@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block title %}Properties - KIF Reality{% endblock %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/properties.css' %}">
+
+{% block content %}
+<!-- Page Header -->
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-4 mb-0">Property Listings</h1>
+                <p class="lead text-muted">Discover your perfect property from our extensive collection</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <p class="mb-0"><strong>{{ total_count }}</strong> Properties Found</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="py-4 border-bottom">
+    <div class="container">
+        <form method="POST" class="row g-3 align-items-end" action="{% url 'properties' %}">
+            {% csrf_token %}
+            <div class="col-md-3">
+                <label class="form-label">Property Type</label>
+                <select name="property_type" class="form-select">
+                    <option value="">All Types</option>
+                    <option value="residential" {% if filters.property_type == "residential" %}selected{% endif %}>
+                        Residential</option>
+                    <option value="commercial" {% if filters.property_type == "commercial" %}selected{% endif %}>
+                        Commercial</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Location</label>
+                <input type="text" name="city" class="form-control" placeholder="Enter location"
+                    value="{{ filters.city }}">
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Min Price (₹)</label>
+                <input type="number" name="min_price" class="form-control" placeholder="Min"
+                    value="{{ filters.min_price }}">
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Max Price (₹)</label>
+                <input type="number" name="max_price" class="form-control" placeholder="Max"
+                    value="{{ filters.max_price }}">
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary-custom w-100">
+                    <i class="fas fa-filter me-1"></i>Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Properties Grid -->
+<section class="py-5">
+    <div class="container">
+        {% if properties_error %}
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ properties_error }}
+        </div>
+        {% endif %}
+
+        <div class="row">
+            {% for property in properties %}
+            <div class="col-lg-4 col-md-6 ">
+                <div class="property-card">
+                    <img src="{{ property.image|default:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}"
+                        alt="{{ property.title }}"
+                        onerror="this.src='https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+
+
+                    <div class="card-body">
+                        <div class="price-tag">
+                            {% if property.price %}
+                            ₹{{ property.price|floatformat:0 }}
+                            {% else %}
+                            Contact for Price
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title">{{ property.title|default:"Beautiful Property" }}</h5>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            {{ property.location|default:"Kerala, India" }}
+                        </p>
+                        <p class="card-text">
+                            <!-- {{ property.description | truncatewords:20 | default:"Premium property with excellent amenities
+                            and great location." }} -->
+                        </p>
+
+                        <div class="row text-center mb-3">
+                            <div class="col-4">
+                                <i class="fas fa-bed text-primary"></i>
+                                <small class="d-block">{{ property.bedrooms|default:"-" }} Beds</small>
+                            </div>
+                            <div class="col-4">
+                                <i class="fas fa-bath text-primary"></i>
+                                <small class="d-block">{{ property.bathrooms|default:"-" }} Baths</small>
+                            </div>
+                            <div class="col-4">
+                                <i class="fas fa-ruler-combined text-primary"></i>
+                                <small class="d-block">{{ property.area|default:"-" }} sqft</small>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-primary-custom">View Details</a>
+                            <a href="{% url 'contact' %}" class="btn btn-outline-primary btn-sm">Contact Agent</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h4>No Properties Found</h4>
+                    <p class="text-muted">Try adjusting your search criteria or browse all properties.</p>
+                    <a href="{% url 'properties' %}" class="btn btn-primary-custom">Clear Filters</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if next_page or prev_page %}
+        <div class="d-flex justify-content-between mt-5">
+            {% if prev_page %}
+            <div>
+            <button type="button" class="btn btn-outline-primary" onclick="goToPage('{{ prev_page }}')">
+                <i class="fas fa-arrow-left me-1"></i> Previous
+            </button>
+            </div>
+            {% else %}
+            <span></span>
+            {% endif %}
+
+            {% if last_page > 1 %}
+            <div class="d-flex justify-content-center">
+                <nav>
+                    <ul class="pagination">
+                        {% for i in page_range %}
+                        <li class="page-item {% if i == current_page %}active{% endif %}">
+                            {% if i == '...' %}
+                            <span class="page-link">...</span>
+                            {% else %}
+                            <button type="button" class="page-link" onclick="goToPage('{{ i }}')">{{ i }}</button>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+
+
+            {% if next_page %}
+            <div>
+            <button type="button" class="btn btn-outline-primary" onclick="goToPage('{{ next_page }}')">
+                Next <i class="fas fa-arrow-right ms-1"></i>
+            </button>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <script>
+            function goToPage(pageNumber) {
+                const form = document.querySelector("form");
+
+                // Remove any existing 'page' input
+                const existing = form.querySelector("input[name='page']");
+                if (existing) existing.remove();
+
+                // Only append 'page' input if not page 1
+                if (pageNumber !== '1') {
+                    const input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "page";
+                    input.value = pageNumber;
+                    form.appendChild(input);
+                }
+
+                form.submit();
+            }
+        </script>
+
+    </div>
+</section>
+{% endblock %}

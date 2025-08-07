@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}KIF Reality - Premium Properties in Kerala{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="animate-fade-up">Find Your Dream Property</h1>
+                <p class="animate-fade-up">Discover premium residential and commercial properties with KIF Reality. Your perfect home or investment opportunity awaits.</p>
+                <div class="animate-fade-up">
+                    <a href="{% url 'properties' %}" class="btn btn-primary-custom me-3">Browse Properties</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-custom">Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Luxury Home" class="img-fluid rounded-3 animate-fade-up" style="box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="search-bar">
+                    <form method="GET" action="{% url 'properties' %}" class="row g-2 align-items-center">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="search" placeholder="Search by location, property type, or keyword...">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary-custom w-100">
+                                <i class="fas fa-search me-2"></i>Search Properties
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-title animate-fade-up">
+            <h2>Featured Properties</h2>
+            <p>Discover our handpicked selection of premium properties that offer exceptional value and quality.</p>
+        </div>
+        
+        {% if properties_error %}
+            <div class="alert alert-warning text-center animate-fade-up">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                {{ properties_error }}
+            </div>
+        {% endif %}
+        
+        <div class="row">
+            {% for property in featured_properties %}
+                <div class="col-lg-4 col-md-6 animate-fade-up">
+                    <div class="property-card">
+                        {% if property.images %}
+                            <img src="{{ property.images.0.url }}" alt="{{ property.title }}" onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Property">
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <div class="price-tag">
+                                {% if property.price %}
+                                    ₹{{ property.price|floatformat:0 }}
+                                {% else %}
+                                    Contact for Price
+                                {% endif %}
+                            </div>
+                            <h5 class="card-title">{{ property.title|default:"Beautiful Property" }}</h5>
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-map-marker-alt me-1"></i>
+                                {{ property.location|default:"Kerala, India" }}
+                            </p>
+                            <p class="card-text">{{ property.description|truncatewords:15|default:"Luxury property with modern amenities and prime location." }}</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    {% if property.bedrooms %}
+                                        <i class="fas fa-bed me-1"></i>{{ property.bedrooms }} Bed
+                                    {% endif %}
+                                    {% if property.bathrooms %}
+                                        <i class="fas fa-bath ms-2 me-1"></i>{{ property.bathrooms }} Bath
+                                    {% endif %}
+                                </small>
+                                <a href="#" class="btn btn-sm btn-primary-custom">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="text-center animate-fade-up">
+                        <i class="fas fa-home fa-3x text-muted mb-3"></i>
+                        <h4>No Featured Properties</h4>
+                        <p class="text-muted">Check back soon for our latest property listings.</p>
+                        <a href="{% url 'properties' %}" class="btn btn-primary-custom">Browse All Properties</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'properties' %}" class="btn btn-outline-primary btn-lg">View All Properties</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5" style="background: var(--bg-light);">
+    <div class="container">
+        <div class="section-title animate-fade-up">
+            <h2>Why Choose KIF Reality?</h2>
+            <p>We provide exceptional real estate services with a commitment to excellence and customer satisfaction.</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-award fa-2x"></i>
+                    </div>
+                    <h4>Expert Knowledge</h4>
+                    <p class="text-muted">Our team has deep knowledge of the Kerala real estate market with over 10 years of experience.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
+                <div class="text-center">
+                    <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-handshake fa-2x"></i>
+                    </div>
+                    <h4>Personalized Service</h4>
+                    <p class="text-muted">We provide tailored solutions to meet your unique property needs and investment goals.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
+                <div class="text-center">
+                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                    <h4>Trusted & Reliable</h4>
+                    <p class="text-muted">With hundreds of satisfied customers, we've built a reputation for transparency and reliability.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div class="animate-fade-up">
+            <h2>Ready to Find Your Dream Property?</h2>
+            <p class="lead mb-4">Let our experts help you discover the perfect property that matches your needs and budget.</p>
+            <a href="{% url 'contact' %}" class="btn btn-light btn-lg me-3">Get Started Today</a>
+            <a href="{% url 'properties' %}" class="btn btn-outline-light btn-lg">Browse Properties</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

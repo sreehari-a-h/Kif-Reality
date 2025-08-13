@@ -57,11 +57,11 @@
     background: linear-gradient(to bottom, #fefdfb, #f8f6f0);
 }
 
-.price-tag {
+/* .price-tag {
     position: absolute;
     top: 15px;
     right: 15px;
-    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    background: linear-gradient(135deg, #D7B56D 0%, #D7B56D 100%);
     color: #2c1810;
     padding: 10px 16px;
     border-radius: 25px;
@@ -70,7 +70,7 @@
     z-index: 2;
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
     border: 1px solid #e6c547;
-}
+} */
 
 .btn-primary-custom {
     background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);

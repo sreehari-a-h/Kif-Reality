@@ -1,15 +1,20 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from django.conf import settings
 from urllib.parse import urlparse, parse_qs
 import json
+
+import requests
 
 from .models import ContactMessage, Newsletter
 from .services import PropertyService
 
-def home(request):
+API_BASE = "https://offplan.market/api/property"
+
+def index(request):
     """Homepage with featured properties"""
     # Get featured properties
     properties_result = PropertyService.get_featured_properties()
@@ -18,7 +23,7 @@ def home(request):
         'featured_properties': properties_result.get('data', {}).get('results', []) if properties_result['success'] else [],
         'properties_error': properties_result.get('error'),
     }
-    return render(request, 'home.html', context)
+    return render(request, 'index.html', context)
 
 def extract_page_number(url):
     if not url:
@@ -54,18 +59,33 @@ def properties(request):
     if properties_result['success'] and properties_result['data'].get('status') is True:
         data_block = properties_result['data']['data']  # ✅ THIS is where the real results are
         for prop in data_block.get('results', []):
+            title_data = prop.get('title', {})
+            title = title_data.get('en', 'Untitled') if isinstance(title_data, dict) else (title_data or 'Untitled')
+
+            city_data = prop.get('city', {})
+            city_name = ''
+            if isinstance(city_data, dict):
+                name_data = city_data.get('name', {})
+                city_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+
+            district_data = prop.get('district', {})
+            district_name = ''
+            if isinstance(district_data, dict):
+                name_data = district_data.get('name', {})
+                district_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+
             mapped_properties.append({
                 'id': prop.get('id'),
-                'title': prop.get('title', {}).get('en', 'Untitled'),
+                'title': title,
                 'image': prop.get('cover'),
-                'location': (prop.get('city', {}).get('name', {}).get('en', '') or '') + ', ' +
-                            (prop.get('district', {}).get('name', {}).get('en', '') or ''),
+                'location': f"{city_name}, {district_name}",
                 'price': prop.get('low_price'),
                 'area': prop.get('min_area'),
                 'bedrooms': prop.get('bedrooms'),
                 'bathrooms': prop.get('bathrooms'),
                 'description': 'Explore more about this project at the detail page.',
             })
+
             
         
         next_page_num = extract_page_number(data_block.get('next_page_url'))
@@ -92,8 +112,8 @@ def properties(request):
         if next_page_num == '3':
             prev_page_num = '1'
 
-        print("➡️ NEXT PAGE:", next_page_num)
-        print("➡️ PREV PAGE:", prev_page_num)
+        # print("➡️ NEXT PAGE:", next_page_num)
+        # print("➡️ PREV PAGE:", prev_page_num)
 
         context = {
             'properties': mapped_properties,
@@ -118,9 +138,81 @@ def properties(request):
 
     return render(request, 'properties.html', context)
 
+def property_detail(request, pk):
+    """
+    Fetch property data from the API and render property_detail.html
+    """
+    url = f"{API_BASE}/{pk}"
+    try:
+        resp = requests.get(url, timeout=8)
+    except requests.RequestException as e:
+        return render(request, "property_detail.html", {"property_error": "Failed to retrieve property data."})
+
+    if resp.status_code != 200:
+        return render(request, "property_detail.html", {"property_error": "Property not found or API error."})
+    data = resp.json()
+    if not data.get("status"):
+        return render(request, "property_detail.html", {"property_error": data.get("message") or "API returned error."})
+
+    prop = data.get("data") or {}
+    # normalize a few fields for template convenience
+    # ensure lists exist
+    prop.setdefault("property_images", [])
+    prop.setdefault("facilities", [])
+    prop.setdefault("grouped_apartments", [])
+    prop.setdefault("payment_plans", [])
+    prop.setdefault("property_units", [])
+
+    return render(request, "property_detail.html", {"property": prop})
+
+
+def unit_detail(request, property_id, unit_id):
+    """
+    Show unit details. We fetch the property and locate the unit by id in either grouped_apartments or property_units.
+    """
+    url = f"{API_BASE}/{property_id}"
+    try:
+        resp = requests.get(url, timeout=8)
+    except requests.RequestException:
+        raise Http404("Property data could not be retrieved.")
+    if resp.status_code != 200:
+        raise Http404("Property not found.")
+
+    data = resp.json()
+    prop = data.get("data") or {}
+    units = prop.get("property_units", []) or []
+    grouped = prop.get("grouped_apartments", []) or []
+
+    # Try to find unit in grouped_apartments by id
+    unit = None
+    for u in grouped + units:
+        # some ids might be strings or ints; normalize
+        try:
+            if int(u.get("id")) == int(unit_id):
+                unit = u
+                break
+        except Exception:
+            if str(u.get("id")) == str(unit_id):
+                unit = u
+                break
+
+    if not unit:
+        raise Http404("Unit not found.")
+
+    # supply property + unit to template
+    context = {
+        "property": prop,
+        "unit": unit,
+    }
+    return render(request, "unit_detail.html", context)
+
 def about(request):
     """About us page"""
     return render(request, 'about.html')
+
+def blogs(request):
+    """About us page"""
+    return render(request, 'blogs.html')
 
 def contact(request):
     """Contact us page"""

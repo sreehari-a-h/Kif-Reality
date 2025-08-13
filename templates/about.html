@@ -1,606 +1,234 @@
 {% extends 'base.html' %}
 
-{% block title %}About Us - KIF Reality{% endblock %}
+{% block title %}About - KIF Reality{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/about.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero" style="min-height: 50vh;">
-    <div class="container">
-        <div class="row align-items-center text-center">
-            <div class="col-12">
-                <h1 class="animate-fade-up">About KIF Reality</h1>
-                <p class="animate-fade-up">Your trusted partner in real estate excellence since 2014</p>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="header-content">
+        <h1>About KIF Realty</h1>
+        <p>From Vision to Reality – Real Estate Leadership Since 2011</p>
+    </div>
+</section>
+
+<!-- Company Story Section -->
+<section class="story-section">
+    <div class="story-container">
+        <div class="story-content">
+            <h2>Our Journey</h2>
+            <p>Founded on over a decade of excellence in the UAE's dynamic property market, <span
+                    class="highlight-text">KIF Realty began its journey in Dubai real estate back in 2011</span>,
+                working alongside the region's top developers and brokers.</p>
+
+            <p>In 2024, this vision evolved into a powerful brand — KIF Realty. We specialize in helping clients <span
+                    class="highlight-text">buy property in Dubai, invest in off-plan projects, and access the best
+                    villas for sale in Dubai</span>.</p>
+
+            <p>Whether you're searching for a studio apartment for sale in JVC, a penthouse in Downtown Dubai, or
+                commercial property in Business Bay, our mission is to provide <span class="highlight-text">clarity,
+                    value, and success</span>.</p>
+        </div>
+        <div class="story-image">
+            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80"
+                alt="Dubai Real Estate Market">
+        </div>
+    </div>
+</section>
+
+<!-- Vision & Mission Section -->
+<section class="vision-mission-section">
+    <div class="vision-mission-grid">
+        <div class="vm-card">
+            <div class="vm-content">
+                <div class="vm-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Our Vision</h3>
+                <p>To become the go-to name in Dubai real estate companies, known for trust, transparency, and
+                    delivering the best real estate investments in the UAE, from Palm Jebel Ali properties to Dubai
+                    Marina apartments for sale.</p>
+            </div>
+        </div>
+        <div class="vm-card">
+            <div class="vm-content">
+                <div class="vm-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3>Our Mission</h3>
+                <p>To empower investors, families, and business owners with the most reliable guidance, real-time market
+                    data, and high-ROI opportunities across Dubai freehold property, off-plan properties in Dubai, and
+                    ready-to-move apartments.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- About Content -->
-<section class="py-5">
-    <div class="container">
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-6 animate-fade-up">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Our Office" class="img-fluid rounded-3 shadow">
-            </div>
-            <div class="col-lg-6 animate-fade-up">
-                <h2 class="mb-4">Our Story</h2>
-                <p class="lead">KIF Reality was founded with a simple mission: to make property transactions seamless, transparent, and rewarding for everyone involved.</p>
-                <p>With over a decade of experience in the Kerala real estate market, we have established ourselves as a trusted name in the industry. Our team of dedicated professionals brings together extensive market knowledge, innovative technology, and personalized service to deliver exceptional results.</p>
-                <p>From luxury villas in Kochi to commercial spaces in Thiruvananthapuram, we've helped thousands of clients find their perfect property match.</p>
-                
-                <div class="row mt-4">
-                    <div class="col-sm-4 text-center">
-                        <h3 class="text-primary">500+</h3>
-                        <p class="mb-0">Properties Sold</p>
-                    </div>
-                    <div class="col-sm-4 text-center">
-                        <h3 class="text-primary">1000+</h3>
-                        <p class="mb-0">Happy Clients</p>
-                    </div>
-                    <div class="col-sm-4 text-center">
-                        <h3 class="text-primary">10+</h3>
-                        <p class="mb-0">Years Experience</p>
-                    </div>
-                </div>
-            </div>
+<!-- Timeline Section -->
+<section class="timeline-section">
+    <div class="timeline-bg"></div>
+    <div class="timeline-content">
+        <div class="section-title">
+            <h2>Our Journey Through the Years</h2>
+            <p style="color: rgba(255,255,255,0.9);">A decade of growth, innovation, and excellence in Dubai real estate
+            </p>
         </div>
-    </div>
-</section>
-
-<!-- Our Values -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="section-title animate-fade-up">
-            <h2>Our Values</h2>
-            <p>The principles that guide everything we do</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
-                <div class="text-center h-100 p-4">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-heart fa-2x"></i>
-                    </div>
-                    <h4>Integrity</h4>
-                    <p class="text-muted">We believe in complete transparency and honesty in all our dealings, ensuring trust at every step.</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">2011</div>
+                <div class="timeline-content-item">
+                    <h3>Foundation & First Steps</h3>
+                    <p>Started our journey in Dubai real estate, building relationships with top developers and
+                        understanding the dynamic UAE property market.</p>
                 </div>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
-                <div class="text-center h-100 p-4">
-                    <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-star fa-2x"></i>
-                    </div>
-                    <h4>Excellence</h4>
-                    <p class="text-muted">We strive for excellence in every service we provide, exceeding client expectations consistently.</p>
+            <div class="timeline-item">
+                <div class="timeline-year">2015</div>
+                <div class="timeline-content-item">
+                    <h3>Market Expansion</h3>
+                    <p>Expanded our portfolio to include luxury villas in Palm Jumeirah and off-plan properties across
+                        emerging Dubai communities.</p>
                 </div>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
-                <div class="text-center h-100 p-4">
-                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-users fa-2x"></i>
-                    </div>
-                    <h4>Customer First</h4>
-                    <p class="text-muted">Our clients are at the heart of everything we do, and their success is our ultimate goal.</p>
+            <div class="timeline-item">
+                <div class="timeline-year">2018</div>
+                <div class="timeline-content-item">
+                    <h3>Digital Innovation</h3>
+                    <p>Launched advanced ROI analysis tools and digital platforms to provide data-backed investment
+                        guidance for our clients.</p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Our Team -->
-<section class="py-5">
-    <div class="container">
-        <div class="section-title animate-fade-up">
-            <h2>Meet Our Team</h2>
-            <p>The dedicated professionals behind KIF Reality's success</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm text-center h-100">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="John Doe" class="card-img-top" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Rajesh Kumar</h5>
-                        <p class="text-primary">Founder & CEO</p>
-                        <p class="card-text">With 15+ years in real estate, Rajesh leads KIF Reality with vision and expertise in luxury property markets.</p>
-                        <div class="social-links">
-                            <a href="#" class="btn btn-outline-primary btn-sm me-2"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2021</div>
+                <div class="timeline-content-item">
+                    <h3>Industry Recognition</h3>
+                    <p>Achieved recognition as one of the top real estate brokers in Dubai with over 1000+ successful
+                        property transactions.</p>
                 </div>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm text-center h-100">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Jane Smith" class="card-img-top" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Priya Nair</h5>
-                        <p class="text-primary">Sales Director</p>
-                        <p class="card-text">Priya specializes in residential properties and has helped over 300 families find their dream homes in Kerala.</p>
-                        <div class="social-links">
-                            <a href="#" class="btn btn-outline-primary btn-sm me-2"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm text-center h-100">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Mike Johnson" class="card-img-top" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Arjun Menon</h5>
-                        <p class="text-primary">Commercial Specialist</p>
-                        <p class="card-text">Arjun focuses on commercial real estate and investment properties, bringing strategic insights to every deal.</p>
-                        <div class="social-links">
-                            <a href="#" class="btn btn-outline-primary btn-sm me-2"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content-item">
+                    <h3>KIF Realty Brand Launch</h3>
+                    <p>Officially launched KIF Realty as a powerful brand, focusing on comprehensive real estate
+                        solutions and exceptional customer service.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Our Services -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="section-title animate-fade-up">
-            <h2>Our Services</h2>
-            <p>Comprehensive real estate solutions tailored to your needs</p>
+<!-- Expertise Section -->
+<section class="expertise-section">
+    <div class="section-title">
+        <h2>Areas of Expertise</h2>
+        <p>Specialized knowledge across Dubai's most promising real estate sectors</p>
+    </div>
+    <div class="expertise-grid">
+        <div class="expertise-card">
+            <i class="fas fa-building"></i>
+            <h3>Luxury Penthouses</h3>
+            <p>Downtown Dubai, Palm Jumeirah, and Business Bay premium properties</p>
         </div>
-        
-        <div class="row">
-            <div class="col-lg-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px; flex-shrink: 0;">
-                            <i class="fas fa-home fa-lg"></i>
-                        </div>
-                        <div>
-                            <h5 class="card-title">Property Sales</h5>
-                            <p class="card-text">Expert assistance in buying and selling residential and commercial properties with market-leading insights.</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="expertise-card">
+            <i class="fas fa-home"></i>
+            <h3>Beachfront Villas</h3>
+            <p>Palm Jebel Ali and Creek Harbour waterfront living</p>
+        </div>
+        <div class="expertise-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Off-Plan Investments</h3>
+            <p>High-growth opportunities with flexible payment plans</p>
+        </div>
+        <div class="expertise-card">
+            <i class="fas fa-golf-ball-tee"></i>
+            <h3>Golf Course Communities</h3>
+            <p>Premium gated communities and exclusive locations</p>
+        </div>
+        <div class="expertise-card">
+            <i class="fas fa-briefcase"></i>
+            <h3>Commercial Properties</h3>
+            <p>Strategic commercial plots and mixed-use buildings</p>
+        </div>
+        <div class="expertise-card">
+            <i class="fas fa-key"></i>
+            <h3>Property Management</h3>
+            <p>End-to-end portfolio care and rental management</p>
+        </div>
+    </div>
+</section>
+
+<!-- Leadership Section -->
+<section class="leadership-section">
+    <div class="section-title">
+        <h2>Our Leadership Team</h2>
+        <p>Expert professionals driving KIF Realty's success in Dubai real estate</p>
+    </div>
+    <div class="leadership-grid">
+        <div class="leader-card">
+            <div class="leader-image">
+                <i class="fas fa-user-tie"></i>
             </div>
-            
-            <div class="col-lg-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex">
-                        <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px; flex-shrink: 0;">
-                            <i class="fas fa-key fa-lg"></i>
-                        </div>
-                        <div>
-                            <h5 class="card-title">Property Rentals</h5>
-                            <p class="card-text">Comprehensive rental services for both landlords and tenants with transparent processes.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="leader-info">
+                <h3>Leadership Team</h3>
+                <div class="leader-title">RERA-Certified Professionals</div>
+                <p>Our experienced team brings deep market knowledge and unwavering commitment to delivering exceptional
+                    results for every client.</p>
             </div>
-            
-            <div class="col-lg-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex">
-                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px; flex-shrink: 0;">
-                            <i class="fas fa-chart-line fa-lg"></i>
-                        </div>
-                        <div>
-                            <h5 class="card-title">Investment Consulting</h5>
-                            <p class="card-text">Strategic guidance for property investments with detailed market analysis and ROI projections.</p>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="leader-card">
+            <div class="leader-image">
+                <i class="fas fa-chart-line"></i>
             </div>
-            
-            <div class="col-lg-6 mb-4 animate-fade-up">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex">
-                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px; flex-shrink: 0;">
-                            <i class="fas fa-cogs fa-lg"></i>
-                        </div>
-                        <div>
-                            <h5 class="card-title">Property Management</h5>
-                            <p class="card-text">Complete property management services including maintenance, tenant screening, and rent collection.</p>
-                        </div>
-                    </div>
-                </title>
-    <meta name="description" content="{% block description %}KIF Reality - Leading real estate company offering premium properties, expert guidance, and exceptional service. Find your dream property today.{% endblock %}">
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <style>
-        :root {
-            --primary-color: #2c5282;
-            --secondary-color: #ed8936;
-            --accent-color: #38b2ac;
-            --text-dark: #2d3748;
-            --text-light: #718096;
-            --bg-light: #f7fafc;
-            --border-color: #e2e8f0;
-        }
+            <div class="leader-info">
+                <h3>Investment Specialists</h3>
+                <div class="leader-title">ROI Analysis Experts</div>
+                <p>Dedicated analysts providing data-backed investment strategies and real-time market insights for
+                    optimal property investments.</p>
+            </div>
+        </div>
+        <div class="leader-card">
+            <div class="leader-image">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <div class="leader-info">
+                <h3>Client Relations</h3>
+                <div class="leader-title">Customer Success Team</div>
+                <p>Personalized service specialists ensuring seamless transactions and long-term client satisfaction
+                    across all property types.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Ready to Work with Dubai's Premier Real Estate Team?</h2>
+        <p>Join thousands of satisfied clients who chose KIF Realty for their Dubai property investments. Experience the
+            difference of working with true industry experts.</p>
+        <div>
+            <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
+            <a href="properties.html" class="btn btn-secondary">View Properties</a>
+        </div>
+    </div>
+</section>
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-        }
+<!-- Floating Contact Button -->
+<div class="floating-contact">
+    <a href="https://wa.me/971509647864" target="_blank" class="floating-btn">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</div>
 
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--primary-color) !important;
-        }
-
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: var(--secondary-color) !important;
-        }
-
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            background: var(--secondary-color);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .navbar-nav .nav-link:hover::after,
-        .navbar-nav .nav-link.active::after {
-            width: 80%;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-        }
-
-        /* Buttons */
-        .btn-primary-custom {
-            background: var(--secondary-color);
-            border: none;
-            padding: 12px 30px;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-primary-custom:hover {
-            background: #d97706;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(237, 137, 54, 0.3);
-        }
-
-        .btn-outline-custom {
-            border: 2px solid white;
-            color: white;
-            padding: 12px 30px;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-outline-custom:hover {
-            background: white;
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        /* Cards */
-        .property-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: none;
-            margin-bottom: 30px;
-        }
-
-        .property-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .property-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: all 0.3s ease;
-        }
-
-        .property-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .price-tag {
-            background: var(--secondary-color);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        /* Section Styling */
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--text-dark);
-            color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 4rem;
-        }
-
-        .footer h5 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .footer a {
-            color: #cbd5e0;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: var(--secondary-color);
-        }
-
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            line-height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: var(--secondary-color);
-            transform: translateY(-3px);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-        }
-
-        /* Animation */
-        .animate-fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .animate-fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Contact Form */
-        .form-control {
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 15px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(44, 82, 130, 0.25);
-        }
-
-        /* Search Bar */
-        .search-bar {
-            background: white;
-            border-radius: 50px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin-top: 2rem;
-        }
-
-        .search-bar .form-control {
-            border: none;
-            border-radius: 40px;
-        }
-
-        .search-bar .btn {
-            border-radius: 40px;
-            padding: 10px 25px;
-        }
-    </style>
-    
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
-     <!-- Main Content -->
-    <main style="padding-top: 80px;">
-    </main>
-
-    <!-- Footer -->
-   
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-fade-up').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Newsletter subscription
-        function subscribeNewsletter() {
-            const email = document.getElementById('newsletter-email').value;
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-
-            fetch('/api/newsletter/subscribe/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({email: email})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Thank you for subscribing to our newsletter!');
-                    document.getElementById('newsletter-email').value = '';
-                } else {
-                    alert(data.error || 'An error occurred. Please try again.');
-                }
-            })
-            .catch(error => {
-                alert('An error occurred. Please try again.');
-            });
-        }
-    </script>
-    
-    {% block extra_js %}{% endblock %}
-    
-        {% endblock %}
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+{% block title %}Blogs - KIF Reality{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blogs.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/blogs.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Real Estate Blog | KIF Realty - Property Investment Insights</title>
+    <meta name="description" content="Stay updated with Dubai real estate trends, luxury villa investments, off-plan property guides, and expert market insights from KIF Realty's property professionals.">
+    <meta name="keywords" content="Dubai real estate blog, property investment tips, luxury villas Dubai, off-plan properties, Dubai Marina apartments, real estate trends">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"> -->
+
+<!-- </head>
+<body> -->
+<!-- Navigation -->
+<!-- <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo">KIF Realty</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/properties/">Properties</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="" class="active">Blogs</a></li>
+            <li><a href="/contact/">Contact</a></li>
+        </ul>
+    </nav> -->
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="header-content">
+        <h1>Dubai Real Estate Insights</h1>
+        <p>Expert market analysis, investment tips, and property trends from Dubai's leading real estate professionals
+        </p>
+    </div>
+</section>
+
+<!-- Blog Content -->
+<section class="blog-section">
+    <div class="blog-container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Featured Post -->
+            <!-- <article class="featured-post">
+                    <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80');">
+                        <div class="featured-badge">Featured</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar"></i> December 15, 2024</span>
+                            <span><i class="fas fa-user"></i> KIF Realty Team</span>
+                            <span><i class="fas fa-eye"></i> 2.5k views</span>
+                        </div>
+                        <h2 class="post-title">Dubai Real Estate Market Outlook 2025: Top Investment Opportunities</h2>
+                        <p class="post-excerpt">Discover the most promising Dubai real estate investment opportunities for 2025. From luxury villas in Palm Jebel Ali to off-plan developments in Dubai South, our comprehensive analysis reveals where smart investors are placing their bets for maximum ROI.</p>
+                        <a href="#" class="read-more-btn">
+                            Read Full Article <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article> -->
+
+            <!-- Blog Posts -->
+            <div class="blog-posts">
+                <article class="blog-post" onclick="readPost('off-plan-guide')">
+                    <div class="post-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80');">
+                        <div class="post-category">Investment Guide</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar"></i> December 12, 2024</span>
+                            <span><i class="fas fa-comments"></i> 24</span>
+                        </div>
+                        <h3 class="post-title">Complete Guide to Off-Plan Properties in Dubai 2025</h3>
+                        <p class="post-excerpt">Everything you need to know about investing in off-plan properties in
+                            Dubai. Payment plans, developer selection, and risk management strategies.</p>
+                        <a href="#" class="read-more-btn">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-post" onclick="readPost('luxury-villas')">
+                    <div class="post-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80');">
+                        <div class="post-category">Luxury Properties</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar"></i> December 10, 2024</span>
+                            <span><i class="fas fa-comments"></i> 18</span>
+                        </div>
+                        <h3 class="post-title">Palm Jumeirah vs Palm Jebel Ali: Which Luxury Villa Investment Wins?</h3>
+                        <p class="post-excerpt">Detailed comparison of Dubai's most prestigious villa communities. Price
+                            analysis, rental yields, and future growth potential.</p>
+                        <a href="#" class="read-more-btn">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-post" onclick="readPost('downtown-apartments')">
+                    <div class="post-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80');">
+                        <div class="post-category">Market Analysis</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar"></i> December 8, 2024</span>
+                            <span><i class="fas fa-comments"></i> 31</span>
+                        </div>
+                        <h3 class="post-title">Downtown Dubai Apartments: ROI Analysis and Investment Potential</h3>
+                        <p class="post-excerpt">In-depth analysis of Downtown Dubai's apartment market. Rental yields,
+                            price trends, and why investors are choosing this iconic location.</p>
+                        <a href="#" class="read-more-btn">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-post" onclick="readPost('dubai-south')">
+                    <div class="post-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80');">
+                        <div class="post-category">Emerging Areas</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar"></i> December 5, 2024</span>
+                            <span><i class="fas fa-comments"></i> 15</span>
+                        </div>
+                        <h3 class="post-title">Dubai South: The Next Investment Hotspot Near Al Maktoum Airport</h3>
+                        <p class="post-excerpt">Why Dubai South is attracting smart investors. Infrastructure
+                            developments, price appreciation potential, and available property types.</p>
+                        <a href="#" class="read-more-btn">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-post" onclick="readPost('property-management')">
+                    <div class="post-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80');">
+                        <div class="post-category">Property Management</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar"></i> December 3, 2024</span>
+                            <span><i class="fas fa-comments"></i> 22</span>
+                        </div>
+                        <h3 class="post-title">Maximizing Rental Returns: Property Management Tips for Dubai Investors
+                        </h3>
+                        <p class="post-excerpt">Expert strategies to optimize your Dubai property investment. Tenant
+                            management, maintenance, and maximizing rental income.</p>
+                        <a href="#" class="read-more-btn">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#"><i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Search Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Search Articles</h3>
+                <div class="search-widget">
+                    <input type="text" class="search-input" placeholder="Search real estate insights...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Categories</h3>
+                <ul class="categories-list">
+                    <li><a href="#">Investment Guides <span class="category-count">12</span></a></li>
+                    <li><a href="#">Market Analysis <span class="category-count">8</span></a></li>
+                    <li><a href="#">Luxury Properties <span class="category-count">15</span></a></li>
+                    <li><a href="#">Off-Plan Properties <span class="category-count">10</span></a></li>
+                    <li><a href="#">Area Spotlights <span class="category-count">18</span></a></li>
+                    <li><a href="#">Property Management <span class="category-count">7</span></a></li>
+                    <li><a href="#">Legal & Finance <span class="category-count">9</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Recent Posts</h3>
+                <div class="recent-posts">
+                    <div class="recent-post" onclick="readPost('jvc-townhouses')">
+                        <div class="recent-post-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80');">
+                        </div>
+                        <div class="recent-post-content">
+                            <h4>JVC Townhouses: Affordable Luxury Investment Option</h4>
+                            <span class="recent-post-date">December 1, 2024</span>
+                        </div>
+                    </div>
+                    <div class="recent-post" onclick="readPost('marina-penthouses')">
+                        <div class="recent-post-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=200&q=80');">
+                        </div>
+                        <div class="recent-post-content">
+                            <h4>Dubai Marina Penthouses: Ultimate Waterfront Living</h4>
+                            <span class="recent-post-date">November 28, 2024</span>
+                        </div>
+                    </div>
+                    <div class="recent-post" onclick="readPost('business-bay')">
+                        <div class="recent-post-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80');">
+                        </div>
+                        <div class="recent-post-content">
+                            <h4>Business Bay Commercial Properties: Investment Potential</h4>
+                            <span class="recent-post-date">November 25, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tags Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Popular Tags</h3>
+                <div class="tags-cloud">
+                    <a href="#" class="tag">Dubai Real Estate</a>
+                    <a href="#" class="tag">Luxury Villas</a>
+                    <a href="#" class="tag">Off-Plan</a>
+                    <a href="#" class="tag">Investment</a>
+                    <a href="#" class="tag">ROI Analysis</a>
+                    <a href="#" class="tag">Downtown Dubai</a>
+                    <a href="#" class="tag">Palm Jumeirah</a>
+                    <a href="#" class="tag">Dubai Marina</a>
+                    <a href="#" class="tag">Property Management</a>
+                    <a href="#" class="tag">Market Trends</a>
+                </div>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget newsletter-widget">
+                <h3 class="widget-title">Stay Updated</h3>
+                <p style="margin-bottom: 1.5rem; opacity: 0.9;">Get the latest Dubai real estate insights delivered to
+                    your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your email address">
+                    <button type="submit" class="newsletter-btn">Subscribe Now</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<!-- Floating Contact Button -->
+<div class="floating-contact">
+    <a href="https://wa.me/971509647864" target="_blank" class="floating-btn">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</div>
+
+
+{% endblock %}
+<!-- </body>
+</html> -->

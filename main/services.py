@@ -27,7 +27,7 @@ class PropertyService:
         """
         Fetch properties from external API using POST and valid JSON body.
         """
-        print("💡 [DEBUG] PropertyService.get_properties called with:", filters)
+        # print("💡 [DEBUG] PropertyService.get_properties called with:", filters)
 
         try:
             raw_filters = filters or {}
@@ -61,8 +61,8 @@ class PropertyService:
 
             response.raise_for_status()
             data = response.json()
-            print("📤 Payload being sent to API:", payload)
-            print("📤 Response being received:", data)
+            # print("📤 Payload being sent to API:", payload)
+            # print("📤 Response being received:", data)
 
 
             return {

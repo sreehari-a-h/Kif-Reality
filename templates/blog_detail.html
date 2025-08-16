@@ -1,0 +1,296 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - KIF Reality Blog{% endblock %}
+
+{% block meta_description %}{{ post.meta_description|default:post.excerpt }}{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="blog-detail">
+    <!-- Hero Section -->
+    <section class="blog-hero" style="background-image: url('{{ post.featured_image.url }}');">
+        <div class="blog-hero-overlay">
+            <div class="blog-hero-content">
+                <div class="breadcrumb">
+                    <a href="{% url 'blogs' %}">Blog</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <a href="{% url 'blog_category' post.category.slug %}">{{ post.category.name }}</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span>{{ post.title }}</span>
+                </div>
+                <h1 class="blog-title">{{ post.title }}</h1>
+                <div class="blog-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>{{ post.author.get_full_name|default:post.author.username }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>{{ post.published_at|date:"F d, Y" }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>{{ post.reading_time }} min read</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-eye"></i>
+                        <span>{{ post.views }} views</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="blog-content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post Content -->
+                    <div class="post-content">
+                        {{ post.content|safe }}
+                    </div>
+
+                    <!-- Tags -->
+                    {% if post.tags.all %}
+                    <div class="post-tags">
+                        <h4>Tags:</h4>
+                        {% for tag in post.tags.all %}
+                        <a href="{% url 'blog_tag' tag.slug %}" class="tag">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Social Share -->
+                    <div class="social-share">
+                        <h4>Share this post:</h4>
+                        <div class="share-buttons">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                               target="_blank" class="share-btn facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" 
+                               target="_blank" class="share-btn twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" 
+                               target="_blank" class="share-btn linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://wa.me/?text={{ post.title }} {{ request.build_absolute_uri }}" 
+                               target="_blank" class="share-btn whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Author Bio -->
+                    <div class="author-bio">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>{{ post.author.get_full_name|default:post.author.username }}</h4>
+                            <p>Real estate expert at KIF Reality with extensive knowledge of Dubai's property market.</p>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h3>Comments ({{ comments.count }})</h3>
+                        
+                        <!-- Comment Form -->
+                        <div class="comment-form-section">
+                            <h4>Leave a Comment</h4>
+                            
+                            <!-- Display Messages -->
+                            {% if messages %}
+                                {% for message in messages %}
+                                <!-- <div class="alert alert-{{ message.tags }}">{{ message }}</div> -->
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <form method="POST" class="comment-form" id="comment-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="comment_submit" value="1">
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        {{ comment_form.name.label_tag }}
+                                        {{ comment_form.name }}
+                                        {% if comment_form.name.errors %}
+                                            <div class="form-errors">
+                                                {% for error in comment_form.name.errors %}
+                                                    <span class="error">{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ comment_form.email.label_tag }}
+                                        {{ comment_form.email }}
+                                        {% if comment_form.email.errors %}
+                                            <div class="form-errors">
+                                                {% for error in comment_form.email.errors %}
+                                                    <span class="error">{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    {{ comment_form.website.label_tag }}
+                                    {{ comment_form.website }}
+                                    {% if comment_form.website.errors %}
+                                        <div class="form-errors">
+                                            {% for error in comment_form.website.errors %}
+                                                <span class="error">{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="form-group">
+                                    {{ comment_form.content.label_tag }}
+                                    {{ comment_form.content }}
+                                    {% if comment_form.content.errors %}
+                                        <div class="form-errors">
+                                            {% for error in comment_form.content.errors %}
+                                                <span class="error">{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <button type="submit" class="submit-btn" id="comment-submit-btn">
+                                    Post Comment
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Comments List -->
+                        <div class="comments-list">
+                            {% for comment in comments %}
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <h5>{{ comment.name }}</h5>
+                                        <span class="comment-date">{{ comment.created_at|date:"F d, Y \a\t g:i A" }}</span>
+                                    </div>
+                                    <p>{{ comment.content|linebreaks }}</p>
+                                    {% if comment.website %}
+                                        <p><a href="{{ comment.website }}" target="_blank" rel="noopener noreferrer">{{ comment.website }}</a></p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="no-comments">
+                                <p>No comments yet. Be the first to comment!</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <aside class="blog-sidebar">
+                        <!-- Related Posts -->
+                        {% if related_posts %}
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">Related Posts</h3>
+                            <div class="related-posts">
+                                {% for related_post in related_posts %}
+                                <div class="related-post" onclick="window.location.href='{{ related_post.get_absolute_url }}'">
+                                    <div class="related-post-image" style="background-image: url('{{ related_post.featured_image.url }}');"></div>
+                                    <div class="related-post-content">
+                                        <h4>{{ related_post.title }}</h4>
+                                        <span class="related-post-date">{{ related_post.published_at|date:"F d, Y" }}</span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Newsletter Widget -->
+                        <div class="sidebar-widget newsletter-widget">
+                            <h3 class="widget-title">Stay Updated</h3>
+                            <p>Get the latest Dubai real estate insights delivered to your inbox.</p>
+                            <form class="newsletter-form" id="newsletter-form">
+                                {% csrf_token %}
+                                <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+                                <button type="submit" class="newsletter-btn">Subscribe Now</button>
+                            </form>
+                            <div id="newsletter-message"></div>
+                        </div>
+
+                        <!-- Contact Widget -->
+                        <div class="sidebar-widget contact-widget">
+                            <h3 class="widget-title">Need Expert Advice?</h3>
+                            <p>Get personalized property investment guidance from our Dubai real estate experts.</p>
+                            <a href="https://wa.me/971509647864" target="_blank" class="contact-btn">
+                                <i class="fab fa-whatsapp"></i> Chat with Expert
+                            </a>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+
+<script>
+// Newsletter subscription handling
+document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const messageDiv = document.getElementById('newsletter-message');
+    
+    fetch('{% url "newsletter_subscribe" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        messageDiv.innerHTML = `<div class="alert ${data.success ? 'alert-success' : 'alert-error'}">${data.message}</div>`;
+        if (data.success) {
+            this.reset();
+        }
+        setTimeout(() => {
+            messageDiv.innerHTML = '';
+        }, 5000);
+    })
+    .catch(error => {
+        messageDiv.innerHTML = '<div class="alert alert-error">Something went wrong. Please try again.</div>';
+    });
+});
+
+// Comment form enhancement (optional - for visual feedback)
+document.getElementById('comment-form').addEventListener('submit', function(e) {
+    const submitBtn = document.getElementById('comment-submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    
+    // Re-enable after a delay (the page will redirect anyway)
+    setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Post Comment';
+    }, 5000);
+});
+</script>
+
+{% endblock %}

@@ -6,6 +6,9 @@
 
  {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/properties.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     {% endblock %}
 
 {% block extra_js %}
@@ -19,6 +22,7 @@
 
 <!-- Page Header -->
 <section class="properties-header">
+    <div class="header-container">
     <div class="header-content">
         <h1>Premium Properties</h1>
         <p>Discover exceptional real estate opportunities in prime locations</p>
@@ -26,6 +30,7 @@
             <i class="fas fa-home me-2"></i>
             <strong>{{ total_count }}</strong> Exclusive Properties Available
         </div>
+    </div>
     </div>
 </section>
 
@@ -65,7 +70,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-label">
-                            <i class="fas fa-rupee-sign me-1"></i>
+                            <i class="fas fa-coins me-1"></i>
                             Min Price
                         </label>
                         <input type="number" name="min_price" class="form-control" placeholder="Min"
@@ -76,7 +81,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-label">
-                            <i class="fas fa-rupee-sign me-1"></i>
+                            <i class="fas fa-coins me-1"></i>
                             Max Price
                         </label>
                         <input type="number" name="max_price" class="form-control" placeholder="Max"
@@ -113,11 +118,12 @@
         <div class="property-card animate-in" style="animation-delay: {{ forloop.counter0|floatformat:1 }}s;">
             <div class="property-image" style="background-image: url('{{ property.image|default:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}');">
                 <div class="price-tag">
+                    Available
                     {% if property.price %}
-                    AED {{ property.low_price|floatformat:0|add_commas }}
+                    <!-- AED {{ property.low_price|floatformat:0|add_commas }} -->
 
                     {% else %}
-                    Contact for Price
+                    <!-- Contact for Price -->
                     {% endif %}
                 </div>
                 <div class="property-type-badge">
@@ -134,13 +140,13 @@
                 </div>
 
                 <div class="property-features">
-                    <!-- <div class="feature-item">
+                    <div class="feature-item">
                         <div class="feature-icon">
                             <i class="fas fa-bed"></i>
                         </div>
                         <div class="feature-text">{{ property.bedrooms|default:"N/A" }} Bedrooms</div>
                     </div>
-                    <div class="feature-item">
+                    <!-- <div class="feature-item">
                         <div class="feature-icon">
                             <i class="fas fa-bath"></i>
                         </div>

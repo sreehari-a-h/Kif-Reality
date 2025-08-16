@@ -28,36 +28,36 @@ function readPost(postId) {
 }
 
 // Search functionality
-document.querySelector('.search-btn').addEventListener('click', function () {
-    const searchInput = document.querySelector('.search-input');
-    const searchTerm = searchInput.value.trim();
+// document.querySelector('.search-btn').addEventListener('click', function () {
+//     const searchInput = document.querySelector('.search-input');
+//     const searchTerm = searchInput.value.trim();
 
-    if (searchTerm) {
-        alert(`Searching for: "${searchTerm}"\n\nThis would show filtered blog posts related to your search term.`);
-    } else {
-        alert('Please enter a search term');
-    }
-});
+//     if (searchTerm) {
+//         alert(`Searching for: "${searchTerm}"\n\nThis would show filtered blog posts related to your search term.`);
+//     } else {
+//         alert('Please enter a search term');
+//     }
+// });
 
 // Newsletter subscription
-document.querySelector('.newsletter-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const email = this.querySelector('.newsletter-input').value;
+// document.querySelector('.newsletter-form').addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     const email = this.querySelector('.newsletter-input').value;
 
-    if (email) {
-        alert(`Thank you for subscribing with: ${email}\n\nYou'll receive weekly Dubai real estate insights and market updates.`);
-        this.querySelector('.newsletter-input').value = '';
-    }
-});
+//     if (email) {
+//         alert(`Thank you for subscribing with: ${email}\n\nYou'll receive weekly Dubai real estate insights and market updates.`);
+//         this.querySelector('.newsletter-input').value = '';
+//     }
+// });
 
 // Category and tag clicks
-document.querySelectorAll('.categories-list a, .tag').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const category = this.textContent.trim();
-        alert(`Viewing posts in category: "${category}"\n\nThis would show filtered blog posts for this category.`);
-    });
-});
+// document.querySelectorAll('.categories-list a, .tag').forEach(link => {
+//     link.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         const category = this.textContent.trim();
+//         alert(`Viewing posts in category: "${category}"\n\nThis would show filtered blog posts for this category.`);
+//     });
+// });
 
 // Intersection Observer for animations
 // const observerOptions = {
@@ -148,7 +148,7 @@ document.querySelectorAll('.pagination a').forEach(link => {
         }
 
         const pageNum = this.textContent || 'next';
-        alert(`Loading page ${pageNum}...\n\nThis would load more blog posts.`);
+        // alert(`Loading page ${pageNum}...\n\nThis would load more blog posts.`);
     });
 });
 

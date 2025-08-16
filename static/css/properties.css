@@ -12,7 +12,7 @@
     }
 
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Cinzel', serif;
         line-height: 1.6;
         color: var(--dark);
         background: var(--light-gray);
@@ -43,6 +43,10 @@
         right: 0;
         bottom: 0;
         background: linear-gradient(45deg, rgba(215, 181, 109, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    }
+
+    .header-container{
+        padding-top: 15%;
     }
 
     .header-content {
@@ -259,10 +263,10 @@
 
     .property-features {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        padding: 1.5rem;
+        grid-template-columns: 1fr 1fr;
+        /* gap: 1rem; */
+        margin-bottom: 1rem;
+        padding: 1rem;
         background: var(--light-gray);
         border-radius: 15px;
     }

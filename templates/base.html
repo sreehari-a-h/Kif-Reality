@@ -14,10 +14,14 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="48x48" href="{% static 'images/logo-kif.png' %}?v=2">
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/logo-kif.png' %}"> -->
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 
     <style>
         * {
@@ -63,7 +67,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: #F5F5DC;
+            background: #e4d5b7;
             backdrop-filter: blur(15px);
             padding: 1rem 5%;
             display: flex;
@@ -75,8 +79,8 @@
         }
 
         .navbar span {
-            background: linear-gradient(135deg,
-                    var(--light-gold),
+            background: linear-gradient(165deg,
+                    var(--primary-gold),
                     var(--medium-gold),
                     var(--primary-gold));
             -webkit-background-clip: text;
@@ -926,7 +930,7 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <a href="{% url 'index' %}" class="navbar-brand">
-            <img src="{% static 'images/logo-kif.png' %}" class="modal-logo">
+            <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo">
             <span>KIF Realty</span>
         </a>
 
@@ -937,7 +941,7 @@
         <ul class="nav-links" id="navLinks">
             <li class="mobile-icon">
                 <a href="{% url 'index' %}" class="navbar-brand">
-                    <img src="{% static 'images/logo-kif.png' %}" class="modal-logo">
+                    <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo">
                     <span>KIF Realty</span>
                 </a>
             </li>

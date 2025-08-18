@@ -4,6 +4,8 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.db.models import Count
+from django import forms
+from tinymce.widgets import TinyMCE
 from .models import Contact, BlogPost, Category, Tag, Comment, Newsletter
 
 @admin.register(Category)
@@ -38,9 +40,24 @@ class CommentInline(admin.TabularInline):
     def has_add_permission(self, request, obj=None):
         return False
 
+class BlogPostAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+
+    class Meta:
+        model = BlogPost
+        fields = '__all__'
+
+
+class CommentAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 15}))
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
+    form = BlogPostAdminForm
     list_display = [
         'title', 'category', 'author', 'status', 'is_featured', 
         'views', 'comments_count', 'published_at', 'thumbnail_preview'
@@ -88,7 +105,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     def comments_count(self, obj):
         count = obj.comments.filter(is_approved=True).count()
         if count > 0:
-            url = reverse('admin:blog_comment_changelist') + f'?post__id__exact={obj.id}'
+            url = reverse('admin:main_comment_changelist') + f'?post__id__exact={obj.id}'
             return format_html('<a href="{}">{} comments</a>', url, count)
         return '0 comments'
     comments_count.short_description = 'Comments'

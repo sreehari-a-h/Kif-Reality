@@ -16,6 +16,9 @@
         --dark: #2c2c2c;
         --shadow: rgba(0, 0, 0, 0.1);
         --gradient-primary: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
+        --max-width: 1500px;
+        --container-padding: 1.5rem;
+        --mobile-padding: 1rem;
     }
 
     body {
@@ -28,25 +31,25 @@
     }
 
     .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #F5F5DC;
-    backdrop-filter: blur(15px);
-    padding: 1rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
-}
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #F5F5DC;
+        backdrop-filter: blur(15px);
+        padding: 1rem var(--container-padding);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+    }
 
-.navbar.scrolled {
-    background: #F5F5DC;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
-}
+    .navbar.scrolled {
+        background: #F5F5DC;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
+    }
 
     /* Breadcrumb */
     .breadcrumb {
@@ -57,9 +60,9 @@
     }
 
     .breadcrumb-container {
-        max-width: 1200px;
+        max-width: var(--max-width);
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 var(--container-padding);
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -80,7 +83,10 @@
     .unit-hero {
         background: white;
         border-radius: 25px;
-        margin-bottom: 3rem;
+        margin: 0 var(--container-padding) 3rem;
+        max-width: var(--max-width);
+        margin-left: auto;
+        margin-right: auto;
         overflow: hidden;
         box-shadow: 0 20px 50px var(--shadow);
     }
@@ -88,8 +94,8 @@
     .hero-content {
         display: grid;
         grid-template-columns: 1fr 400px;
-        gap: 3rem;
-        padding: 3rem;
+        gap: 2rem;
+        padding: 1.5rem;
         align-items: center;
     }
 
@@ -241,24 +247,24 @@
 
     /* Main Content */
     .unit-content {
-        max-width: 1200px;
+        max-width: var(--max-width);
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 var(--container-padding);
         display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 3rem;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 2.5rem;
     }
 
     .main-content {
         display: flex;
         flex-direction: column;
-        gap: 3rem;
+        gap: 1.5rem;
     }
 
     .content-section {
         background: white;
         border-radius: 25px;
-        padding: 3rem;
+        padding: 1rem;
         box-shadow: 0 20px 50px var(--shadow);
     }
 
@@ -291,7 +297,7 @@
     /* Payment Plans */
     .payment-plans {
         display: grid;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .payment-plan {
@@ -375,13 +381,13 @@
     /* Amenities */
     .amenities-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.25rem;
     }
 
     .amenity-item {
         background: var(--light-gray);
-        padding: 1.5rem;
+        padding: 1.25rem;
         border-radius: 15px;
         display: flex;
         align-items: center;
@@ -502,16 +508,49 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 768px) {
+    @media (max-width: 1200px) {
+        :root {
+            --container-padding: 1.25rem;
+        }
+        
+        .unit-content {
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+    }
+
+    @media (max-width: 968px) {
+        :root {
+            --container-padding: var(--mobile-padding);
+        }
+        
         .hero-content {
-            display: grid;
-          grid-template-columns: 1fr; /* one per row */
-          gap: 0.5rem; /* small vertical gap */
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 2rem;
         }
         
         .unit-content {
             grid-template-columns: 1fr;
-            padding: 0;
+            gap: 1.5rem;
+        }
+        
+        .unit-info h1 {
+            font-size: 2.5rem;
+        }
+        
+        .content-section {
+            padding: 2rem;
+        }
+        
+        .amenities-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-content {
+            padding: 1.5rem;
         }
         
         .unit-info h1 {
@@ -519,17 +558,30 @@
         }
         
         .unit-stats {
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(2, 1fr);
         }
         
         .content-section {
-            padding: 2rem;
+            padding: 1.5rem;
         }
         
-        .breadcrumb-container {
-            padding: 0 1rem;
+        .amenities-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .unit-stats {
+            grid-template-columns: 1fr;
         }
         
+        .hero-content {
+            gap: 1.5rem;
+        }
+        
+        .stat-item {
+            padding: 1rem;
+        }
     }
 
     /* Animations */
@@ -568,7 +620,7 @@
 </div>
 
 <!-- Unit Hero Section -->
-<div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+<div style="max-width: 1500px; margin: 0 auto; padding: 0 2rem;">
     <div class="unit-hero fade-in">
         <div class="hero-content">
             <div class="unit-info">
@@ -654,7 +706,7 @@
 
         <!-- Payment Plans -->
         {% if property.payment_plans %}
-        <section class="content-section fade-in">
+        <section class="content-section">
             <h2 class="section-title">Payment Plans</h2>
             <div class="payment-plans">
                 {% for plan in property.payment_plans %}

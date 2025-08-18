@@ -164,9 +164,9 @@
 
     /* Properties Grid */
     .properties-section {
-        max-width: 1200px;
+        max-width: 1600px;
         margin: 0 auto;
-        padding: 3rem 2rem;
+        padding: 3rem 2rem; 
     }
 
     .properties-grid {

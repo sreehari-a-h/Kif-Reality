@@ -292,6 +292,17 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def exclusive(request):
+    """Homepage with featured properties"""
+    # Get featured properties
+    # properties_result = PropertyService.get_featured_properties()
+    
+    # context = {
+    #     'featured_properties': properties_result.get('data', {}).get('results', []) if properties_result['success'] else [],
+    #     'properties_error': properties_result.get('error'),
+    # }
+    return render(request, 'properties/exclusive_list.html')
+
 def extract_page_number(url):
     if not url:
         return None

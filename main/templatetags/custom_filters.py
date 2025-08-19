@@ -3,6 +3,13 @@ from django import template
 
 register = template.Library()
 
+@register.simple_tag
+def url_replace(request, field, value):
+    """Replace a URL parameter while maintaining others"""
+    dict_ = request.GET.copy()
+    dict_[field] = value
+    return dict_.urlencode()
+
 @register.filter
 def add_commas(value):
     """
@@ -25,3 +32,19 @@ def add_commas(value):
             return '.'.join(parts)
         except Exception:
             return s
+
+@register.filter
+def multiply(value, arg):
+    """Multiply two values"""
+    try:
+        return float(value) * float(arg)
+    except (ValueError, TypeError):
+        return 0
+    
+@register.filter
+def percentage(value, total):
+    """Calculate percentage"""
+    try:
+        return round((float(value) / float(total)) * 100, 1)
+    except (ValueError, TypeError, ZeroDivisionError):
+        return 0

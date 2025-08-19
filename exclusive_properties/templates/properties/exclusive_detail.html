@@ -1,0 +1,1112 @@
+<!-- templates/properties/exclusive_detail.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}{{ property.title }} - Exclusive Property - KIF Realty{% endblock %}
+
+{% block meta_description %}{{ property.meta_description|default:property.short_description|default:property.description|striptags|truncatewords:30 }}{% endblock %}
+
+{% block extra_css %}
+    <!-- <link rel="stylesheet" href="{% static 'css/exclusive_detail.css' %}"> -->
+    <style>
+        /* Similar styling to the unit detail page but customized for exclusive properties */
+        :root {
+            --primary-gold: #d7b56d;
+            --light-gold: #f3e2b8;
+            --dark-gold: #b8924a;
+            --darker-gold: #9b7b35;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark: #2c2c2c;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light-gray);
+            margin: 0;
+            padding: 0;
+            padding-top: 80px;
+        }
+
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #2c2c2c;
+    backdrop-filter: blur(15px);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+    background: #4c4c4c;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
+}
+
+.breadcrumb {
+    background: #f9f9f9; /* light background */
+    padding: 10px 20px;
+    border-radius: 8px;
+    /* margin-bottom: 20px; */
+}
+
+.breadcrumb-container a {
+    color: #b8924a;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-container a:hover {
+    color: #8a6b32; /* darker gold on hover */
+}
+
+.breadcrumb-container span {
+    color: #b8924a;
+    font-weight: bold;
+}
+
+.breadcrumb-container i {
+    margin: 0 8px;
+    color: #b8924a;
+    font-size: 12px;
+}
+
+
+        /* Similar styles as unit detail page but adapted for exclusive properties */
+        .property-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            min-height: calc(100vh - 80px);
+            gap: 0;
+        }
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .property-hero {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(215, 181, 109, 0.3));
+        }
+
+        .hero-gallery {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .exclusive-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 8px 20px rgba(215, 181, 109, 0.6);
+            z-index: 10;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.4), rgba(215, 181, 109, 0.2));
+            padding: 2rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .property-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            line-height: 1.2;
+        }
+
+        .property-location {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            box-shadow: 0 10px 25px rgba(215, 181, 109, 0.6);
+            align-self: flex-start;
+            text-shadow: none;
+        }
+
+        .content-container {
+            flex: 1;
+            overflow-y: auto;
+            background: white;
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-gold);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            color: var(--primary-gold);
+            font-size: 1.4rem;
+        }
+
+        .property-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .property-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid var(--light-gray);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(215, 181, 109, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.2rem;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .amenity-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+        }
+
+        .amenity-item:hover {
+            background: var(--primary-gold);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(215, 181, 109, 0.4);
+        }
+
+        .amenity-icon {
+            font-size: 1.4rem;
+            color: var(--primary-gold);
+            transition: all 0.3s ease;
+            width: 25px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .amenity-item:hover .amenity-icon {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #e9ecef;
+            overflow-y: auto;
+        }
+
+        .sidebar-card {
+            padding: 2rem;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(215, 181, 109, 0.05), rgba(215, 181, 109, 0.1));
+        }
+
+        .agent-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(215, 181, 109, 0.4);
+        }
+
+        .agent-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .agent-title {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(215, 181, 109, 0.6);
+            color: white;
+        }
+
+        .contact-btn.outline {
+            background: transparent;
+            color: var(--primary-gold);
+            border: 2px solid var(--primary-gold);
+        }
+
+        .contact-btn.outline:hover {
+            background: var(--primary-gold);
+            color: white;
+        }
+
+        .info-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card-title i {
+            color: var(--primary-gold);
+        }
+
+        .plan-details {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .plan-item {
+            display: flex;
+            justify-content: space-between;
+            gap:25px;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .plan-item:hover {
+            transform: translateX(5px);
+            background: var(--light-gold);
+        }
+
+        .plan-item-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .plan-item-value {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 968px) {
+            .property-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                order: 1;
+            }
+
+            .sidebar {
+                order: 2;
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+            }
+
+            .property-hero {
+                height: 350px;
+            }
+
+            .property-title {
+                font-size: 2.2rem;
+            }
+
+            .content-container {
+                padding: 1.5rem;
+            }
+
+            .property-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .amenities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .property-hero {
+                height: 280px;
+            }
+
+            .property-title {
+                font-size: 1.8rem;
+            }
+
+            .price-badge {
+                font-size: 1.1rem;
+                padding: 1rem 2rem;
+            }
+
+            .content-container {
+                padding: 1rem;
+            }
+
+            .property-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-item {
+                padding: 1.5rem;
+            }
+
+            .agent-avatar {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Gallery Navigation */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .gallery-nav:hover {
+            background: var(--primary-gold);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+            opacity: 1;
+        }
+
+        .gallery-prev {
+            left: 20px;
+        }
+
+        .gallery-next {
+            right: 20px;
+        }
+
+        .gallery-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .gallery-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-indicator.active {
+            background: white;
+            transform: scale(1.3);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <div class="breadcrumb-container">
+        <a href="{% url 'index' %}">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="{% url 'exclusive_properties:list' %}">Exclusive Properties</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>{{ property.title }}</span>
+    </div>
+</div>
+
+<!-- Main Layout -->
+<div class="property-layout">
+    <!-- Left Panel -->
+    <div class="left-panel">
+        <!-- Hero Section -->
+        <section class="property-hero">
+            <div class="hero-gallery">
+                <img id="heroImage" 
+                     src="{% if property.cover_image %}{{ property.cover_image.url }}{% else %}https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80{% endif %}" 
+                     alt="{{ property.title }}" 
+                     class="hero-image">
+
+                <div class="exclusive-badge">
+                    <i class="fas fa-crown"></i>
+                    EXCLUSIVE
+                </div>
+
+                {% if property.images.count > 0 %}
+                <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="gallery-nav gallery-next" onclick="changeImage(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="gallery-indicators" id="galleryIndicators">
+                    <div class="gallery-indicator active"></div>
+                    {% for image in property.images.all %}
+                    <div class="gallery-indicator"></div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="hero-overlay">
+                <h1 class="property-title">{{ property.title }}</h1>
+                <div class="property-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>{{ property.district }}{% if property.city %}, {{ property.city }}{% endif %}</span>
+                </div>
+                <div class="price-badge">
+                    {{ property.formatted_price }}
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Container -->
+        <div class="content-container">
+            <!-- Overview Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-home"></i>
+                    About This Property
+                </h2>
+                <div class="property-description">
+                    {{ property.description|safe }}
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    Property Specifications
+                </h2>
+                <div class="property-stats">
+                    <div class="stat-item">
+                        <i class="stat-icon fas fa-bed"></i>
+                        <div class="stat-value">{{ property.bedroom_display }}</div>
+                        <div class="stat-label">Bedrooms</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="stat-icon fas fa-bath"></i>
+                        <div class="stat-value">{{ property.bathrooms }}</div>
+                        <div class="stat-label">Bathrooms</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="stat-icon fas fa-expand-arrows-alt"></i>
+                        <div class="stat-value">{{ property.area_sqft|floatformat:0 }}</div>
+                        <div class="stat-label">Sq Ft</div>
+                    </div>
+                    {% if property.plot_size %}
+                    <div class="stat-item">
+                        <i class="stat-icon fas fa-map"></i>
+                        <div class="stat-value">{{ property.plot_size|floatformat:0 }}</div>
+                        <div class="stat-label">Plot Size</div>
+                    </div>
+                    {% endif %}
+                    {% if property.price_per_sqft %}
+                    <div class="stat-item">
+                        <i class="stat-icon fas fa-calculator"></i>
+                        <div class="stat-value">{{ property.price_per_sqft|floatformat:0 }}</div>
+                        <div class="stat-label">AED/Sq Ft</div>
+                    </div>
+                    {% endif %}
+                    {% if property.completion_year %}
+                    <div class="stat-item">
+                        <i class="stat-icon fas fa-calendar"></i>
+                        <div class="stat-value">{{ property.completion_year }}</div>
+                        <div class="stat-label">Year Built</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Key Features Section -->
+            {% if property.key_features %}
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Key Features
+                </h2>
+                <div class="amenities-grid">
+                    {% for feature in property.key_features %}
+                    <div class="amenity-item">
+                        <div class="amenity-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <span>{{ feature }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Amenities Section -->
+            {% if property.amenities.exists %}
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-building"></i>
+                    Building Amenities
+                </h2>
+                <div class="amenities-grid">
+                    {% for amenity_rel in property.amenities.all %}
+                    <div class="amenity-item">
+                        <div class="amenity-icon">
+                            <i class="{{ amenity_rel.amenity.icon }}"></i>
+                        </div>
+                        <span>{{ amenity_rel.amenity.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Nearby Amenities Section -->
+            {% if property.nearby_amenities %}
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Nearby Amenities
+                </h2>
+                <div class="amenities-grid">
+                    {% for amenity in property.nearby_amenities %}
+                    <div class="amenity-item">
+                        <div class="amenity-icon">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+                        <span>{{ amenity }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if property.floor_plan %}
+<div class="section">
+    <h2 class="section-title">
+        <i class="fas fa-drafting-compass"></i>
+        Floor Plan
+    </h2>
+    <img src="{{ property.floor_plan.url }}" alt="Floor Plan of {{ property.title }}" style="width:100%; border-radius:10px;">
+</div>
+{% endif %}
+
+
+            <!-- Location Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-map"></i>
+                    Location & Map
+                </h2>
+                <div class="location-content">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--primary-gold); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--dark); margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700;">Prime Location</h3>
+                        <p style="color: #666; line-height: 1.6; margin-bottom: 1.5rem;">
+                            {% if property.address %}
+                                {{ property.address }}
+                            {% else %}
+                                Located in {{ property.district }}, one of Dubai's most prestigious neighborhoods,
+                                this exclusive property offers excellent connectivity to major landmarks, business districts, and
+                                leisure destinations.
+                            {% endif %}
+                        </p>
+                        <button onclick="toggleMap()" style="background: var(--gradient-primary); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
+                            <i class="fas fa-map"></i> View on Map
+                        </button>
+                    </div>
+
+                    <!-- Hidden Map Container -->
+                    <div id="mapContainer" style="display:none; height:400px; width:100%; margin-top:15px; border-radius: 15px; overflow: hidden;">
+                        {% if property.latitude and property.longitude %}
+                        <iframe
+                            src="https://maps.google.com/maps?q={{ property.latitude }},{{ property.longitude }}&z=15&output=embed"
+                            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        {% else %}
+                        <iframe
+                            src="https://maps.google.com/maps?q={{ property.district|urlencode }},Dubai&z=15&output=embed"
+                            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+        <!-- Contact Card -->
+        <div class="sidebar-card contact-card">
+            <div class="agent-avatar">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h3 class="agent-name">
+                {% if property.assigned_agent %}
+                    {{ property.assigned_agent.get_full_name|default:property.assigned_agent.username }}
+                {% else %}
+                    Property Consultant
+                {% endif %}
+            </h3>
+            <p class="agent-title">Exclusive Properties Specialist</p>
+
+            <a href="tel:{% if property.contact_phone %}{{ property.contact_phone }}{% else %}+971509647864{% endif %}" class="contact-btn">
+                <i class="fas fa-phone"></i>
+                Call Now
+            </a>
+            <a href="https://wa.me/971509647864?text=I'm interested in {{ property.title }}" class="contact-btn outline" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp
+            </a>
+            <a href="{% url 'exclusive_properties:submit_inquiry' %}" 
+               class="contact-btn outline" 
+               onclick="openInquiryModal('{{ property.id }}'); return false;">
+                <i class="fas fa-envelope"></i>
+                Send Inquiry
+            </a>
+        </div>
+
+        <!-- Property Info -->
+        <div class="sidebar-card">
+            <h3 class="info-card-title">
+                <i class="fas fa-info-circle"></i>
+                Property Details
+            </h3>
+            <div class="plan-details">
+                <div class="plan-item">
+                    <span class="plan-item-label">Property Type</span>
+                    <strong class="plan-item-value">{{ property.get_property_type_display }}</strong>
+                </div>
+                <div class="plan-item">
+                    <span class="plan-item-label">Status</span>
+                    <strong class="plan-item-value">{{ property.get_status_display }}</strong>
+                </div>
+                {% if property.developer_name %}
+                <div class="plan-item">
+                    <span class="plan-item-label">Developer</span>
+                    <strong class="plan-item-value">{{ property.developer_name }}</strong>
+                </div>
+                {% endif %}
+                {% if property.service_charge %}
+                <div class="plan-item">
+                    <span class="plan-item-label">Service Charge</span>
+                    <strong class="plan-item-value">AED {{ property.service_charge|floatformat:0 }}/year</strong>
+                </div>
+                {% endif %}
+                <div class="plan-item">
+                    <span class="plan-item-label">Reference</span>
+                    <strong class="plan-item-value">KIF-{{ property.id|slice:":8" }}</strong>
+                </div>
+                <div class="plan-item">
+                    <span class="plan-item-label">Views</span>
+                    <strong class="plan-item-value">{{ property.view_count }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Info -->
+        <div class="sidebar-card">
+            <h3 class="info-card-title">
+                <i class="fas fa-chart-line"></i>
+                Investment Highlights
+            </h3>
+            <div class="plan-details">
+                <div class="plan-item">
+                    <span class="plan-item-label">Price per Sq Ft</span>
+                    <strong class="plan-item-value">
+                        {% if property.price_per_sqft %}
+                            AED {{ property.price_per_sqft|floatformat:0 }}
+                        {% else %}
+                            Contact for details
+                        {% endif %}
+                    </strong>
+                </div>
+                <div class="plan-item">
+                    <span class="plan-item-label">ROI Potential</span>
+                    <strong class="plan-item-value">6-8% annually</strong>
+                </div>
+                <div class="plan-item">
+                    <span class="plan-item-label">Financing</span>
+                    <strong class="plan-item-value">Available</strong>
+                </div>
+                <div class="plan-item">
+                    <span class="plan-item-label">Ownership</span>
+                    <strong class="plan-item-value">Freehold</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Properties -->
+        {% if related_properties %}
+        <div class="sidebar-card">
+            <h3 class="info-card-title">
+                <i class="fas fa-building"></i>
+                Similar Properties
+            </h3>
+            {% for related in related_properties %}
+            <div style="border: 1px solid var(--light-gray); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer;" onclick="location.href='{{ related.get_absolute_url }}'">
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem; color: var(--dark);">{{ related.title }}</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.9rem;">{{ related.district }}</p>
+                <p style="margin: 0; font-weight: 700; color: var(--primary-gold); font-size: 1rem;">{{ related.formatted_price }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Inquiry Modal -->
+<div id="inquiryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; padding: 1rem;">
+    <div style="background: white; max-width: 500px; margin: 1rem auto; border-radius: 20px; padding: 2rem; position: relative;">
+        <button onclick="closeInquiryModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">×</button>
+        
+        <h3 style="margin-bottom: 2rem; text-align: center; color: var(--dark);">Property Inquiry</h3>
+        
+        <form id="inquiryForm" onsubmit="submitInquiry(event)">
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Full Name *</label>
+                <input type="text" name="name" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email *</label>
+                <input type="email" name="email" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Phone</label>
+                <input type="tel" name="phone" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Inquiry Type</label>
+                <select name="inquiry_type" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <option value="info">Request Information</option>
+                    <option value="viewing">Schedule Viewing</option>
+                    <option value="offer">Make Offer</option>
+                    <option value="callback">Request Callback</option>
+                    <option value="brochure">Download Brochure</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Message</label>
+                <textarea name="message" rows="2" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; resize: vertical;" placeholder="Please provide any additional details about your inquiry..."></textarea>
+            </div>
+            
+            <button type="submit" style="width: 100%; background: var(--gradient-primary); color: white; padding: 15px; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                Send Inquiry
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Image gallery functionality
+    let currentImageIndex = 0;
+    const images = [
+        "{% if property.cover_image %}{{ property.cover_image.url }}{% else %}https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80{% endif %}"
+        {% for image in property.images.all %},
+        "{{ image.image.url }}"
+        {% endfor %}
+    ];
+
+    function changeImage(direction) {
+        if (images.length <= 1) return;
+
+        const heroImage = document.getElementById('heroImage');
+        const indicators = document.querySelectorAll('.gallery-indicator');
+
+        currentImageIndex += direction;
+
+        if (currentImageIndex >= images.length) currentImageIndex = 0;
+        else if (currentImageIndex < 0) currentImageIndex = images.length - 1;
+
+        // Update image with smooth transition
+        heroImage.style.opacity = '0.7';
+        heroImage.style.transform = 'scale(1.05)';
+
+        setTimeout(() => {
+            heroImage.src = images[currentImageIndex];
+            heroImage.style.opacity = '1';
+            heroImage.style.transform = 'scale(1)';
+        }, 200);
+
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentImageIndex);
+        });
+    }
+
+    // Map toggle functionality
+    function toggleMap() {
+        const mapContainer = document.getElementById("mapContainer");
+        mapContainer.style.display = (mapContainer.style.display === "none" || mapContainer.style.display === "")
+            ? "block"
+            : "none";
+    }
+
+    // Inquiry modal functionality
+    function openInquiryModal(propertyId) {
+        document.getElementById('inquiryModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInquiryModal() {
+        document.getElementById('inquiryModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function submitInquiry(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(event.target);
+        const data = {
+            property_id: '{{ property.id }}',
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            inquiry_type: formData.get('inquiry_type'),
+            message: formData.get('message')
+        };
+
+        // Show loading state
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        fetch('{% url "exclusive_properties:submit_inquiry" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Thank you for your inquiry! We will contact you soon.');
+                closeInquiryModal();
+                event.target.reset();
+            } else {
+                alert('There was an error submitting your inquiry. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error submitting your inquiry. Please try again.');
+        })
+        .finally(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+    }
+
+    // Auto-play gallery if there are multiple images
+    if (images.length > 1) {
+        setInterval(() => {
+            changeImage(1);
+        }, 5000);
+    }
+
+    // Initialize animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach((section, index) => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.8s ease';
+            
+            setTimeout(() => {
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }, index * 200);
+        });
+
+        console.log('KIF Realty Exclusive Property Detail Page Loaded Successfully');
+    });
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeInquiryModal();
+        }
+    });
+
+    // Close modal on outside click
+    document.getElementById('inquiryModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeInquiryModal();
+        }
+    });
+</script>
+
+{% endblock %}

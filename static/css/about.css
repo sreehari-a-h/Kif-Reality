@@ -32,7 +32,7 @@ html {
     position: fixed;
     top: 0;
     width: 100%;
-    background: #F5F5DC;
+    background: #2c2c2c;
     backdrop-filter: blur(15px);
     padding: 1rem 5%;
     display: flex;
@@ -44,7 +44,7 @@ html {
 }
 
 .navbar.scrolled {
-    background: #F5F5DC;
+    background: #4c4c4c;
     backdrop-filter: blur(20px);
     box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
 }
@@ -65,7 +65,7 @@ html {
 
 .nav-links a {
     text-decoration: none;
-    color: var(--dark);
+    color: var(--primary-gold);
     font-weight: 600;
     transition: all 0.3s ease;
     position: relative;
@@ -115,7 +115,7 @@ html {
 
 .header-content h1 {
     font-size: 4rem;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     font-weight: 900;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -132,13 +132,13 @@ html {
 
 /* Company Story Section */
 .story-section {
-    padding: 6rem 5%;
+    padding: 2.8rem;
     background: white;
 }
 
 .story-container {
     max-width: 1200px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -201,7 +201,7 @@ html {
 
 /* Vision & Mission Section */
 .vision-mission-section {
-    padding: 6rem 5%;
+    /* padding: 6rem 5%; */
     background: linear-gradient(135deg, var(--light-gray) 0%, white 50%, var(--light-gray) 100%);
 }
 
@@ -279,7 +279,7 @@ html {
 
 /* Timeline Section */
 .timeline-section {
-    padding: 6rem 5%;
+    padding: 3rem 5%;
     background: var(--dark);
     color: white;
     position: relative;
@@ -383,7 +383,7 @@ html {
 
 /* Expertise Section */
 .expertise-section {
-    padding: 6rem 5%;
+    padding: 2rem;
     background: white;
 }
 
@@ -425,7 +425,7 @@ html {
 
 /* Leadership Section */
 .leadership-section {
-    padding: 6rem 5%;
+    padding: 2rem;
     background: linear-gradient(135deg, var(--light-gold) 0%, white 50%, var(--light-gold) 100%);
 }
 
@@ -479,7 +479,7 @@ html {
 /* CTA Section */
 .cta-section {
     background: var(--gradient-primary);
-    padding: 5rem 5%;
+    padding: 2rem;
     text-align: center;
     color: white;
 }

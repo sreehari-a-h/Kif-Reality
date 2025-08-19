@@ -728,7 +728,7 @@ def send_notification_email(contact):
     
     In the meantime, feel free to reach out directly:
     📞 +971 50 964 7864
-    📧 info@kifrealty.ae
+    📧 info@kifreality.ae
     💬 WhatsApp: https://wa.me/971509647864
     
     Best regards,

@@ -187,9 +187,9 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 
 # Customize admin site header and title
-admin.site.site_header = "KIF Reality Blog Administration"
-admin.site.site_title = "KIF Reality Admin"
-admin.site.index_title = "Welcome to KIF Reality Blog Admin"
+admin.site.site_header = "KIF Realty Blog Administration"
+admin.site.site_title = "KIF Realty Admin"
+admin.site.index_title = "Welcome to KIF Realty Blog Admin"
 
 # @admin.register(ContactMessage)
 # class ContactMessageAdmin(admin.ModelAdmin):

@@ -714,7 +714,7 @@ def send_notification_email(contact):
         )
     
     # User confirmation email
-    user_subject = "Thank you for contacting KIF Reality"
+    user_subject = "Thank you for contacting KIF Realty"
     user_message = f"""
     Dear {contact.first_name},
     
@@ -728,11 +728,11 @@ def send_notification_email(contact):
     
     In the meantime, feel free to reach out directly:
     📞 +971 50 964 7864
-    📧 info@kifreality.ae
+    📧 info@kifrealty.ae
     💬 WhatsApp: https://wa.me/971509647864
     
     Best regards,
-    KIF Reality Team
+    KIF Realty Team
     """
     
     send_mail(

@@ -641,6 +641,7 @@ html {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+        background-color: #4c4c4c;
     }
 
     .hero h1 {

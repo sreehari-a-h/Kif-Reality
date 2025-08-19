@@ -542,6 +542,10 @@
             flex-wrap: wrap;
             justify-content: center;
         }
+
+        .nav-links{
+            background-color: #4c4c4c;
+        }
     }
 
     .form-group .btn{

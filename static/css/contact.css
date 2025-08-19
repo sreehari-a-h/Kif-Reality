@@ -605,6 +605,7 @@ html {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+        background-color: #4c4c4c;
     }
 
     .header-content h1 {

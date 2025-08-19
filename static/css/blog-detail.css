@@ -674,6 +674,10 @@ body{
         height: 60vh;
     }
 
+    .nav-links{
+        background-color: #4c4c4c;
+    }
+
     .blog-title {
         font-size: 2rem;
     }

@@ -101,6 +101,37 @@
             font-weight: 600;
         }
 
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #2c2c2c;
+            backdrop-filter: blur(15px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar span {
+            background: linear-gradient(165deg,
+                    var(--primary-gold),
+                    var(--medium-gold),
+                    var(--primary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar.scrolled {
+            background: #4c4c4c;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
+            padd
+
         /* Compact Navbar */
         /* .navbar {
             position: fixed;
@@ -567,6 +598,10 @@
         @media (max-width: 768px) {
             .header-content h1 {
                 font-size: 2rem;
+            }
+
+            .nav-links{
+                background-color: #4c4c4c;
             }
             
             .properties-grid {

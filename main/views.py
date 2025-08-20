@@ -484,6 +484,18 @@ def unit_detail(request, property_id, unit_id):
     }
     return render(request, "unit_detail.html", context)
 
+def model(request):
+    """Model page"""
+    return render(request, 'model.html')
+
+def model1(request):
+    """Model 1 page"""
+    return render(request, 'model1.html')
+
+def model2(request):
+    """Model 2 page"""
+    return render(request, 'model2.html')
+
 def about(request):
     """About us page"""
     return render(request, 'about.html')

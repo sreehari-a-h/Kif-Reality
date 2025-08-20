@@ -7,6 +7,10 @@ urlpatterns = [
     #Exclusive
     path('exclusive/', include('exclusive_properties.urls')),
 
+    path('model/', views.model, name='model'),
+    path('model1/', views.model1, name='model1'),
+    path('model2/', views.model2, name='model2'),
+
     # Properties
     path('properties/', views.properties, name='properties'),
     path('property/<int:pk>/', views.property_detail, name='property_detail'),

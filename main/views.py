@@ -496,9 +496,38 @@ def model2(request):
     """Model 2 page"""
     return render(request, 'model2.html')
 
+def model3(request):
+    """Model 3 page"""
+    return render(request, 'model3.html')
+
+def model4(request):
+    """Model 4 page"""
+    return render(request, 'model4.html')
+
+def model5(request):
+    """Model 5 page"""
+    return render(request, 'model5.html')
+
+def model6(request):
+    """Model 6 page"""
+    return render(request, 'model6.html')
+
+def model7(request):
+    """Model 7 page"""
+    return render(request, 'model7.html')
+
+def model8(request):
+    """Model 8 page"""
+    return render(request, 'model8.html')
+
+def model9(request):
+    """Model 9 page"""
+    return render(request, 'model9.html')
+
 def about(request):
     """About us page"""
     return render(request, 'about.html')
+
 
 def blogs(request):
     """About us page"""

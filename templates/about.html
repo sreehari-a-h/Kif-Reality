@@ -5,11 +5,315 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/about.css' %}">
-{% endblock %}
+<style>
+/* About Page - OBSIDIAN Style */
+.story-section {
+    padding: 4rem 3rem;
+    background: linear-gradient(135deg, var(--charcoal-gray) 0%, var(--obsidian-black) 100%);
+    position: relative;
+    overflow: hidden;
+}
 
-{% block extra_js %}
-<script src="{% static 'js/about.js' %}"></script>
+.story-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0.02;
+}
+
+.story-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.story-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--rose-gold);
+    margin-bottom: 2rem;
+    letter-spacing: -0.01em;
+}
+
+.story-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.highlight-text {
+    color: var(--rose-gold);
+    font-weight: 500;
+}
+
+.story-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.story-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.story-image:hover img {
+    transform: scale(1.05);
+}
+
+/* Vision & Mission Section */
+.vision-mission-section {
+    padding: 4rem 3rem;
+    background: var(--obsidian-black);
+    position: relative;
+    overflow: hidden;
+}
+
+.vision-mission-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(232, 180, 160, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(244, 208, 63, 0.06) 0%, transparent 50%);
+}
+
+.vision-mission-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.vm-card {
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 25px;
+    padding: 3rem;
+    text-align: center;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.vm-card:hover::before {
+    opacity: 0.05;
+}
+
+.vm-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    border-color: rgba(232, 180, 160, 0.3);
+}
+
+.vm-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+}
+
+.vm-icon i {
+    font-size: 2.2rem;
+    color: var(--obsidian-black);
+    transition: all 0.4s ease;
+}
+
+.vm-card:hover .vm-icon {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 15px 30px rgba(232, 180, 160, 0.4);
+}
+
+.vm-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+}
+
+.vm-card p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    font-size: 1.1rem;
+}
+
+/* Timeline Section */
+.timeline-section {
+    padding: 4rem 3rem;
+    background: linear-gradient(135deg, var(--medium-gray) 0%, var(--charcoal-gray) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0.02;
+}
+
+.timeline-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline {
+    margin-top: 4rem;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent-gradient);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-year {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    min-width: 120px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-content-item {
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 0 2rem;
+    flex: 1;
+    max-width: 400px;
+    transition: all 0.5s ease;
+}
+
+.timeline-content-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    border-color: rgba(232, 180, 160, 0.3);
+}
+
+.timeline-content-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.timeline-content-item p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .story-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .story-content h2 {
+        font-size: 2.5rem;
+    }
+    
+    .vision-mission-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .vm-card {
+        padding: 2rem;
+    }
+    
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 40px;
+    }
+    
+    .timeline-year {
+        margin-bottom: 1rem;
+    }
+    
+    .timeline-content-item {
+        margin: 0;
+        max-width: none;
+    }
+}
+</style>
 {% endblock %}
 
 {% block content %}

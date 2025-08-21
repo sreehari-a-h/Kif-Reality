@@ -27,6 +27,9 @@ urlpatterns = [
     # API
     path('api/newsletter/subscribe/', views.subscribe_newsletter, name='subscribe_newsletter'),
     path('api/search/', views.search_properties_api, name='search_properties_api'),
+    path('api/properties/filter/', views.filter_properties_api, name='filter_properties_api'),
+    path('cities/', views.cities_api, name='cities_api'),  # Cities API for React frontend
+    path('developers/', views.developers_api, name='developers_api'),  # Developers API for React frontend
 
     # Contact
     path('contact/', views.contact_view, name='contact'),

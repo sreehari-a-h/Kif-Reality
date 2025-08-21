@@ -6,635 +6,1124 @@
 {% block title %}Exclusive Properties - KIF Realty{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/exclusive_properties.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gold: #d7b56d;
-            --light-gold: #f3e2b8;
-            --dark-gold: #b8924a;
-            --darker-gold: #9b7b35;
-            --white: #ffffff;
-            --light-gray: #f8f9fa;
-            --dark: #2c2c2c;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --gradient-primary: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
-        }
+<style>
+/* Exclusive Properties Page - OBSIDIAN Style */
 
-        body {
-            font-family: 'Cinzel', serif;
-            line-height: 1.4;
-            color: var(--dark);
-            background: var(--light-gray);
-        }
+/* Header Section */
+.exclusive-header {
+    height: 60vh;
+    min-height: 500px;
+    background: radial-gradient(ellipse at center, rgba(42, 42, 42, 0.3) 0%, var(--obsidian-black) 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 80px;
+}
 
-        .navbar {
-    position: fixed;
+.exclusive-header::before {
+    content: '';
+    position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0.05;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.header-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--text-light), var(--rose-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+.header-content p {
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.8;
+    opacity: 0.9;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.exclusive-badge {
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    padding: 1.5rem 3rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--rose-gold);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Filters Section */
+.filters-section {
+    background: linear-gradient(135deg, var(--charcoal-gray) 0%, var(--obsidian-black) 100%);
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.filters-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0.02;
+}
+
+.filters-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.filter-form {
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0.02;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    align-items: end;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-label i {
+    color: var(--rose-gold);
+}
+
+.form-control, .form-select {
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-control:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--rose-gold);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(232, 180, 160, 0.2);
+    transform: translateY(-2px);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Property Type Toggle */
+.property-type-section {
+    margin-bottom: 2rem;
+}
+
+.property-type-toggle {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.property-type-btn {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    background: var(--obsidian-black);
+    color: var(--text-muted);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.property-type-btn.active {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    border-color: var(--rose-gold);
+    box-shadow: 0 10px 25px rgba(232, 180, 160, 0.4);
+}
+
+.property-type-btn:hover:not(.active) {
+    background: rgba(232, 180, 160, 0.1);
+    color: var(--rose-gold);
+    border-color: var(--rose-gold);
+}
+
+/* Main Filters */
+.main-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.filter-icon {
+    color: var(--rose-gold);
+}
+
+.filter-select, .filter-input {
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.filter-select:focus, .filter-input:focus {
+    outline: none;
+    border-color: var(--rose-gold);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(232, 180, 160, 0.2);
+    transform: translateY(-2px);
+}
+
+.filter-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Bedrooms Section */
+.bedrooms-section {
+    margin-bottom: 2rem;
+}
+
+.bedrooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.bedroom-btn {
+    padding: 12px 16px;
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    background: var(--obsidian-black);
+    color: var(--text-muted);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.bedroom-btn.active {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    border-color: var(--rose-gold);
+    box-shadow: 0 5px 15px rgba(232, 180, 160, 0.4);
+}
+
+.bedroom-btn:hover:not(.active) {
+    background: rgba(232, 180, 160, 0.1);
+    color: var(--rose-gold);
+    border-color: var(--rose-gold);
+}
+
+/* Advanced Filters */
+.advanced-filters-toggle {
+    margin-bottom: 1.5rem;
+}
+
+.advanced-toggle-btn {
+    background: rgba(232, 180, 160, 0.1);
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    color: var(--rose-gold);
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     width: 100%;
-    background: #2c2c2c;
-    backdrop-filter: blur(15px);
-    padding: 1rem 5%;
+    justify-content: center;
+}
+
+.advanced-toggle-btn:hover {
+    background: rgba(232, 180, 160, 0.2);
+    transform: translateY(-2px);
+}
+
+.advanced-filters-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    border-top: 1px solid rgba(232, 180, 160, 0.1);
+    margin-top: 1rem;
+    opacity: 0.5;
+}
+
+.advanced-filters-content.open {
+    max-height: 2000px !important;
+    padding-top: 1.5rem;
+    opacity: 1;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.advanced-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Range Sliders */
+.range-sliders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.range-group {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(232, 180, 160, 0.1);
+}
+
+.range-inputs {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.range-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--medium-gray);
+    outline: none;
+    margin: 1rem 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(232, 180, 160, 0.4);
+}
+
+.range-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 10px rgba(232, 180, 160, 0.4);
+}
+
+.range-display {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Filter Actions */
+.filter-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.reset-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    color: var(--text-muted);
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.reset-btn:hover {
+    background: rgba(232, 180, 160, 0.1);
+    color: var(--rose-gold);
+    transform: translateY(-2px);
+}
+
+.search-btn {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.search-btn:hover::before {
+    left: 100%;
+}
+
+.search-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(232, 180, 160, 0.6);
+    color: var(--obsidian-black);
+}
+
+.filter-btn {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 50px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.filter-btn:hover::before {
+    left: 100%;
+}
+
+.filter-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(232, 180, 160, 0.6);
+    color: var(--obsidian-black);
+}
+
+/* Properties Grid */
+.properties-section {
+    padding: 4rem 3rem;
+    background: var(--obsidian-black);
+    position: relative;
+    overflow: hidden;
+}
+
+.properties-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(232, 180, 160, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(244, 208, 63, 0.06) 0%, transparent 50%);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--rose-gold);
+    letter-spacing: -0.01em;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.property-card {
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    cursor: pointer;
+}
+
+.property-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.property-card:hover::before {
+    opacity: 0.05;
+}
+
+.property-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    border-color: rgba(232, 180, 160, 0.3);
+}
+
+.property-image {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.exclusive-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 25px rgba(232, 180, 160, 0.4);
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.price-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    color: var(--rose-gold);
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.property-status {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(46, 204, 113, 0.9);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.property-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.property-location {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.property-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(232, 180, 160, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(232, 180, 160, 0.1);
+}
+
+.feature-item {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.feature-icon {
+    color: var(--rose-gold);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.property-description {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.property-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.btn-primary-custom {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.btn-primary-custom:hover::before {
+    left: 100%;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(232, 180, 160, 0.6);
+    color: var(--obsidian-black);
+}
+
+.btn-outline-primary {
+    background: transparent;
+    color: var(--rose-gold);
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--rose-gold);
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.btn-outline-primary:hover {
+    background: var(--rose-gold);
+    color: var(--obsidian-black);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(232, 180, 160, 0.4);
+}
+
+/* Pagination */
+.pagination-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 1000;
+    margin-top: 4rem;
+    padding: 2rem;
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.pagination-info {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.pagination-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.page-btn {
+    background: rgba(232, 180, 160, 0.1);
+    color: var(--text-light);
+    padding: 0.8rem 1.2rem;
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 15px;
+    min-width: 45px;
+    height: 45px;
+    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
 }
 
-.navbar.scrolled {
-    background: #4c4c4c;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
+.page-btn:hover, .page-btn.active {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(232, 180, 160, 0.4);
 }
 
-        /* Header Section */
-        .exclusive-header {
-            height: 40vh;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(215, 181, 109, 0.4)),
-                        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            position: relative;
-            margin-top: 80px;
-        }
-
-        .exclusive-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(215, 181, 109, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);   
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .header-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 900;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
-            animation: fadeInUp 1s ease;
-        }
-
-        .header-content p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s both;
-        }
-
-        .exclusive-badge {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: fadeInUp 1s ease 0.6s both;
-        }
-
-        /* Filters Section */
-        .filters-section {
-            background: white;
-            padding: 2rem 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
-        }
-
-        .filters-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .filter-form {
-            background: var(--light-gray);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px var(--shadow);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            align-items: end;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .form-control, .form-select {
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-            font-family: 'Cinzel', serif;
-        }
-
-        .form-control:focus, .form-select:focus {
-            outline: none;
-            border-color: var(--primary-gold);
-            box-shadow: 0 0 15px rgba(215, 181, 109, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .filter-btn {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            min-height: 50px;
-            font-family: 'Cinzel', serif;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(215, 181, 109, 0.6);
-        }
-
-        /* Properties Grid */
-        .properties-section {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .property-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px var(--shadow);
-            transition: all 0.4s ease;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .property-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .property-image {
-            height: 250px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .exclusive-tag {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 5px 15px rgba(215, 181, 109, 0.5);
-            z-index: 2;
-        }
-
-        .price-tag {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .property-status {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(46, 204, 113, 0.9);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .card-body {
-            padding: 2rem;
-        }
-
-        .property-title {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-            line-height: 1.3;
-        }
-
-        .property-location {
-            color: #666;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .property-features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--light-gray);
-            border-radius: 15px;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 0.5rem;
-        }
-
-        .feature-icon {
-            color: var(--primary-gold);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-text {
-            font-size: 0.9rem;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .property-description {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .property-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .btn-primary-custom {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(215, 181, 109, 0.4);
-            color: white;
-        }
-
-        .btn-outline-primary {
-            background: transparent;
-            color: var(--primary-gold);
-            padding: 12px 20px;
-            border: 2px solid var(--primary-gold);
-            border-radius: 25px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .btn-outline-primary:hover {
-            background: var(--primary-gold);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Pagination */
-        .pagination-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 3rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px var(--shadow);
-        }
-
-        .pagination-info {
-            color: #666;
-            font-weight: 600;
-        }
-
-        .pagination-nav {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .page-btn {
-            background: var(--light-gray);
-            color: var(--dark);
-            padding: 10px 15px;
-            border: none;
-            border-radius: 12px;
-            min-width: 45px;
-            height: 45px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-
-        .page-btn:hover, .page-btn.active {
-            background: var(--gradient-primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(215, 181, 109, 0.4);
-        }
-
-        .nav-btn {
-            background: var(--primary-gold);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-
-        .nav-btn:hover {
-            background: var(--dark-gold);
-            transform: translateY(-2px);
-            color: white;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* No Properties */
-        .no-properties {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px var(--shadow);
-            margin: 2rem 0;
-        }
-
-        .no-properties-icon {
-            font-size: 4rem;
-            color: var(--primary-gold);
-            margin-bottom: 2rem;
-            opacity: 0.7;
-        }
-
-        .no-properties h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .no-properties p {
-            color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Floating Contact */
-        .floating-contact {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-
-        .floating-btn {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 8px 25px rgba(215, 181, 109, 0.6);
-            transition: all 0.3s ease;
-            animation: pulse 2s infinite;
-            text-decoration: none;
-        }
-
-        .floating-btn:hover {
-            transform: scale(1.1);
-            color: white;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 8px 25px rgba(215, 181, 109, 0.6); }
-            50% { box-shadow: 0 8px 25px rgba(215, 181, 109, 0.9), 0 0 0 15px rgba(215, 181, 109, 0.2); }
-            100% { box-shadow: 0 8px 25px rgba(215, 181, 109, 0.6); }
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .exclusive-header {
-                height: 35vh;
-            }
-
-            .nav-links{
-                background-color: #4c4c4c;
-            }
-
-            .header-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .header-content p {
-                font-size: 1.1rem;
-            }
-
-            .properties-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .property-actions {
-                grid-template-columns: 1fr;
-            }
-
-            .properties-section {
-                padding: 2rem 1rem;
-            }
-
-            .pagination-section {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .properties-section {
-                padding: 1.5rem 0.5rem;
-            }
-
-            .filters-container {
-                padding: 0 1rem;
-            }
-
-            .property-image {
-                height: 200px;
-            }
-
-            .card-body {
-                padding: 1.5rem;
-            }
-
-            .property-title {
-                font-size: 1.2rem;
-            }
-
-            .property-features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+.nav-btn {
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(232, 180, 160, 0.4);
+    color: var(--obsidian-black);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* No Properties */
+.no-properties {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    margin: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.no-properties-icon {
+    font-size: 4rem;
+    color: var(--rose-gold);
+    margin-bottom: 2rem;
+    opacity: 0.7;
+}
+
+.no-properties h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.no-properties p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Floating Contact */
+.floating-contact {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--obsidian-black);
+    font-size: 1.5rem;
+    box-shadow: 0 15px 35px rgba(232, 180, 160, 0.6);
+    transition: all 0.4s ease;
+    animation: pulse 2s infinite;
+    text-decoration: none;
+}
+
+.floating-btn:hover {
+    transform: scale(1.15);
+    color: var(--obsidian-black);
+    box-shadow: 0 20px 45px rgba(232, 180, 160, 0.8);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes titleGlow {
+    0% {
+        filter: brightness(1);
+    }
+    100% {
+        filter: brightness(1.2);
+    }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 15px 35px rgba(232, 180, 160, 0.6); }
+    50% { box-shadow: 0 15px 35px rgba(232, 180, 160, 0.9), 0 0 0 15px rgba(232, 180, 160, 0.2); }
+    100% { box-shadow: 0 15px 35px rgba(232, 180, 160, 0.6); }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .exclusive-header {
+        height: 50vh;
+        margin-top: 80px;
+    }
+
+    .header-content h1 {
+        font-size: 3rem;
+    }
+
+    .header-content p {
+        font-size: 1.1rem;
+    }
+
+    .properties-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .main-filters {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .advanced-filters-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .range-sliders {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .property-type-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .bedrooms-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    .property-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .properties-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .pagination-section {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .filters-section {
+        padding: 2rem 0;
+    }
+
+    .filter-form {
+        padding: 2rem;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .reset-btn, .search-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        min-height: 48px;
+    }
+}
+
+@media (max-width: 480px) {
+    .exclusive-header {
+        height: 40vh;
+    }
+
+    .header-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .properties-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .filters-container {
+        padding: 0 1rem;
+    }
+
+    .filter-form {
+        padding: 1.5rem;
+    }
+
+    .property-image {
+        height: 200px;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .property-title {
+        font-size: 1.3rem;
+    }
+
+    .property-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    .bedrooms-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .property-type-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .property-type-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .range-group {
+        padding: 1rem;
+    }
+
+    .advanced-filters-content {
+        padding-top: 1rem;
+    }
+}
     </style>
 {% endblock %}
 
@@ -655,75 +1144,213 @@
 <!-- Filters Section -->
 <section class="filters-section">
     <div class="filters-container">
-        <form method="GET" class="filter-form" id="filterForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-building"></i>
-                        Property Type
-                    </label>
-                    <select name="property_type" class="form-select">
-                        <option value="">All Types</option>
-                        {% for type_key, type_name in property_types %}
-                        <option value="{{ type_key }}" 
-                                {% if filters.property_type == type_key %}selected{% endif %}>
-                            {{ type_name }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Location
-                    </label>
-                    <select name="location" class="form-select">
-                        <option value="">All Locations</option>
-                        {% for location in locations %}
-                        <option value="{{ location }}" 
-                                {% if filters.location == location %}selected{% endif %}>
-                            {{ location }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-bed"></i>
-                        Bedrooms
-                    </label>
-                    <select name="bedrooms" class="form-select">
-                        <option value="">Any</option>
-                        <option value="studio" {% if filters.bedrooms == "studio" %}selected{% endif %}>Studio</option>
-                        <option value="1" {% if filters.bedrooms == "1" %}selected{% endif %}>1 BR</option>
-                        <option value="2" {% if filters.bedrooms == "2" %}selected{% endif %}>2 BR</option>
-                        <option value="3" {% if filters.bedrooms == "3" %}selected{% endif %}>3 BR</option>
-                        <option value="4" {% if filters.bedrooms == "4" %}selected{% endif %}>4+ BR</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-coins"></i>
-                        Budget Range
-                    </label>
-                    <select name="budget" class="form-select">
-                        <option value="">Any Budget</option>
-                        <option value="500000-1000000" {% if filters.budget == "500000-1000000" %}selected{% endif %}>500K - 1M AED</option>
-                        <option value="1000000-2000000" {% if filters.budget == "1000000-2000000" %}selected{% endif %}>1M - 2M AED</option>
-                        <option value="2000000-5000000" {% if filters.budget == "2000000-5000000" %}selected{% endif %}>2M - 5M AED</option>
-                        <option value="5000000+" {% if filters.budget == "5000000+" %}selected{% endif %}>5M+ AED</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="filter-btn">
-                        <i class="fas fa-search"></i>
-                        Search
+        <form method="GET" class="filter-form" action="{% url 'exclusive_properties:list' %}">
+            
+            <!-- Property Type Toggle -->
+            <div class="property-type-section">
+                <label class="filter-label">Property Type</label>
+                <div class="property-type-toggle">
+                    <button type="button" class="property-type-btn active" data-type="residential" id="residentialBtn">
+                        Residential
+                    </button>
+                    <button type="button" class="property-type-btn" data-type="commercial" id="commercialBtn">
+                        Commercial
                     </button>
                 </div>
+                <input type="hidden" name="property_type" id="propertyTypeInput" value="residential">
+            </div>
+
+            <!-- Main Filters Grid -->
+            <div class="main-filters">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-home filter-icon"></i>
+                        Unit Type
+                    </label>
+                    <select name="unit_type" class="filter-select" id="unitTypeSelect">
+                        <option value="">All Types</option>
+                        <option value="apartment" {% if filters.unit_type == "apartment" %}selected{% endif %}>Apartment</option>
+                        <option value="villa" {% if filters.unit_type == "villa" %}selected{% endif %}>Villa</option>
+                        <option value="townhouse" {% if filters.unit_type == "townhouse" %}selected{% endif %}>Townhouse</option>
+                        <option value="penthouse" {% if filters.unit_type == "penthouse" %}selected{% endif %}>Penthouse</option>
+                        <option value="studio" {% if filters.unit_type == "studio" %}selected{% endif %}>Studio</option>
+                        <option value="duplex" {% if filters.unit_type == "duplex" %}selected{% endif %}>Duplex</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-map-marker-alt filter-icon"></i>
+                        City
+                    </label>
+                    <select name="city" class="filter-select" id="citySelect">
+                        <option value="">All Cities</option>
+                        {% for city in cities %}
+                        <option value="{{ city }}" {% if filters.city == city %}selected{% endif %}>
+                            {{ city }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-building filter-icon"></i>
+                        Neighborhood
+                    </label>
+                    <select name="district" class="filter-select" id="neighborhoodSelect">
+                        <option value="">Select Area</option>
+                        {% for district in districts %}
+                        <option value="{{ district }}" {% if filters.district == district %}selected{% endif %}>
+                            {{ district }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-dollar-sign filter-icon"></i>
+                        Price Range
+                    </label>
+                    <select name="price_range" class="filter-select">
+                        <option value="">Any Price</option>
+                        <option value="0-1000000" {% if filters.price_range == "0-1000000" %}selected{% endif %}>Under 1M AED</option>
+                        <option value="1000000-2000000" {% if filters.price_range == "1000000-2000000" %}selected{% endif %}>1M - 2M AED</option>
+                        <option value="2000000-5000000" {% if filters.price_range == "2000000-5000000" %}selected{% endif %}>2M - 5M AED</option>
+                        <option value="5000000-10000000" {% if filters.price_range == "5000000-10000000" %}selected{% endif %}>5M - 10M AED</option>
+                        <option value="10000000+" {% if filters.price_range == "10000000+" %}selected{% endif %}>Above 10M AED</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bedrooms Section (Only for Residential) -->
+            <div class="bedrooms-section" id="bedroomsSection">
+                <label class="filter-label">
+                    <i class="fas fa-bed filter-icon"></i>
+                    Bedrooms
+                </label>
+                <div class="bedrooms-grid">
+                    <button type="button" class="bedroom-btn" data-bedrooms="1">1</button>
+                    <button type="button" class="bedroom-btn" data-bedrooms="2">2</button>
+                    <button type="button" class="bedroom-btn" data-bedrooms="3">3</button>
+                    <button type="button" class="bedroom-btn" data-bedrooms="4">4</button>
+                    <button type="button" class="bedroom-btn" data-bedrooms="5">5</button>
+                    <button type="button" class="bedroom-btn" data-bedrooms="6+">6+</button>
+                </div>
+                <input type="hidden" name="bedrooms" id="bedroomsInput" value="{{ filters.bedrooms|default:'' }}">
+            </div>
+
+            <!-- Advanced Filters Toggle -->
+            <div class="advanced-filters-toggle">
+                <button type="button" class="advanced-toggle-btn" id="advancedToggle">
+                    <i class="fas fa-sliders-h"></i>
+                    Advanced Filters
+                    <i class="fas fa-chevron-down" id="advancedIcon"></i>
+                </button>
+            </div>
+
+            <!-- Advanced Filters Content -->
+            <div class="advanced-filters-content" id="advancedContent">
+                <div class="advanced-filters-grid">
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <i class="fas fa-calendar filter-icon"></i>
+                            Delivery Year
+                        </label>
+                        <select name="delivery_year" class="filter-select">
+                            <option value="">Any Year</option>
+                            {% for year in completion_years %}
+                            <option value="{{ year }}" {% if filters.delivery_year == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <i class="fas fa-building filter-icon"></i>
+                            Developer
+                        </label>
+                        <select name="developer" class="filter-select" id="developerSelect">
+                            <option value="">All Developers</option>
+                            {% for developer in developers %}
+                            <option value="{{ developer }}" {% if filters.developer == developer %}selected{% endif %}>
+                                {{ developer }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <i class="fas fa-search filter-icon"></i>
+                            Project Name
+                        </label>
+                        <input type="text" name="project_name" class="filter-input" placeholder="Search by project name" value="{{ filters.project_name|default:'' }}">
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <i class="fas fa-tag filter-icon"></i>
+                            Property Status
+                        </label>
+                        <select name="property_status" class="filter-select">
+                            <option value="">Any Status</option>
+                            <option value="Ready" {% if filters.property_status == "Ready" %}selected{% endif %}>Ready</option>
+                            <option value="Off Plan" {% if filters.property_status == "Off Plan" %}selected{% endif %}>Off Plan</option>
+                            <option value="Under Construction" {% if filters.property_status == "Under Construction" %}selected{% endif %}>Under Construction</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Price Range Sliders -->
+                <div class="range-sliders">
+                    <div class="range-group">
+                        <label class="filter-label">
+                            <i class="fas fa-coins filter-icon"></i>
+                            Price Range (AED)
+                        </label>
+                        <div class="range-inputs">
+                            <input type="range" id="minPriceRange" min="0" max="100000000" value="{{ filters.min_price|default:'0' }}" class="range-slider">
+                            <input type="range" id="maxPriceRange" min="0" max="100000000" value="{{ filters.max_price|default:'100000000' }}" class="range-slider">
+                        </div>
+                        <div class="range-display">
+                            <span id="minPriceDisplay">0 AED</span>
+                            <span id="maxPriceDisplay">100M AED</span>
+                        </div>
+                        <input type="hidden" name="min_price" id="minPriceInput" value="{{ filters.min_price|default:'0' }}">
+                        <input type="hidden" name="max_price" id="maxPriceInput" value="{{ filters.max_price|default:'100000000' }}">
+                    </div>
+
+                    <div class="range-group">
+                        <label class="filter-label">
+                            <i class="fas fa-ruler-combined filter-icon"></i>
+                            Area Range (sq ft)
+                        </label>
+                        <div class="range-inputs">
+                            <input type="range" id="minAreaRange" min="0" max="50000" value="{{ filters.min_area|default:'0' }}" class="range-slider">
+                            <input type="range" id="maxAreaRange" min="0" max="50000" value="{{ filters.max_area|default:'50000' }}" class="range-slider">
+                        </div>
+                        <div class="range-display">
+                            <span id="minAreaDisplay">0 sq ft</span>
+                            <span id="maxAreaDisplay">50,000 sq ft</span>
+                        </div>
+                        <input type="hidden" name="min_area" id="minAreaInput" value="{{ filters.min_area|default:'0' }}">
+                        <input type="hidden" name="max_area" id="maxAreaInput" value="{{ filters.max_area|default:'50000' }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="filter-actions">
+                <button type="button" class="reset-btn" onclick="resetFilters()">
+                    <i class="fas fa-refresh"></i>
+                    Reset Filters
+                </button>
+                <button type="submit" class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                    Search Properties
+                </button>
             </div>
         </form>
     </div>
@@ -858,67 +1485,602 @@
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Animate property cards on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+(function() {
+    if (window.exclusiveFilterSystemInitialized) {
+        console.log('⚠️ Exclusive filter system already initialized, skipping...');
+        return;
+    }
+    window.exclusiveFilterSystemInitialized = true;
+    console.log('✅ Initializing exclusive filter system...');
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('📋 DOMContentLoaded fired for exclusive properties');
+        initializeFilters();
+        setupEventListeners();
+        setupRangeSliders();
+        animatePropertyCards();
+    });
+
+    // Initialize filters
+    function initializeFilters() {
+        console.log('🔧 Initializing exclusive filters...');
+        
+        // Set default property type based on current filter or default to residential
+        const currentPropertyType = '{{ filters.property_type|default:"residential" }}';
+        const propertyTypeInput = document.getElementById('propertyTypeInput');
+        if (propertyTypeInput) {
+            propertyTypeInput.value = currentPropertyType;
+        }
+        updatePropertyType(currentPropertyType);
+        
+        // Set active property type button based on current filter
+        const residentialBtn = document.getElementById('residentialBtn');
+        const commercialBtn = document.getElementById('commercialBtn');
+        if (residentialBtn && commercialBtn) {
+            residentialBtn.classList.remove('active');
+            commercialBtn.classList.remove('active');
+            
+            if (currentPropertyType === 'residential') {
+                residentialBtn.classList.add('active');
+            } else if (currentPropertyType === 'commercial') {
+                commercialBtn.classList.add('active');
+            } else {
+                residentialBtn.classList.add('active'); // Default
             }
-        });
-    }, observerOptions);
-
-    // Initially hide cards for animation
-    document.querySelectorAll('.property-card').forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'all 0.6s ease';
-        observer.observe(card);
-    });
-
-    // Auto-submit form on filter change
-    const filterSelects = document.querySelectorAll('.form-select');
-    filterSelects.forEach(select => {
-        select.addEventListener('change', function() {
-            document.getElementById('filterForm').submit();
-        });
-    });
-
-    // Add loading state to filter form
-    document.getElementById('filterForm').addEventListener('submit', function() {
-        const submitBtn = this.querySelector('.filter-btn');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-        submitBtn.disabled = true;
+            console.log('🏠 Set property type to:', currentPropertyType);
+        }
         
-        // Re-enable after a delay (in case form submission fails)
-        setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }, 5000);
-    });
+        // Set active bedroom button if filter is applied
+        const currentBedrooms = '{{ filters.bedrooms|default:"" }}';
+        if (currentBedrooms) {
+            const bedroomBtn = document.querySelector(`[data-bedrooms="${currentBedrooms}"]`);
+            if (bedroomBtn) {
+                bedroomBtn.classList.add('active');
+            }
+        }
+        
+        // Update range displays
+        updatePriceRange();
+        updateAreaRange();
+    }
 
-    // Add hover effects
-    document.querySelectorAll('.property-card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform += ' scale(1.02)';
+    // Setup event listeners
+    function setupEventListeners() {
+        console.log('🎧 Setting up exclusive event listeners...');
+        
+        // Property type buttons
+        document.querySelectorAll('.property-type-btn').forEach(btn => {
+            console.log('🏠 Setting up property type button:', btn.dataset.type);
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const propertyType = this.dataset.type;
+                updatePropertyType(propertyType);
+                console.log('🏠 Property type changed to:', propertyType);
+            });
+        });
+
+        // Bedroom buttons
+        document.querySelectorAll('.bedroom-btn').forEach(btn => {
+            console.log('🛏️ Setting up bedroom button:', btn.dataset.bedrooms);
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const bedrooms = this.dataset.bedrooms;
+                updateBedroomSelection(bedrooms);
+            });
+        });
+
+        // Advanced filters toggle
+        const advancedToggle = document.getElementById('advancedToggle');
+        console.log('🔽 Setting up advanced toggle - element found:', !!advancedToggle);
+        if (advancedToggle) {
+            advancedToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleAdvancedFilters();
+            });
+            console.log('✅ Advanced toggle event listener attached');
+        } else {
+            console.error('❌ Advanced toggle button not found!');
+        }
+
+        // Form submission
+        const filterForm = document.querySelector('.filter-form');
+        if (filterForm) {
+            filterForm.addEventListener('submit', function(e) {
+                // Allow normal form submission for GET method
+                console.log('🔍 Submitting exclusive filter form...');
+                
+                // Show loading state
+                const searchBtn = document.getElementById('searchBtn');
+                const originalText = searchBtn.innerHTML;
+                searchBtn.classList.add('loading');
+                searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+                searchBtn.disabled = true;
+                
+                // Re-enable after a delay (in case form submission fails)
+                setTimeout(() => {
+                    searchBtn.classList.remove('loading');
+                    searchBtn.innerHTML = originalText;
+                    searchBtn.disabled = false;
+                }, 5000);
+            });
+        }
+    }
+
+    // Setup range sliders
+    function setupRangeSliders() {
+        const minPriceRange = document.getElementById('minPriceRange');
+        const maxPriceRange = document.getElementById('maxPriceRange');
+        const minAreaRange = document.getElementById('minAreaRange');
+        const maxAreaRange = document.getElementById('maxAreaRange');
+
+        if (minPriceRange && maxPriceRange) {
+            minPriceRange.addEventListener('input', updatePriceRange);
+            maxPriceRange.addEventListener('input', updatePriceRange);
+        }
+
+        if (minAreaRange && maxAreaRange) {
+            minAreaRange.addEventListener('input', updateAreaRange);
+            maxAreaRange.addEventListener('input', updateAreaRange);
+        }
+    }
+
+    // Update property type
+    function updatePropertyType(propertyType) {
+        const propertyTypeInput = document.getElementById('propertyTypeInput');
+        const residentialBtn = document.getElementById('residentialBtn');
+        const commercialBtn = document.getElementById('commercialBtn');
+        const bedroomsSection = document.getElementById('bedroomsSection');
+
+        if (propertyTypeInput) {
+            propertyTypeInput.value = propertyType;
+        }
+
+        if (residentialBtn && commercialBtn) {
+            residentialBtn.classList.remove('active');
+            commercialBtn.classList.remove('active');
+            
+            if (propertyType === 'residential') {
+                residentialBtn.classList.add('active');
+                if (bedroomsSection) bedroomsSection.style.display = 'block';
+            } else {
+                commercialBtn.classList.add('active');
+                if (bedroomsSection) bedroomsSection.style.display = 'none';
+            }
+        }
+    }
+
+    // Update bedroom selection
+    function updateBedroomSelection(bedrooms) {
+        document.querySelectorAll('.bedroom-btn').forEach(btn => {
+            btn.classList.remove('active');
         });
         
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = this.style.transform.replace(' scale(1.02)', '');
-        });
-    });
+        const bedroomsInput = document.getElementById('bedroomsInput');
+        if (bedroomsInput) {
+            if (bedroomsInput.value === bedrooms) {
+                bedroomsInput.value = '';
+                console.log('🛏️ Deselected bedrooms');
+            } else {
+                bedroomsInput.value = bedrooms;
+                const selectedBtn = document.querySelector(`[data-bedrooms="${bedrooms}"]`);
+                if (selectedBtn) {
+                    selectedBtn.classList.add('active');
+                }
+                console.log('🛏️ Selected bedrooms:', bedrooms);
+            }
+        }
+    }
 
-    console.log('KIF Realty Exclusive Properties Page Loaded Successfully');
-});
+    // Toggle advanced filters
+    function toggleAdvancedFilters() {
+        console.log('🔽 toggleAdvancedFilters called');
+        const content = document.getElementById('advancedContent');
+        const icon = document.getElementById('advancedIcon');
+        
+        if (!content || !icon) {
+            console.error('❌ Advanced filter elements not found!');
+            return;
+        }
+        
+        const isOpen = content.classList.contains('open');
+        console.log('🔽 Current state before toggle - isOpen:', isOpen);
+        
+        if (isOpen) {
+            content.classList.remove('open');
+            content.style.maxHeight = '0px';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+            console.log('🔽 CLOSING advanced filters');
+        } else {
+            content.classList.add('open');
+            content.style.maxHeight = '2000px';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+            console.log('🔽 OPENING advanced filters');
+        }
+    }
+
+    // Update price range display
+    function updatePriceRange() {
+        const minPriceRange = document.getElementById('minPriceRange');
+        const maxPriceRange = document.getElementById('maxPriceRange');
+        const minPriceDisplay = document.getElementById('minPriceDisplay');
+        const maxPriceDisplay = document.getElementById('maxPriceDisplay');
+        const minPriceInput = document.getElementById('minPriceInput');
+        const maxPriceInput = document.getElementById('maxPriceInput');
+
+        if (minPriceRange && maxPriceRange && minPriceDisplay && maxPriceDisplay) {
+            const minValue = parseInt(minPriceRange.value);
+            const maxValue = parseInt(maxPriceRange.value);
+            
+            minPriceDisplay.textContent = formatPrice(minValue);
+            maxPriceDisplay.textContent = formatPrice(maxValue);
+            
+            if (minPriceInput) minPriceInput.value = minValue;
+            if (maxPriceInput) maxPriceInput.value = maxValue;
+        }
+    }
+
+    // Update area range display
+    function updateAreaRange() {
+        const minAreaRange = document.getElementById('minAreaRange');
+        const maxAreaRange = document.getElementById('maxAreaRange');
+        const minAreaDisplay = document.getElementById('minAreaDisplay');
+        const maxAreaDisplay = document.getElementById('maxAreaDisplay');
+        const minAreaInput = document.getElementById('minAreaInput');
+        const maxAreaInput = document.getElementById('maxAreaInput');
+
+        if (minAreaRange && maxAreaRange && minAreaDisplay && maxAreaDisplay) {
+            const minValue = parseInt(minAreaRange.value);
+            const maxValue = parseInt(maxAreaRange.value);
+            
+            minAreaDisplay.textContent = formatArea(minValue);
+            maxAreaDisplay.textContent = formatArea(maxValue);
+            
+            if (minAreaInput) minAreaInput.value = minValue;
+            if (maxAreaInput) maxAreaInput.value = maxValue;
+        }
+    }
+
+    // Format price
+    function formatPrice(price) {
+        if (price >= 1000000) {
+            return `${(price / 1000000).toFixed(1)}M AED`;
+        } else if (price >= 1000) {
+            return `${(price / 1000).toFixed(0)}K AED`;
+        }
+        return `${price} AED`;
+    }
+
+    // Format area
+    function formatArea(area) {
+        if (area >= 1000) {
+            return `${(area / 1000).toFixed(1)}K sq ft`;
+        }
+        return `${area} sq ft`;
+    }
+
+    // Reset filters
+    function resetFilters() {
+        console.log('🔄 Resetting exclusive filters...');
+        
+        // Redirect to base URL to reset all filters
+        window.location.href = '{% url "exclusive_properties:list" %}';
+    }
+
+    // Perform search
+    function performSearch() {
+        console.log('🔍 Performing exclusive search...');
+        
+        const filterForm = document.querySelector('.filter-form');
+        const formData = new FormData(filterForm);
+        const searchBtn = document.getElementById('searchBtn');
+        
+        // Show loading state
+        const originalText = searchBtn.innerHTML;
+        searchBtn.classList.add('loading');
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+        searchBtn.disabled = true;
+        
+        // Build filters object
+        const filters = {};
+        for (let [key, value] of formData.entries()) {
+            if (value && value.trim()) {
+                filters[key] = value.trim();
+            }
+        }
+        
+        // Convert property type
+        if (filters.property_type === 'residential') {
+            filters.property_type = 'Residential';
+        } else if (filters.property_type === 'commercial') {
+            filters.property_type = 'Commercial';
+        }
+        
+        console.log('🔍 Sending exclusive filters:', filters);
+        
+        // Send AJAX request
+        fetch('{% url "exclusive_properties:filter_api" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify(filters)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('🔍 Exclusive search response:', result);
+            
+            if (result.status === 'success' && result.data) {
+                updatePropertiesGrid(result.data.results);
+                updatePagination(result.data);
+                updateTotalCount(result.data.count || 0);
+            } else {
+                console.error('❌ Exclusive search error:', result.message || 'Unknown error');
+                updatePropertiesGrid([]);
+                updatePagination({count: 0, current_page: 1, last_page: 1});
+                updateTotalCount(0);
+            }
+        })
+        .catch(error => {
+            console.error('❌ Exclusive search error:', error);
+            updatePropertiesGrid([]);
+            updatePagination({count: 0, current_page: 1, last_page: 1});
+            updateTotalCount(0);
+        })
+        .finally(() => {
+            // Reset button state
+            searchBtn.classList.remove('loading');
+            searchBtn.innerHTML = originalText;
+            searchBtn.disabled = false;
+        });
+    }
+
+    // Update properties grid
+    function updatePropertiesGrid(properties) {
+        const propertiesGrid = document.querySelector('.properties-grid');
+        if (!propertiesGrid) return;
+        
+        if (properties.length === 0) {
+            propertiesGrid.innerHTML = `
+                <div class="no-properties">
+                    <div class="no-properties-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>No Exclusive Properties Found</h3>
+                    <p>We couldn't find any exclusive properties matching your criteria. Try adjusting your search filters.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        properties.forEach(property => {
+            const image = property.cover_image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+            
+            html += `
+                <div class="property-card">
+                    <div class="property-image" style="background-image: url('${image}');">
+                        <div class="exclusive-tag">EXCLUSIVE</div>
+                        <div class="price-tag">${property.formatted_price}</div>
+                        <div class="property-status">${property.status}</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="property-title">${property.title}</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${property.district}${property.city ? ', ' + property.city : ''}
+                        </div>
+                        <div class="property-features">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-bed"></i></div>
+                                <div class="feature-text">${property.bedrooms === 0 ? 'Studio' : property.bedrooms + ' BR'}</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-bath"></i></div>
+                                <div class="feature-text">${property.bathrooms} Bath</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-ruler-combined"></i></div>
+                                <div class="feature-text">${property.area_sqft.toLocaleString()} sq ft</div>
+                            </div>
+                        </div>
+                        <p class="property-description">
+                            ${property.short_description || 'Exclusive property with premium features and prime location.'}
+                        </p>
+                        <div class="property-actions">
+                            <a href="${property.url}" class="btn-primary-custom">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </a>
+                            <a href="{% url 'contact' %}?property=${property.id}" class="btn-outline-primary">
+                                <i class="fas fa-phone"></i>
+                                Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        propertiesGrid.innerHTML = html;
+        animatePropertyCards();
+    }
+
+    // Update pagination
+    function updatePagination(data) {
+        const paginationSection = document.querySelector('.pagination-section');
+        if (!paginationSection) return;
+        
+        if (!data.next_page_url && !data.prev_page_url) {
+            paginationSection.style.display = 'none';
+            return;
+        }
+        
+        paginationSection.style.display = 'block';
+        
+        const totalCount = data.count || 0;
+        const perPage = 12;
+        const totalPages = Math.max(1, Math.ceil(totalCount / perPage));
+        const currentPage = Math.max(1, Math.min(data.current_page || 1, totalPages));
+        
+        let paginationHTML = '';
+        
+        if (data.prev_page_url && currentPage > 1) {
+            paginationHTML += `<button type="button" class="nav-btn" onclick="goToPage(${currentPage - 1})">
+                <i class="fas fa-chevron-left"></i>
+                Previous
+            </button>`;
+        }
+        
+        if (totalPages > 1) {
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `<button type="button" class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            if (endPage < totalPages) {
+                paginationHTML += `<span class="page-ellipsis">...</span>`;
+                paginationHTML += `<button type="button" class="page-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+        }
+        
+        if (data.next_page_url && currentPage < totalPages) {
+            paginationHTML += `<button type="button" class="nav-btn" onclick="goToPage(${currentPage + 1})">
+                Next
+                <i class="fas fa-chevron-right"></i>
+            </button>`;
+        }
+        
+        paginationSection.innerHTML = paginationHTML;
+    }
+
+    // Update total count
+    function updateTotalCount(count) {
+        const exclusiveBadge = document.querySelector('.exclusive-badge span');
+        if (exclusiveBadge) {
+            exclusiveBadge.innerHTML = `<strong>${count}</strong> Exclusive Properties Available`;
+        }
+    }
+
+    // Go to page
+    function goToPage(page) {
+        console.log('📄 Going to exclusive page:', page);
+        
+        const filterForm = document.querySelector('.filter-form');
+        const formData = new FormData(filterForm);
+        formData.set('page', page);
+        
+        const searchBtn = document.getElementById('searchBtn');
+        const originalText = searchBtn.innerHTML;
+        searchBtn.classList.add('loading');
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        searchBtn.disabled = true;
+        
+        const filters = {};
+        for (let [key, value] of formData.entries()) {
+            if (value && value.trim()) {
+                filters[key] = value.trim();
+            }
+        }
+        
+        if (filters.property_type === 'residential') {
+            filters.property_type = 'Residential';
+        } else if (filters.property_type === 'commercial') {
+            filters.property_type = 'Commercial';
+        }
+        
+        filters.page = page;
+        
+        fetch('{% url "exclusive_properties:filter_api" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify(filters)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success' && result.data) {
+                updatePropertiesGrid(result.data.results);
+                updatePagination(result.data);
+                updateTotalCount(result.data.count || 0);
+                
+                const propertiesSection = document.querySelector('.properties-section');
+                if (propertiesSection) {
+                    propertiesSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        })
+        .catch(error => {
+            console.error('❌ Pagination error:', error);
+        })
+        .finally(() => {
+            searchBtn.classList.remove('loading');
+            searchBtn.innerHTML = originalText;
+            searchBtn.disabled = false;
+        });
+    }
+
+    // Animate property cards
+    function animatePropertyCards() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.property-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    }
+
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Make functions globally available
+    window.resetFilters = resetFilters;
+    window.goToPage = goToPage;
+
+    console.log('✅ Exclusive Properties Page - OBSIDIAN Theme with Advanced Filters Loaded Successfully');
+})();
 </script>
 {% endblock %}
 

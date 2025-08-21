@@ -18,7 +18,8 @@ ALLOWED_FILTER_KEYS = {
     'max_area',
     'property_status',
     'sales_status',
-    'title'
+    'title',
+    'developer'
 }
 
 class PropertyService:
@@ -61,8 +62,8 @@ class PropertyService:
 
             response.raise_for_status()
             data = response.json()
-            # print("📤 Payload being sent to API:", payload)
-            # print("📤 Response being received:", data)
+            print("📤 Payload being sent to API:", payload)
+            print("📤 Response being received:", data)
 
 
             return {
@@ -113,3 +114,71 @@ class PropertyService:
         search_filters = filters or {}
         search_filters['title'] = query
         return PropertyService.get_properties(search_filters)
+
+    @staticmethod
+    def get_cities() -> Dict:
+        """
+        Get cities with districts from external API.
+        """
+        try:
+            response = requests.get(
+                settings.CITIES_API_URL,
+                timeout=settings.API_TIMEOUT
+            )
+            response.raise_for_status()
+            data = response.json()
+            
+            return {
+                'success': True,
+                'data': data,
+                'error': None
+            }
+            
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Cities API request failed: {str(e)}")
+            return {
+                'success': False,
+                'data': [],
+                'error': 'Unable to fetch cities data.'
+            }
+        except Exception as e:
+            logger.error(f"Unexpected error fetching cities: {str(e)}")
+            return {
+                'success': False,
+                'data': [],
+                'error': 'An unexpected error occurred.'
+            }
+
+    @staticmethod
+    def get_developers() -> Dict:
+        """
+        Get developers list from external API.
+        """
+        try:
+            response = requests.get(
+                settings.DEVELOPERS_API_URL,
+                timeout=settings.API_TIMEOUT
+            )
+            response.raise_for_status()
+            data = response.json()
+            
+            return {
+                'success': True,
+                'data': data,
+                'error': None
+            }
+            
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Developers API request failed: {str(e)}")
+            return {
+                'success': False,
+                'data': [],
+                'error': 'Unable to fetch developers data.'
+            }
+        except Exception as e:
+            logger.error(f"Unexpected error fetching developers: {str(e)}")
+            return {
+                'success': False,
+                'data': [],
+                'error': 'An unexpected error occurred.'
+            }

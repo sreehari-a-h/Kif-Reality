@@ -87,7 +87,7 @@
 
 /* Services Section - OBSIDIAN Style */
 .services-section {
-    padding: 3rem 3rem;
+    /* padding: 3rem 3rem; */
     background: linear-gradient(135deg, var(--charcoal-gray) 0%, var(--obsidian-black) 100%);
     position: relative;
     overflow: hidden;
@@ -546,8 +546,14 @@
 
 @media (max-width: 768px) {
     .hero {
-        min-height: 700px;
+        height: 80vh;
+        min-height: 500px;
         padding: 2rem 0;
+        margin-top: 80px; /* Add margin to prevent navbar overlap */
+    }
+
+    .hero-content-container{
+        margin-top: 2%;
     }
     
     .hero-content h1 {

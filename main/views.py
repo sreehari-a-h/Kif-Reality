@@ -321,11 +321,13 @@ def properties(request):
     filters = {}
 
     if request.method == 'POST':
-        filters['property_type'] = request.POST.get('property_type')
+        # Pass exact frontend property type values as they are
+        filters['property_type'] = request.POST.get('property_type', '')
         filters['city'] = request.POST.get('city')
         filters['min_price'] = request.POST.get('min_price')
         filters['max_price'] = request.POST.get('max_price')
         filters['page'] = request.POST.get('page')
+
     else:
         filters['page'] = request.GET.get('page')
 
@@ -334,6 +336,8 @@ def properties(request):
     properties_result = PropertyService.get_properties(filters)
     
     mapped_properties = []
+    property_type_counts = {'residential': 0, 'commercial': 0}
+    
     if properties_result['success'] and properties_result['data'].get('status') is True:
         data_block = properties_result['data']['data']  # ✅ THIS is where the real results are
         for prop in data_block.get('results', []):
@@ -352,6 +356,18 @@ def properties(request):
                 name_data = district_data.get('name', {})
                 district_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
 
+            # Map property type ID to readable text
+            property_type_id = prop.get('property_type')
+            property_type_text = 'Residential'  # Default
+            if property_type_id == '3' or property_type_id == 3:
+                property_type_text = 'Commercial'
+                property_type_counts['commercial'] += 1
+            elif property_type_id == '20' or property_type_id == 20:
+                property_type_text = 'Residential'
+                property_type_counts['residential'] += 1
+            else:
+                property_type_counts['residential'] += 1
+
             mapped_properties.append({
                 'id': prop.get('id'),
                 'title': title,
@@ -361,6 +377,7 @@ def properties(request):
                 'area': prop.get('min_area'),
                 'bedrooms': prop.get('bedrooms'),
                 'bathrooms': prop.get('bathrooms'),
+                'property_type': property_type_text,
                 'description': 'Explore more about this project at the detail page.',
             })
 
@@ -393,6 +410,10 @@ def properties(request):
         # print("➡️ NEXT PAGE:", next_page_num)
         # print("➡️ PREV PAGE:", prev_page_num)
 
+        # Determine predominant property type
+        predominant_type = 'commercial' if property_type_counts['commercial'] > property_type_counts['residential'] else 'residential'
+
+
         context = {
             'properties': mapped_properties,
             'filters': filters,
@@ -403,6 +424,7 @@ def properties(request):
             'last_page': data_block.get('last_page', (data_block.get('count', 0) // 12) + 1),  # assuming 12 per page
             'page_range': get_page_range(current_page, last_page), 
             'properties_error': None,
+            'predominant_property_type': predominant_type,
         }
     else:
         context = {
@@ -412,6 +434,7 @@ def properties(request):
             'next_page': None,
             'prev_page': None,
             'properties_error': properties_result.get('error', 'Unable to load properties.'),
+            'predominant_property_type': 'residential',  # Default to residential if no properties
         }
 
     return render(request, 'properties.html', context)
@@ -565,6 +588,113 @@ def search_properties_api(request):
             'success': False,
             'error': result['error']
         })
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def filter_properties_api(request):
+    """API endpoint for property filtering with JSON body"""
+    try:
+        # Parse JSON data
+        data = json.loads(request.body)
+
+        
+        # Extract filters from JSON body - only include non-empty/non-zero values
+        print(f"🔍 Received filters from frontend: {data}")
+        filters = {}
+        
+        # Always include property_type if provided
+        if data.get('property_type'):
+            filters['property_type'] = data.get('property_type')
+        
+        # Only add string fields if they have values
+        string_fields = ['city', 'district', 'unit_type', 'rooms', 'sales_status', 'title', 'developer', 'property_status']
+        for field in string_fields:
+            value = data.get(field)
+            if value and str(value).strip():
+                filters[field] = str(value).strip()
+        
+        # Only add numeric fields if they are greater than 0
+        numeric_fields = ['delivery_year', 'low_price', 'max_price', 'min_area', 'max_area']
+        for field in numeric_fields:
+            value = data.get(field)
+            if value and (isinstance(value, (int, float)) and value > 0):
+                filters[field] = value
+        
+        print(f"🔍 Sending to external API: {filters}")
+        
+        # Get properties using the service
+        properties_result = PropertyService.get_properties(filters)
+        
+        if properties_result['success'] and properties_result['data'].get('status') is True:
+            data_block = properties_result['data']['data']
+            
+            # Map properties to frontend format
+            mapped_properties = []
+            for prop in data_block.get('results', []):
+                title_data = prop.get('title', {})
+                
+                # Map property type ID to readable text
+                property_type_id = prop.get('property_type')
+                property_type_text = 'Residential'  # Default
+                if property_type_id == '3' or property_type_id == 3:
+                    property_type_text = 'Commercial'
+                elif property_type_id == '20' or property_type_id == 20:
+                    property_type_text = 'Residential'
+                
+                # Debug log to check property type mapping
+                print(f"🏠 Backend property type mapping: ID={property_type_id} -> Text={property_type_text} (3=Commercial, 20=Residential)")
+                
+                mapped_properties.append({
+                    'id': prop.get('id'),
+                    'title': title_data.get('en', 'Luxury Property'),
+                    'location': prop.get('location', 'Premium Location, Dubai'),
+                    'bedrooms': prop.get('bedrooms', 'N/A'),
+                    'area': prop.get('area', 'N/A'),
+                    'price': prop.get('price'),
+                    'low_price': prop.get('low_price'),
+                    'min_area': prop.get('min_area'),
+                    'property_type': property_type_text,
+                    'cover': prop.get('cover'),  # Add cover field
+                    'image': prop.get('image'),  # Keep image as backup
+                    'city': prop.get('city'),    # Add city object
+                    'district': prop.get('district'),  # Add district object
+                    'detail_url': f"/property/{prop.get('id')}/"
+                })
+            
+            # Debug pagination data
+            pagination_data = {
+                'count': data_block.get('count', 0),
+                'current_page': data_block.get('current_page', 1),
+                'last_page': data_block.get('last_page', 1),
+                'next_page_url': data_block.get('next_page_url'),
+                'prev_page_url': data_block.get('prev_page_url')
+            }
+            print(f"📄 Backend pagination data: {pagination_data}")
+            
+            return JsonResponse({
+                'status': True,
+                'data': {
+                    'results': mapped_properties,
+                    **pagination_data
+                }
+            })
+        else:
+            return JsonResponse({
+                'status': False,
+                'error': properties_result.get('error', 'Unable to load properties.')
+            })
+            
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'status': False,
+            'error': 'Invalid JSON data'
+        }, status=400)
+    except Exception as e:
+        print(f"Filter API error: {e}")
+        return JsonResponse({
+            'status': False,
+            'error': 'An error occurred while filtering properties'
+        }, status=500)
 
 def contact_view(request):
     """Display the contact page"""
@@ -789,3 +919,41 @@ def submit_comment_ajax(request, slug):
             'success': False,
             'message': 'Sorry, there was an error submitting your comment. Please try again.'
         })
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def cities_api(request):
+    """API endpoint to get cities with districts for React frontend"""
+    try:
+        # Get cities data from PropertyService
+        result = PropertyService.get_cities()
+        
+        if result['success']:
+            return JsonResponse({
+                'status': True,
+                'data': result['data']
+            })
+        else:
+            return JsonResponse({'status': False, 'error': result['error']}, status=400)
+            
+    except Exception as e:
+        return JsonResponse({'status': False, 'error': str(e)}, status=500)
+
+@csrf_exempt  
+@require_http_methods(["GET"])
+def developers_api(request):
+    """API endpoint to get developers list for React frontend"""
+    try:
+        # Get developers data from PropertyService
+        result = PropertyService.get_developers()
+        
+        if result['success']:
+            return JsonResponse({
+                'status': True,
+                'data': result['data']
+            })
+        else:
+            return JsonResponse({'status': False, 'error': result['error']}, status=400)
+            
+    except Exception as e:
+        return JsonResponse({'status': False, 'error': str(e)}, status=500)

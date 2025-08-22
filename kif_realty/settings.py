@@ -166,4 +166,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # External API Configuration
 PROPERTIES_API_URL = 'https://offplan.market/api/properties/filter/'
+CITIES_API_URL = 'https://offplan.market/api/cities/'
+DEVELOPERS_API_URL = 'https://offplan.market/api/developers/'
 API_TIMEOUT = 30

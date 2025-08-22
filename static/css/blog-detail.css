@@ -1,13 +1,13 @@
-body{
+/* body{
     font-family: 'Cinzel', serif;
-}
+} */
 
 /* Blog Detail Specific Styles */
 .blog-detail {
     margin-top: 80px; /* Account for fixed navbar */
 }
 
-.navbar {
+/* .navbar {
     position: fixed;
     top: 0;
     width: 100%;
@@ -26,7 +26,7 @@ body{
     background: #4c4c4c;
     backdrop-filter: blur(20px);
     box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
-}
+} */
 
 /* Blog Hero Section */
 .blog-hero {
@@ -674,9 +674,9 @@ body{
         height: 60vh;
     }
 
-    .nav-links{
+    /* .nav-links{
         background-color: #4c4c4c;
-    }
+    } */
 
     .blog-title {
         font-size: 2rem;

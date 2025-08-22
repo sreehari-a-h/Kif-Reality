@@ -147,9 +147,22 @@
             filter: brightness(1.2);
         }
 
+        /* Ensure navbar brand text is always visible */
+        .navbar-brand span {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .navbar-brand:hover span,
+        .navbar-brand:active span,
+        .navbar-brand:focus span {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
         .nav-links {
             display: flex;
-            gap: 3rem;
+            gap: 1rem;
             list-style: none;
             align-items: center;
         }
@@ -238,7 +251,7 @@
         /* Page Headers - OBSIDIAN Style */
         .page-header {
             height: 70vh;
-            min-height: 600px;
+            /* min-height: 600px; */
             background: radial-gradient(ellipse at center, rgba(42, 42, 42, 0.3) 0%, var(--obsidian-black) 70%);
             display: flex;
             align-items: center;
@@ -273,7 +286,7 @@
             font-size: 4.5rem;
             margin-bottom: 2rem;
             font-weight: 300;
-            line-height: 1.1;
+            line-height: 1.2;
             background: linear-gradient(135deg, var(--text-light), var(--rose-gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -742,7 +755,7 @@
 
             /* Mobile Footer */
             .mobile-footer {
-                padding: 2rem;
+                padding: 1rem;
                 border-top: 1px solid rgba(232, 180, 160, 0.2);
                 background: rgba(232, 180, 160, 0.05);
                 opacity: 0;
@@ -752,11 +765,11 @@
                 margin-top: auto;
                 position: sticky;
                 bottom: 0;
-                min-height: 120px;
+                min-height: 100px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                margin-bottom: 2rem;
+                /* margin-bottom: 2rem; */
             }
 
             .nav-links.mobile-open .mobile-footer {
@@ -973,10 +986,37 @@
             .mobile-header .navbar-brand {
                 color: #ffffff !important;
                 font-weight: 600;
+                /* Override any hover/active effects that might hide the text */
+                filter: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            .mobile-header .navbar-brand:hover,
+            .mobile-header .navbar-brand:active,
+            .mobile-header .navbar-brand:focus {
+                color: #ffffff !important;
+                filter: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
             }
 
             .mobile-header .navbar-brand span {
                 color: #ffffff !important;
+                /* Ensure span text is always visible */
+                opacity: 1 !important;
+                visibility: visible !important;
+                filter: none !important;
+            }
+
+            .mobile-header .navbar-brand:hover span,
+            .mobile-header .navbar-brand:active span,
+            .mobile-header .navbar-brand:focus span {
+                color: #ffffff !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                filter: none !important;
             }
 
             .mobile-close {
@@ -1064,7 +1104,7 @@
 
             /* Mobile Footer */
             .mobile-footer {
-                padding: 2rem;
+                padding: 2.5rem;
                 border-top: 1px solid rgba(232, 180, 160, 0.2);
                 background: rgba(232, 180, 160, 0.05);
                 opacity: 0;
@@ -1319,9 +1359,9 @@
                     <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo">
                     <span>KIF Realty</span>
                 </a>
-                <button class="mobile-close" aria-label="Close menu" id="mobileClose">
+                <!-- <button class="mobile-close" aria-label="Close menu" id="mobileClose">
                     <i class="fas fa-times"></i>
-                </button>
+                </button> -->
             </li>
             
             <!-- Navigation Items Container -->
@@ -1468,8 +1508,19 @@
             const mobileClose = document.getElementById('mobileClose');
             const navLinks = document.getElementById('navLinks');
             const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
-            const toggleIcon = mobileToggle.querySelector('i');
             const body = document.body;
+
+            // Safety check - ensure all required elements exist
+            if (!mobileToggle || !navLinks || !mobileMenuBackdrop) {
+                console.warn('⚠️ Mobile menu elements not found:', {
+                    mobileToggle: !!mobileToggle,
+                    navLinks: !!navLinks,
+                    mobileMenuBackdrop: !!mobileMenuBackdrop
+                });
+                return; // Exit early if required elements are missing
+            }
+
+            const toggleIcon = mobileToggle.querySelector('i');
 
             // Toggle mobile menu
             function toggleMobileMenu() {
@@ -1535,11 +1586,13 @@
                 toggleMobileMenu();
             });
 
-            // Close button event listener
-            mobileClose.addEventListener('click', function(e) {
-                e.stopPropagation();
-                closeMobileMenu();
-            });
+            // Close button event listener (if exists)
+            if (mobileClose) {
+                mobileClose.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    closeMobileMenu();
+                });
+            }
 
             // Backdrop click event listener
             mobileMenuBackdrop.addEventListener('click', function(e) {

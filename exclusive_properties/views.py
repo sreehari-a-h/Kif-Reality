@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -135,43 +135,100 @@ def exclusive_properties_list(request):
     page_number = request.GET.get('page') or request.POST.get('page')
     page_obj = paginator.get_page(page_number)
     
-    # Get filter options for the form
+    # Enhanced filter options with fallback data
     property_types = ExclusiveProperty.PROPERTY_TYPES
-    cities = ExclusiveProperty.objects.values_list('city', flat=True).distinct().exclude(city='')
-    districts = ExclusiveProperty.objects.values_list('district', flat=True).distinct().exclude(district='')
-    developers = ExclusiveProperty.objects.values_list('developer_name', flat=True).distinct().exclude(developer_name='')
-    completion_years = ExclusiveProperty.objects.values_list('completion_year', flat=True).distinct().exclude(completion_year__isnull=True).order_by('completion_year')
+    
+    # Get cities with fallback to popular Dubai areas - ensure uniqueness
+    cities_raw = list(ExclusiveProperty.objects.values_list('city', flat=True).exclude(city=''))
+    # Clean and deduplicate cities (handle case sensitivity and whitespace)
+    cities = list(set([city.strip() for city in cities_raw if city and city.strip()]))
+    if not cities:
+        cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah']
+    else:
+        # Add popular cities if not already present
+        popular_cities = ['Dubai', 'Abu Dhabi', 'Sharjah']
+        for city in popular_cities:
+            if city not in cities:
+                cities.append(city)
+    
+    # Get districts with fallback to popular Dubai neighborhoods - ensure uniqueness
+    districts_raw = list(ExclusiveProperty.objects.values_list('district', flat=True).exclude(district=''))
+    # Clean and deduplicate districts (handle case sensitivity and whitespace)
+    districts = list(set([district.strip() for district in districts_raw if district and district.strip()]))
+    if not districts:
+        districts = [
+            'Downtown Dubai', 'Dubai Marina', 'Palm Jumeirah', 'Dubai Hills Estate',
+            'Business Bay', 'Jumeirah Village Circle', 'Dubai South', 'Palm Jebel Ali',
+            'Jumeirah Beach Residence', 'Dubai Creek Harbour', 'Dubai Harbour',
+            'Bluewaters Island', 'Dubai Silicon Oasis', 'Dubai Sports City',
+            'Dubai Production City', 'Dubai Media City', 'Dubai Internet City'
+        ]
+    else:
+        # Add popular districts if not already present
+        popular_districts = [
+            'Downtown Dubai', 'Dubai Marina', 'Palm Jumeirah', 'Dubai Hills Estate',
+            'Business Bay', 'Jumeirah Village Circle'
+        ]
+        for district in popular_districts:
+            if district not in districts:
+                districts.append(district)
+    
+    # Get developers with fallback - ensure uniqueness
+    developers_raw = list(ExclusiveProperty.objects.values_list('developer_name', flat=True).exclude(developer_name=''))
+    # Clean and deduplicate developers (handle case sensitivity and whitespace)
+    developers = list(set([developer.strip() for developer in developers_raw if developer and developer.strip()]))
+    if not developers:
+        developers = [
+            'Emaar Properties', 'Damac Properties', 'Nakheel', 'Meraas',
+            'Dubai Properties', 'Sobha Realty', 'Azizi Developments',
+            'Deyaar Development', 'Union Properties', 'Al Habtoor Group'
+        ]
+    
+    # Get completion years with fallback - ensure uniqueness
+    completion_years = list(set(ExclusiveProperty.objects.values_list('completion_year', flat=True).exclude(completion_year__isnull=True)))
+    if not completion_years:
+        current_year = timezone.now().year
+        completion_years = list(range(current_year, current_year + 6))  # Current year + 5 years
+    else:
+        # Sort completion years numerically
+        completion_years = sorted(completion_years)
     
     # Debug prints
     print(f"🔍 Debug - Total properties: {properties.count()}")
-    print(f"🔍 Debug - Cities found: {list(cities)}")
-    print(f"🔍 Debug - Districts found: {list(districts)}")
-    print(f"🔍 Debug - Developers found: {list(developers)}")
-    print(f"🔍 Debug - Completion years found: {list(completion_years)}")
+    print(f"🔍 Debug - Cities found: {cities}")
+    print(f"🔍 Debug - Districts found: {districts}")
+    print(f"🔍 Debug - Developers found: {developers}")
+    print(f"🔍 Debug - Completion years found: {completion_years}")
+    
+    # Clean filter values to ensure empty strings don't get selected
+    def clean_filter_value(value):
+        if not value or not value.strip():
+            return None
+        return value.strip()
     
     context = {
         'properties': page_obj,
         'property_types': property_types,
-        'cities': cities,
-        'districts': districts,
-        'developers': developers,
+        'cities': sorted(cities),
+        'districts': sorted(districts),
+        'developers': sorted(developers),
         'completion_years': completion_years,
         'total_count': properties.count(),
         'filters': {
-            'property_type': property_type,
-            'unit_type': unit_type,
-            'city': city,
-            'district': district,
-            'price_range': price_range,
-            'bedrooms': bedrooms,
-            'delivery_year': delivery_year,
-            'developer': developer,
-            'project_name': project_name,
-            'property_status': property_status,
-            'min_price': min_price,
-            'max_price': max_price,
-            'min_area': min_area,
-            'max_area': max_area,
+            'property_type': clean_filter_value(property_type),
+            'unit_type': clean_filter_value(unit_type),
+            'city': clean_filter_value(city),
+            'district': clean_filter_value(district),
+            'price_range': clean_filter_value(price_range),
+            'bedrooms': clean_filter_value(bedrooms),
+            'delivery_year': clean_filter_value(delivery_year),
+            'developer': clean_filter_value(developer),
+            'project_name': clean_filter_value(project_name),
+            'property_status': clean_filter_value(property_status),
+            'min_price': clean_filter_value(min_price),
+            'max_price': clean_filter_value(max_price),
+            'min_area': clean_filter_value(min_area),
+            'max_area': clean_filter_value(max_area),
         }
     }
     
@@ -417,3 +474,54 @@ def exclusive_properties_api(request):
     )
     
     return JsonResponse(list(properties), safe=False)
+
+
+def get_filter_options(request):
+    """API endpoint to get filter options for dynamic loading"""
+    try:
+        # Get cities
+        cities = list(ExclusiveProperty.objects.values_list('city', flat=True).distinct().exclude(city=''))
+        if not cities:
+            cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah']
+        
+        # Get districts
+        districts = list(ExclusiveProperty.objects.values_list('district', flat=True).distinct().exclude(district=''))
+        if not districts:
+            districts = [
+                'Downtown Dubai', 'Dubai Marina', 'Palm Jumeirah', 'Dubai Hills Estate',
+                'Business Bay', 'Jumeirah Village Circle', 'Dubai South', 'Palm Jebel Ali',
+                'Jumeirah Beach Residence', 'Dubai Creek Harbour', 'Dubai Harbour',
+                'Bluewaters Island', 'Dubai Silicon Oasis', 'Dubai Sports City',
+                'Dubai Production City', 'Dubai Media City', 'Dubai Internet City'
+            ]
+        
+        # Get developers
+        developers = list(ExclusiveProperty.objects.values_list('developer_name', flat=True).distinct().exclude(developer_name=''))
+        if not developers:
+            developers = [
+                'Emaar Properties', 'Damac Properties', 'Nakheel', 'Meraas',
+                'Dubai Properties', 'Sobha Realty', 'Azizi Developments',
+                'Deyaar Development', 'Union Properties', 'Al Habtoor Group'
+            ]
+        
+        # Get completion years
+        completion_years = list(ExclusiveProperty.objects.values_list('completion_year', flat=True).distinct().exclude(completion_year__isnull=True).order_by('completion_year'))
+        if not completion_years:
+            current_year = timezone.now().year
+            completion_years = list(range(current_year, current_year + 6))
+        
+        return JsonResponse({
+            'status': 'success',
+            'data': {
+                'cities': sorted(cities),
+                'districts': sorted(districts),
+                'developers': sorted(developers),
+                'completion_years': completion_years,
+            }
+        })
+        
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)

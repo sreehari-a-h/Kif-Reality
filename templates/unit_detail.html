@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% load date_extras %}
 
 {% block title %}{{ unit.unit_type.en|default:"Unit" }} - {{ property.title.en }} - KIF Realty{% endblock %}
 
@@ -104,7 +105,7 @@
     .unit-hero {
         background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
         border-radius: 25px;
-        margin: 0 2rem 3rem;
+        margin: 0 1rem 1rem;
         max-width: 1500px;
         margin-left: auto;
         margin-right: auto;
@@ -129,8 +130,8 @@
     .hero-content {
         display: grid;
         grid-template-columns: 1fr 400px;
-        gap: 2rem;
-        padding: 3rem;
+        gap: 1.5rem;
+        padding: 2rem;
         align-items: center;
         position: relative;
         z-index: 1;
@@ -341,7 +342,7 @@
     .contact-btn.primary:hover {
         transform: translateY(-3px);
         box-shadow: 0 15px 30px rgba(10, 10, 10, 0.3);
-        color: var(--gold-accent);
+        /* color: var(--gold-accent); */
     }
 
     .contact-btn.secondary {
@@ -363,19 +364,19 @@
         padding: 0 2rem;
         display: grid;
         grid-template-columns: 2.2fr 1fr;
-        gap: 2.5rem;
+        gap: 1rem;
     }
 
     .main-content {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
     }
 
     .content-section {
         background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
         border-radius: 25px;
-        padding: 3rem;
+        padding: 1rem;
         box-shadow: 0 25px 60px var(--shadow-dark);
         border: 1px solid rgba(232, 180, 160, 0.1);
         position: relative;
@@ -567,7 +568,7 @@
 
     .amenity-item {
         background: linear-gradient(145deg, var(--medium-gray), var(--light-gray));
-        padding: 1.8rem 1.5rem;
+        padding: 0.7rem 0.7rem;
         border-radius: 15px;
         display: flex;
         align-items: center;
@@ -629,7 +630,7 @@
     .sidebar {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
     }
 
     .sidebar-card {
@@ -830,7 +831,7 @@
         }
         
         .content-section {
-            padding: 2rem;
+            padding: 1rem;
         }
         
         .amenities-grid {
@@ -842,7 +843,7 @@
         }
 
         .unit-hero {
-            margin: 0 1rem 3rem;
+            margin: 0 1rem 1rem;
         }
 
         .unit-content {
@@ -864,7 +865,7 @@
         }
         
         .content-section {
-            padding: 1.5rem;
+            padding: 1rem;
         }
         
         .amenities-grid {
@@ -1004,7 +1005,7 @@
                         <div class="stat-icon">
                             <i class="fas fa-calendar"></i>
                         </div>
-                        <div class="stat-value">{{ property.delivery_date|date:"Y" }}</div>
+                        <div class="stat-value">{{ property.delivery_date|format_delivery }}</div>
                         <div class="stat-label">Handover</div>
                     </div>
                 </div>

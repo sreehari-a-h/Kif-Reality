@@ -701,6 +701,8 @@
 }
 
 /* Pagination */
+/* Enhanced Pagination Styles - Add these to your existing CSS */
+
 .pagination-section {
     display: flex;
     justify-content: space-between;
@@ -710,11 +712,21 @@
     background: var(--charcoal-gray);
     border-radius: 20px;
     border: 1px solid rgba(232, 180, 160, 0.1);
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .pagination-nav {
     display: flex;
     gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination-info {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .page-btn {
@@ -725,7 +737,7 @@
     border-radius: 50%;
     width: 50px;
     height: 50px;
-            cursor: pointer;
+    cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -741,6 +753,12 @@
     box-shadow: 0 8px 20px rgba(232, 180, 160, 0.5);
 }
 
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .nav-btn {
     background: var(--rose-gold);
     color: var(--obsidian-black);
@@ -748,7 +766,7 @@
     border: none;
     border-radius: 25px;
     cursor: pointer;
-            transition: all 0.3s ease;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -768,6 +786,42 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
+    background: var(--medium-gray);
+    color: var(--text-muted);
+}
+
+/* Mobile responsiveness for pagination */
+@media (max-width: 768px) {
+    .pagination-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .pagination-nav {
+        justify-content: center;
+    }
+    
+    .pagination-info {
+        order: -1;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-btn {
+        padding: 10px 16px;
+        font-size: 0.8rem;
+    }
+    
+    .page-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.8rem;
+    }
+    
+    .pagination-nav {
+        gap: 0.5rem;
+    }
 }
 
 /* Error Alert */
@@ -891,7 +945,7 @@
             <p>Discover exceptional real estate opportunities in prime locations</p>
             <div class="total-count">
                 <i class="fas fa-gem me-2"></i>
-                <strong>{{ total_count }}</strong> Exclusive Properties Available
+                <strong id="totalCountDisplay">{{ total_count|default:"Loading..." }}</strong> Exclusive Properties Available
         </div>
     </div>
 </section>
@@ -958,14 +1012,15 @@
                         <i class="fas fa-dollar-sign filter-icon"></i>
                         Price Range
                     </label>
-                    <select name="price_range" class="filter-select">
+                    <select name="price_range" class="filter-select" id="priceRangeSelect">
                         <option value="">Any Price</option>
-                        <option value="0-1000000">Under 1M AED</option>
-                        <option value="1000000-2000000">1M - 2M AED</option>
-                        <option value="2000000-5000000">2M - 5M AED</option>
-                        <option value="5000000-10000000">5M - 10M AED</option>
-                        <option value="10000000+">Above 10M AED</option>
+                        <option value="0-1000000" data-min="0" data-max="1000000">Under 1M AED</option>
+                        <option value="1000000-2000000" data-min="1000000" data-max="2000000">1M - 2M AED</option>
+                        <option value="2000000-5000000" data-min="2000000" data-max="5000000">2M - 5M AED</option>
+                        <option value="5000000-10000000" data-min="5000000" data-max="10000000">5M - 10M AED</option>
+                        <option value="10000000+" data-min="10000000" data-max="">Above 10M AED</option>
                     </select>
+
                 </div>
             </div>
 
@@ -1109,115 +1164,18 @@
     {% endif %}
 
     <div class="properties-grid">
-        {% for property in properties %}
-        <div class="property-card">
-            <div class="property-image" {% if property.image %}style="background-image: url('{{ property.image }}');"{% endif %}>
-                {% if property.image %}
-                {% else %}
-                <i class="fas fa-crown"></i>
-                {% endif %}
-                <div class="price-tag">
-                    Available
-                    {% if property.price %}
-                    <!-- AED {{ property.low_price|floatformat:0|add_commas }} -->
-                    {% else %}
-                    <!-- Contact for Price -->
-                    {% endif %}
-                </div>
-                <div class="property-type-badge">
-                    {{ property.property_type|default:"Residential" }}
-                </div>
-            </div>
-
-            <div class="card-body">
-                <h3 class="property-title">{{ property.title|default:"Luxury Property" }}</h3>
-                
-                <div class="property-location">
-                    <i class="fas fa-map-marker-alt"></i>
-                    {{ property.location|default:"Premium Location, Dubai" }}
-                </div>
-
-                <div class="property-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-bed"></i>
-                        </div>
-                        <div class="feature-text">{{ property.bedrooms|default:"N/A" }} Bedrooms</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-ruler-combined"></i>
-                        </div>
-                        <div class="feature-text">{{ property.area|default:"N/A" }} sq ft</div>
-                    </div>
-                </div>
-
-                <div class="property-actions">
-                    <a href="{% url 'property_detail' property.id %}" class="btn-primary-custom">
-                        <i class="fas fa-eye"></i>
-                        View Details
-                    </a>
-                    <a href="{% url 'contact' %}" class="btn-outline-primary">
-                        <i class="fas fa-phone"></i>
-                        Contact Agent
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
+        <!-- Properties will be loaded dynamically from API -->
         <div class="no-properties">
             <div class="no-properties-icon">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-spinner fa-spin"></i>
             </div>
-            <h4>No Properties Found</h4>
-            <p>We couldn't find any properties matching your criteria. Try adjusting your search filters or explore our complete collection of luxury properties.</p>
-            <a href="{% url 'properties' %}" class="btn-primary-custom" style="display: inline-flex;">
-                <i class="fas fa-refresh me-2"></i>
-                View All Properties
-            </a>
+            <h4>Loading Properties...</h4>
+            <p>Please wait while we fetch the latest properties for you.</p>
         </div>
-        {% endfor %}
     </div>
 
-    <!-- Pagination -->
-    {% if next_page or prev_page %}
-    <div class="pagination-section">
-        <!-- Previous Button -->
-        {% if prev_page %}
-        <button type="button" class="nav-btn" onclick="goToPage('{{ prev_page }}')">
-            <i class="fas fa-chevron-left"></i>
-            Previous
-        </button>
-        {% else %}
-        <span></span>
-        {% endif %}
-
-        <!-- Page Numbers -->
-        {% if last_page > 1 %}
-        <div class="pagination-nav">
-            {% for i in page_range %}
-                {% if i == '...' %}
-                    <span class="page-btn" style="cursor: default;">...</span>
-                {% else %}
-                    <button type="button" class="page-btn {% if i == current_page %}active{% endif %}" onclick="goToPage('{{ i }}')">
-                        {{ i }}
-                    </button>
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- Next Button -->
-        {% if next_page %}
-        <button type="button" class="nav-btn" onclick="goToPage('{{ next_page }}')">
-            Next
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        {% else %}
-        <span></span>
-        {% endif %}
-    </div>
-    {% endif %}
+    <!-- Dynamic Pagination (will be populated by JavaScript) -->
+    <div class="pagination-section" id="dynamicPagination" style="display: none;"></div>
 </section>
 
 {% block extra_js %}
@@ -1254,6 +1212,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('📋 DOMContentLoaded fired');
     initializeFilters();
     setupEventListeners();
+    
+    // Load initial properties from API on page load
+    loadInitialProperties();
 });
 
 function initializeFilters() {
@@ -1285,6 +1246,168 @@ function initializeFilters() {
     // Load cities and developers from API
     loadCitiesFromAPI();
     loadDevelopersFromAPI();
+}
+
+function loadInitialProperties() {
+    console.log('🏠 Loading initial properties from API...');
+    
+    // Show loading state
+    const propertiesGrid = document.querySelector('.properties-grid');
+    if (propertiesGrid) {
+        propertiesGrid.innerHTML = `
+            <div class="no-properties">
+                <div class="no-properties-icon">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <h4>Loading Properties...</h4>
+                <p>Please wait while we fetch the latest properties for you.</p>
+            </div>
+        `;
+    }
+    
+
+    
+    // Get current form data to send as initial filters
+    const filterForm = document.querySelector('.filter-form');
+    const formData = new FormData(filterForm);
+    
+    // Convert form data to filters object (same logic as performSearch)
+    const propertyTypeValue = formData.get('property_type') || 'residential';
+    let propertyTypeText = 'Residential';
+    if (propertyTypeValue === 'commercial') {
+        propertyTypeText = 'Commercial';
+    }
+    
+    const filters = {};
+    
+    // Always include property_type
+    filters.property_type = propertyTypeText;
+    
+    // Only add non-empty string values
+    const city = formData.get('city');
+    if (city && city.trim()) {
+        filters.city = city.trim();
+    }
+    
+    const district = formData.get('district');
+    if (district && district.trim()) {
+        filters.district = district.trim();
+    }
+    
+    const unitType = formData.get('unit_type');
+    if (unitType && unitType.trim()) {
+        filters.unit_type = unitType.trim();
+    }
+    
+    // Only send rooms for Residential and if selected
+    if (propertyTypeText === 'Residential') {
+        const rooms = formData.get('bedrooms');
+        if (rooms && rooms.trim()) {
+            filters.rooms = rooms.trim();
+        }
+    }
+    
+    // Only add delivery_year if explicitly selected
+    const deliveryYear = formData.get('delivery_year');
+    if (deliveryYear && deliveryYear.trim() && deliveryYear !== '0') {
+        filters.delivery_year = parseInt(deliveryYear);
+    }
+    
+    // Only add price range if modified from defaults
+    const minPrice = parseInt(formData.get('min_price')) || 0;
+    const maxPrice = parseInt(formData.get('max_price')) || 100000000;
+    if (minPrice > 0) {
+        filters.low_price = minPrice;
+    }
+    if (maxPrice < 100000000) {
+        filters.max_price = maxPrice;
+    }
+    
+    // Only add area range if modified from defaults
+    const minArea = parseInt(formData.get('min_area')) || 0;
+    const maxArea = parseInt(formData.get('max_area')) || 50000;
+    if (minArea > 0) {
+        filters.min_area = minArea;
+    }
+    if (maxArea < 50000) {
+        filters.max_area = maxArea;
+    }
+    
+    // Only add if provided
+    const title = formData.get('project_name');
+    if (title && title.trim()) {
+        filters.title = title.trim();
+    }
+    
+    const developer = formData.get('developer');
+    if (developer && developer.trim()) {
+        filters.developer = developer.trim();
+    }
+    
+    // Add property_status conditionally
+    const propertyStatus = formData.get('property_status');
+    if (propertyStatus && propertyStatus.trim() && propertyStatus !== 'Total') {
+        filters.property_status = propertyStatus.trim();
+    }
+    
+    console.log('🏠 Initial filters:', filters);
+    
+    // Make API call to get initial properties
+    fetch('https://offplan.market/api/properties/filter/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}) // Empty filters for initial load
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('🏠 Initial properties API response:', result);
+        
+        if (result?.status && result?.data) {
+            const propertiesData = result.data;
+            const properties = propertiesData.results || [];
+            
+            console.log('🏠 Found', properties.length, 'initial properties');
+            console.log('🏠 Total count:', propertiesData.count);
+            
+            // Update properties grid
+            updatePropertiesGrid(properties);
+            
+            // Update pagination
+            updatePagination(propertiesData);
+            
+            // Update total count
+            if (propertiesData.count !== undefined) {
+                updateTotalCount(propertiesData.count);
+            }
+        } else {
+            console.error('❌ Initial properties API error:', result?.error || result?.message || 'No properties found');
+            // Show empty properties grid
+            updatePropertiesGrid([]);
+            updatePagination({count: 0, current_page: 1, last_page: 1});
+            updateTotalCount(0);
+        }
+    })
+    .catch(error => {
+        console.error('❌ Initial properties error:', error);
+        // Show error state
+        if (propertiesGrid) {
+            propertiesGrid.innerHTML = `
+                <div class="no-properties">
+                    <div class="no-properties-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Error Loading Properties</h4>
+                    <p>We encountered an error while loading properties. Please try refreshing the page.</p>
+                    <button onclick="loadInitialProperties()" class="btn-primary-custom" style="display: inline-flex;">
+                        <i class="fas fa-refresh me-2"></i>
+                        Try Again
+                    </button>
+                </div>
+            `;
+        }
+    });
 }
 
 function setupEventListeners() {
@@ -2016,16 +2139,13 @@ function performSearch() {
     
     console.log('🔍 Sending filters:', filters);
 
-    // Make API call and return Promise
-    const csrftoken = getCookie('csrftoken');
-    return fetch('/api/properties/filter/', {
+    // Make API call and return Promise to external API
+    return fetch('https://offplan.market/api/properties/filter/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
         },
-        credentials: 'include',
-        body: JSON.stringify(filters),
+        body: JSON.stringify(filters)
     })
     .then(response => response.json())
     .then(result => {
@@ -2042,7 +2162,11 @@ function performSearch() {
             // Always update the grid, even if empty (it will show "no properties" message)
             updatePropertiesGrid(properties);
             updatePagination(propertiesData);
-            updateTotalCount(propertiesData.count || 0);
+            
+            // Update total count
+            if (propertiesData.count !== undefined) {
+                updateTotalCount(propertiesData.count);
+            }
         } else {
             console.error('❌ Properties API error:', result?.error || result?.message || 'No properties found');
             // Show empty properties grid instead of error
@@ -2060,8 +2184,8 @@ function performSearch() {
 
 
 
-// Global function to update properties grid
-function updatePropertiesGrid(properties) {
+// Global function to update properties grid - must be outside IIFE to be accessible by global functions
+window.updatePropertiesGrid = function(properties) {
     const propertiesGrid = document.querySelector('.properties-grid');
     if (!propertiesGrid) return;
 
@@ -2092,14 +2216,6 @@ function updatePropertiesGrid(properties) {
         } else if (propertyTypeText === 20 || propertyTypeText === '20') {
             propertyTypeText = 'Residential';
         }
-        
-        // Debug log to check what property type is being received
-        console.log('🏠 Property type mapping:', {
-            original: property.property_type,
-            mapped: propertyTypeText,
-            property_id: property.id,
-            note: '3=Commercial, 20=Residential'
-        });
         
         // Get property title (handle multilingual object)
         const title = property.title?.en || property.title || 'Luxury Property';
@@ -2170,57 +2286,345 @@ function updatePropertiesGrid(properties) {
     propertiesGrid.innerHTML = propertiesHTML;
 }
 
-// Global function to update pagination
-function updatePagination(data) {
-    console.log('📄 Updating pagination with data:', data);
-    console.log('📄 Pagination keys:', Object.keys(data));
-    console.log('📄 Count:', data.count, 'Current page:', data.current_page, 'Last page:', data.last_page);
-    console.log('📄 Next URL:', data.next_page_url, 'Prev URL:', data.prev_page_url);
+// Global function to update total count
+window.updateTotalCount = function(count) {
+    const totalCountElement = document.getElementById('totalCountDisplay');
+    if (totalCountElement) {
+        totalCountElement.textContent = count;
+    }
+};
+
+// Global function to show error messages - must be outside IIFE to be accessible by global functions
+window.showError = function(message) {
+    const propertiesSection = document.querySelector('.properties-section');
+    if (!propertiesSection) return;
+
+    const errorHTML = `
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle"></i>
+            ${message}
+        </div>
+    `;
+
+    // Insert error at the top of properties section
+    propertiesSection.insertAdjacentHTML('afterbegin', errorHTML);
+
+    // Remove error after 5 seconds
+    setTimeout(() => {
+        const errorAlert = propertiesSection.querySelector('.alert-danger');
+        if (errorAlert) {
+            errorAlert.remove();
+        }
+    }, 5000);
+};
+
+})(); // End of IIFE
+
+// Pagination function that calls the external API directly as provided in the response
+window.goToPageByUrl = function(url) {
+    console.log('📄 Going to page by URL:', url);
+
+    // Show loading state
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.classList.add('loading');
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        searchBtn.disabled = true;
+    }
+
+    // Call the external API URL with POST method and current filters in body
+    const currentFilters = getCurrentFilters();
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(currentFilters)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('📄 External API response:', result);
+
+        if (result.status && result.data) {
+            const propertiesData = result.data;
+            const properties = propertiesData.results || [];
+
+            // Update properties grid
+            window.updatePropertiesGrid(properties);
+
+            // Update pagination
+            window.updatePagination(propertiesData);
+
+            // Update total count
+            if (propertiesData.count !== undefined) {
+                window.updateTotalCount(propertiesData.count);
+            }
+
+            // Scroll to top of properties section
+            scrollToProperties();
+        } else {
+            console.error('❌ External API error:', result?.error || 'Unknown error');
+            window.showError('Failed to load page. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('❌ External API call error:', error);
+        window.showError('An error occurred while loading the page.');
+    })
+    .finally(() => {
+        // Hide loading state
+        const searchBtn = document.getElementById('searchBtn');
+        if (searchBtn) {
+            searchBtn.classList.remove('loading');
+            searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Properties';
+            searchBtn.disabled = false;
+        }
+    });
+}
+
+// Simplified pagination function for page numbers
+window.goToPage = function(page) {
+    console.log('📄 Going to page:', page);
+
+    // Show loading state
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.classList.add('loading');
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        searchBtn.disabled = true;
+    }
+
+    console.log('📄 Page parameter:', page);
+
+    // Call external API with page as query parameter and current filters in body
+    const currentFilters = getCurrentFilters();
+    fetch(`https://offplan.market/api/properties/filter/?page=${page}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(currentFilters)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('📄 External API pagination response:', result);
+
+        if (result.status && result.data) {
+            const propertiesData = result.data;
+            const properties = propertiesData.results || [];
+
+            // Update properties grid
+            window.updatePropertiesGrid(properties);
+
+            // Update pagination
+            window.updatePagination(propertiesData);
+
+            // Update total count
+            if (propertiesData.count !== undefined) {
+                window.updateTotalCount(propertiesData.count);
+            }
+
+            // Scroll to top of properties section
+            scrollToProperties();
+        } else {
+            console.error('❌ External API pagination error:', result?.error || 'Unknown error');
+            window.showError('Failed to load page. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('❌ External API pagination error:', error);
+        window.showError('An error occurred while loading the page.');
+    })
+    .finally(() => {
+        // Hide loading state
+        const searchBtn = document.getElementById('searchBtn');
+        if (searchBtn) {
+            searchBtn.classList.remove('loading');
+            searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Properties';
+            searchBtn.disabled = false;
+        }
+    });
+}
+
+function getCurrentFilters() {
+    const filterForm = document.querySelector('.filter-form');
+    const formData = new FormData(filterForm);
     
-    const paginationSection = document.querySelector('.pagination-section');
+    // Convert form data to filters object
+    const propertyTypeValue = formData.get('property_type') || 'residential';
+    let propertyTypeText = 'Residential';
+    if (propertyTypeValue === 'commercial') {
+        propertyTypeText = 'Commercial';
+    }
+    
+    const filters = {};
+    filters.property_type = propertyTypeText;
+    
+    // Add other filters only if they have values
+    const city = formData.get('city');
+    if (city && city.trim()) {
+        filters.city = city.trim();
+    }
+    
+    const district = formData.get('district');
+    if (district && district.trim()) {
+        filters.district = district.trim();
+    }
+    
+    const unitType = formData.get('unit_type');
+    if (unitType && unitType.trim()) {
+        filters.unit_type = unitType.trim();
+    }
+    
+    // Only send rooms for Residential and if selected
+    if (propertyTypeText === 'Residential') {
+        const rooms = formData.get('bedrooms');
+        if (rooms && rooms.trim()) {
+            filters.rooms = rooms.trim();
+        }
+    }
+    
+    const deliveryYear = formData.get('delivery_year');
+    if (deliveryYear && deliveryYear.trim() && deliveryYear !== '0') {
+        filters.delivery_year = parseInt(deliveryYear);
+    }
+    
+    const minPrice = parseInt(formData.get('min_price')) || 0;
+    const maxPrice = parseInt(formData.get('max_price')) || 100000000;
+    if (minPrice > 0) {
+        filters.low_price = minPrice;
+    }
+    if (maxPrice < 100000000) {
+        filters.max_price = maxPrice;
+    }
+    
+    const minArea = parseInt(formData.get('min_area')) || 0;
+    const maxArea = parseInt(formData.get('max_area')) || 50000;
+    if (minArea > 0) {
+        filters.min_area = minArea;
+    }
+    if (maxArea < 50000) {
+        filters.max_area = maxArea;
+    }
+    
+    const title = formData.get('project_name');
+    if (title && title.trim()) {
+        filters.title = title.trim();
+    }
+    
+    const developer = formData.get('developer');
+    if (developer && developer.trim()) {
+        filters.developer = developer.trim();
+    }
+    
+    const propertyStatus = formData.get('property_status');
+    if (propertyStatus && propertyStatus.trim() && propertyStatus !== 'Total') {
+        filters.property_status = propertyStatus.trim();
+    }
+    
+    return filters;
+}
+
+// Helper function to show loading state
+function showLoadingState() {
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.classList.add('loading');
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        searchBtn.disabled = true;
+    }
+    
+    // Also show loading in properties grid
+    const propertiesGrid = document.querySelector('.properties-grid');
+    if (propertiesGrid) {
+        propertiesGrid.innerHTML = `
+            <div class="no-properties">
+                <div class="no-properties-icon">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <h4>Loading Properties...</h4>
+                <p>Please wait while we fetch the properties.</p>
+            </div>
+        `;
+    }
+}
+
+// Helper function to hide loading state
+function hideLoadingState() {
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.classList.remove('loading');
+        searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Properties';
+        searchBtn.disabled = false;
+    }
+}
+
+// Helper function to scroll to properties section
+function scrollToProperties() {
+    const propertiesSection = document.querySelector('.properties-section');
+    if (propertiesSection) {
+        propertiesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Simplified updatePagination function that works with the API response structure
+window.updatePagination = function(data) {
+    console.log('📄 Updating pagination with data:', data);
+    
+    const paginationSection = document.querySelector('#dynamicPagination');
     if (!paginationSection) {
-        console.log('📄 No pagination section found');
+        console.log('📄 No dynamic pagination section found');
         return;
     }
 
-    // Check if pagination is needed
-    if (!data.next_page_url && !data.prev_page_url) {
+    // Extract pagination info from API response
+    const totalCount = data.count || 0;
+    const currentPage = data.current_page || 1;
+    const nextUrl = data.next_page_url;
+    const previousUrl = data.previous_page_url;
+    const perPage = 12;
+    const totalPages = Math.max(1, Math.ceil(totalCount / perPage));
+    
+    console.log('📄 Pagination info:', {
+        totalCount,
+        currentPage,
+        totalPages,
+        nextUrl,
+        previousUrl
+    });
+    
+    // Hide pagination if not needed
+    if (totalPages <= 1) {
         console.log('📄 No pagination needed, hiding section');
         paginationSection.style.display = 'none';
         return;
     }
 
     console.log('📄 Showing pagination section');
-    paginationSection.style.display = 'block';
+    paginationSection.style.display = 'flex';
     
-    // Calculate total pages from the API response
-    const totalCount = data.count || 0;
-    const perPage = 12; // Assuming 12 items per page, adjust if different
-    const totalPages = Math.max(1, Math.ceil(totalCount / perPage));
-    const currentPage = Math.max(1, Math.min(data.current_page || 1, totalPages));
-    
-    console.log('📄 Pagination info: Current:', currentPage, 'Total pages:', totalPages);
-    
-    // Update pagination HTML based on data
-    let paginationHTML = '';
+    // Build pagination HTML
+    let paginationHTML = '<div class="pagination-nav">';
     
     // Previous button
-    if (data.prev_page_url) {
+    if (previousUrl) {
         paginationHTML += `
-            <button type="button" class="nav-btn" onclick="goToPageByUrl('${data.prev_page_url}')">
+            <button type="button" class="nav-btn" onclick="goToPageByUrl('${previousUrl}')">
                 <i class="fas fa-chevron-left"></i>
                 Previous
             </button>
         `;
     } else {
-        paginationHTML += '<span></span>';
+        paginationHTML += `
+            <button type="button" class="nav-btn" disabled>
+                <i class="fas fa-chevron-left"></i>
+                Previous
+            </button>
+        `;
     }
-
-    // Add page numbers if needed
+    
+    // Page numbers (show current page and a few around it)
     if (totalPages > 1) {
-        paginationHTML += '<div class="pagination-nav">';
-        
-        // Show first few pages
         const maxPagesToShow = 5;
         const startPage = Math.max(1, currentPage - 2);
         const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
@@ -2244,197 +2648,50 @@ function updatePagination(data) {
                 </button>
             `;
         }
-        
-        paginationHTML += '</div>';
     }
 
     // Next button
-    if (data.next_page_url) {
+    if (nextUrl) {
         paginationHTML += `
-            <button type="button" class="nav-btn" onclick="goToPageByUrl('${data.next_page_url}')">
+            <button type="button" class="nav-btn" onclick="goToPageByUrl('${nextUrl}')">
                 Next
                 <i class="fas fa-chevron-right"></i>
             </button>
         `;
     } else {
-        paginationHTML += '<span></span>';
+        paginationHTML += `
+            <button type="button" class="nav-btn" disabled>
+                Next
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        `;
+    }
+    
+    paginationHTML += '</div>';
+
+    // Add page info
+    if (totalCount > 0) {
+        paginationHTML += `
+            <div class="pagination-info">
+                <span>Showing page ${currentPage} of ${totalPages} (${totalCount} properties)</span>
+            </div>
+        `;
     }
 
     paginationSection.innerHTML = paginationHTML;
 }
 
-// Global function to go to page by URL (for next/previous buttons)
-function goToPageByUrl(url) {
-    console.log('📄 Going to page by URL:', url);
-    
-    // Show loading state
-    const searchBtn = document.getElementById('searchBtn');
-    const originalText = searchBtn.innerHTML;
-    
-    searchBtn.classList.add('loading');
-    searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-    searchBtn.disabled = true;
-    
-    // Make direct API call to the external URL
-    fetch(url)
-    .then(response => response.json())
-    .then(result => {
-        console.log('📄 Direct API response:', result);
-        
-        if (result.status && result.data) {
-            const propertiesData = result.data;
-            const properties = propertiesData.results || [];
-            
-            // Update properties grid
-            updatePropertiesGrid(properties);
-            
-            // Update pagination
-            updatePagination(propertiesData);
-            
-            // Update total count
-            updateTotalCount(propertiesData.count || 0);
-            
-            // Scroll to top of properties section
-            const propertiesSection = document.querySelector('.properties-section');
-            if (propertiesSection) {
-                propertiesSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        } else {
-            console.error('❌ Direct API error:', result?.error || 'Unknown error');
-            showError('Failed to load page. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('❌ Direct API error:', error);
-        showError('An error occurred while loading the page.');
-    })
-    .finally(() => {
-        // Reset button state
-        searchBtn.classList.remove('loading');
-        searchBtn.innerHTML = originalText;
-        searchBtn.disabled = false;
-    });
-}
+document.getElementById("priceRangeSelect").addEventListener("change", function() {
+    const selected = this.options[this.selectedIndex];
+    const min = selected.getAttribute("data-min");
+    const max = selected.getAttribute("data-max");
 
-// Global function to update total count
-function updateTotalCount(count) {
-    const totalCountElement = document.querySelector('.total-count strong');
-    if (totalCountElement) {
-        totalCountElement.textContent = count;
-    }
-}
+    document.getElementById("minPriceInput").value = min || "";
+    document.getElementById("maxPriceInput").value = max || "";
 
-// Global function to show error messages
-function showError(message) {
-    const propertiesSection = document.querySelector('.properties-section');
-    if (!propertiesSection) return;
+    console.log("Selected range:", min, "-", max);
+});
 
-    const errorHTML = `
-        <div class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle"></i>
-            ${message}
-        </div>
-    `;
-
-    // Insert error at the top of properties section
-    propertiesSection.insertAdjacentHTML('afterbegin', errorHTML);
-    
-    // Remove error after 5 seconds
-    setTimeout(() => {
-        const errorAlert = propertiesSection.querySelector('.alert-danger');
-        if (errorAlert) {
-            errorAlert.remove();
-        }
-    }, 5000);
-}
-
-})(); // End of IIFE
-
-// Global pagination function - must be outside IIFE to be accessible by onclick handlers
-function goToPage(page) {
-    console.log('📄 Going to page:', page);
-    
-    // Show loading state
-    const searchBtn = document.getElementById('searchBtn');
-    const originalText = searchBtn.innerHTML;
-    
-    searchBtn.classList.add('loading');
-    searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-    searchBtn.disabled = true;
-    
-    // Get current form data
-    const filterForm = document.querySelector('.filter-form');
-    const formData = new FormData(filterForm);
-    
-    // Make API call with page parameter
-    const csrftoken = getCookie('csrftoken');
-    const filters = {};
-    
-    // Convert form data to filters object
-    for (let [key, value] of formData.entries()) {
-        if (value && value.trim()) {
-            filters[key] = value.trim();
-        }
-    }
-    
-    // Handle property type conversion
-    if (filters.property_type === 'residential') {
-        filters.property_type = 'Residential';
-    } else if (filters.property_type === 'commercial') {
-        filters.property_type = 'Commercial';
-    }
-    
-    // Add page parameter for external API
-    filters.page = page;
-    
-    console.log('📄 Sending pagination request with filters:', filters);
-    
-    fetch('/api/properties/filter/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
-        },
-        body: JSON.stringify(filters)
-    })
-    .then(response => response.json())
-    .then(result => {
-        console.log('📄 Pagination response:', result);
-        
-        if (result.status && result.data) {
-            const propertiesData = result.data;
-            const properties = propertiesData.results || [];
-            
-            // Update properties grid
-            updatePropertiesGrid(properties);
-            
-            // Update pagination
-            updatePagination(propertiesData);
-            
-            // Update total count
-            updateTotalCount(propertiesData.count || 0);
-            
-            // Scroll to top of properties section
-            const propertiesSection = document.querySelector('.properties-section');
-            if (propertiesSection) {
-                propertiesSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        } else {
-            console.error('❌ Pagination API error:', result?.error || 'Unknown error');
-            showError('Failed to load page. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('❌ Pagination error:', error);
-        showError('An error occurred while loading the page.');
-    })
-    .finally(() => {
-        // Reset button state
-        searchBtn.classList.remove('loading');
-        searchBtn.innerHTML = originalText;
-        searchBtn.disabled = false;
-    });
-}
 </script>
 {% endblock %}
 

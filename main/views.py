@@ -667,7 +667,7 @@ def filter_properties_api(request):
                 'current_page': data_block.get('current_page', 1),
                 'last_page': data_block.get('last_page', 1),
                 'next_page_url': data_block.get('next_page_url'),
-                'prev_page_url': data_block.get('prev_page_url')
+                'previous_page_url': data_block.get('previous_page_url')  # Fixed: use previous_page_url instead of prev_page_url
             }
             print(f"📄 Backend pagination data: {pagination_data}")
             

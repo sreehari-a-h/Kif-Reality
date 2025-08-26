@@ -7,6 +7,7 @@
 {% block extra_css %}
 <style>
 /* Hero Section - OBSIDIAN Style */
+/* Hero Section - OBSIDIAN Style */
 .hero {
     height: 100vh;
     min-height: 700px;
@@ -37,6 +38,19 @@
     overflow: hidden;
 }
 
+.hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    color: var(--primary-gold);
+}
+
 .hero-content-container {
     position: relative;
     z-index: 2;
@@ -52,7 +66,7 @@
 }
 
 .hero-content h1 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 3.8rem;
     font-weight: 300;
     margin-bottom: 2.5rem;
@@ -87,7 +101,6 @@
 
 /* Services Section - OBSIDIAN Style */
 .services-section {
-    /* padding: 3rem 3rem; */
     background: linear-gradient(135deg, var(--charcoal-gray) 0%, var(--obsidian-black) 100%);
     position: relative;
     overflow: hidden;
@@ -468,7 +481,7 @@
     border-radius: 50px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     display: inline-block;
     transition: all 0.4s ease;
     text-transform: uppercase;
@@ -507,7 +520,7 @@
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     display: inline-block;
     transition: all 0.4s ease;
     text-transform: uppercase;
@@ -521,97 +534,233 @@
     box-shadow: 0 15px 35px rgba(232, 180, 160, 0.4);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 992px) {
-    .hero-content h1 {
-        font-size: 4rem;
-    }
-    
-    .section-title h2 {
-        font-size: 3.2rem;
-    }
-    
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .locations-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
+/* Investment Calculators Section - OBSIDIAN Style */
+.calculators-section {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--charcoal-gray) 0%, var(--obsidian-black) 100%);
+    position: relative;
+    overflow: hidden;
 }
 
-@media (max-width: 768px) {
-    .hero {
-        height: 80vh;
-        min-height: 500px;
-        padding: 2rem 0;
-        margin-top: 80px; /* Add margin to prevent navbar overlap */
-    }
-
-    .hero-content-container{
-        margin-top: 2%;
-    }
-    
-    .hero-content h1 {
-        font-size: 3.2rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .section-title h2 {
-        font-size: 2.8rem;
-    }
-    
-    .services-section,
-    .locations-section,
-    .why-choose-section,
-    .cta-section {
-        padding: 2rem 1.5rem;
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    
-    .btn-primary-custom,
-    .btn-secondary-custom {
-        width: 100%;
-        max-width: 300px;
-        margin-right: 0;
-        margin-bottom: 1rem;
-    }
-    
-    .cta-content h2 {
-        font-size: 2.5rem;
-    }
+.calculators-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0.02;
 }
 
-@media (max-width: 480px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-    
-    .section-title h2 {
-        font-size: 2.2rem;
-    }
-    
-    .service-card,
-    .feature-card {
-        padding: 2.5rem 2rem;
-    }
-    
-    .cta-content h2 {
-        font-size: 2rem;
-    }
+.calculators-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 1.5rem auto 0;
+    position: relative;
+    z-index: 2;
+}
+
+.calculator-card {
+    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 25px;
+    padding: 2.5rem;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.calculator-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.calculator-card:hover::before {
+    opacity: 0.05;
+}
+
+.calculator-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    border-color: rgba(232, 180, 160, 0.3);
+}
+
+.calculator-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.calculator-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+}
+
+.calculator-icon i {
+    font-size: 2.2rem;
+    color: var(--obsidian-black);
+}
+
+.calculator-card:hover .calculator-icon {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 15px 30px rgba(232, 180, 160, 0.4);
+}
+
+.calculator-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+
+.calculator-header p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.calculator-form {
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(145deg, var(--obsidian-black), var(--charcoal-gray));
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 15px;
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--rose-gold);
+    box-shadow: 0 0 20px rgba(232, 180, 160, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.calculate-btn {
+    width: 100%;
+    background: var(--accent-gradient);
+    color: var(--obsidian-black);
+    padding: 1.2rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.calculate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.calculate-btn:hover::before {
+    left: 100%;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(232, 180, 160, 0.6);
+}
+
+.calculate-btn i {
+    margin-right: 0.5rem;
+}
+
+.calculator-results {
+    background: linear-gradient(145deg, var(--obsidian-black), var(--charcoal-gray));
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(232, 180, 160, 0.1);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.result-value {
+    color: var(--rose-gold);
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: 'Cormorant Garamond', serif;
 }
 
 /* Enhanced animations */
@@ -643,6 +792,416 @@
 .services-grid .service-card:nth-child(4) { animation-delay: 0.4s; }
 .services-grid .service-card:nth-child(5) { animation-delay: 0.5s; }
 .services-grid .service-card:nth-child(6) { animation-delay: 0.6s; }
+
+.calculators-container .calculator-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.calculators-container .calculator-card:nth-child(1) { animation-delay: 0.1s; }
+.calculators-container .calculator-card:nth-child(2) { animation-delay: 0.2s; }
+
+/* RESPONSIVE MEDIA QUERIES - ORGANIZED BY BREAKPOINT */
+
+/* Large tablets and small desktops: 1200px and down */
+@media (max-width: 1200px) {
+    .calculators-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 800px;
+    }
+    
+    .calculator-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* Tablets: 992px and down */
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .section-title h2 {
+        font-size: 3rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .locations-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .calculators-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 700px;
+    }
+    
+    .calculator-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .calculator-header h3 {
+        font-size: 1.8rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 0.9rem 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .calculate-btn {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .calculator-results {
+        padding: 1.5rem;
+    }
+}
+
+/* Mobile tablets: 768px and down */
+@media (max-width: 768px) {
+    .hero {
+        height: 80vh;
+        min-height: 500px;
+        padding: 2rem 0;
+        margin-top: 80px;
+    }
+
+    .hero-content-container {
+        margin-top: 2%;
+        padding: 0 1.5rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2.5rem;
+    }
+    
+    .services-section,
+    .locations-section,
+    .why-choose-section,
+    .cta-section,
+    .calculators-section {
+        padding: 2rem 1rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .btn-primary-custom,
+    .btn-secondary-custom {
+        width: 100%;
+        max-width: 300px;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2.5rem;
+    }
+    
+    .calculators-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 1.5rem auto 0;
+        max-width: 100%;
+    }
+    
+    .calculator-card {
+        padding: 1.5rem 1rem;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .calculator-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .calculator-header h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .calculator-header p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .calculator-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1rem;
+    }
+    
+    .calculator-icon i {
+        font-size: 1.8rem;
+    }
+    
+    .calculator-form {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 12px;
+    }
+    
+    .calculate-btn {
+        padding: 1rem 1.2rem;
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+    }
+    
+    .calculator-results {
+        padding: 1.2rem;
+        border-radius: 15px;
+    }
+    
+    .result-item {
+        padding: 0.8rem 0;
+    }
+    
+    .result-label {
+        font-size: 0.85rem;
+    }
+    
+    .result-value {
+        font-size: 1rem;
+    }
+}
+
+/* Small mobile devices: 480px and down */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+    
+    .service-card,
+    .feature-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .calculators-section {
+        padding: 1.5rem 0.8rem;
+    }
+    
+    .calculators-container {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin: 1.2rem auto 0;
+        max-width: 100%;
+    }
+    
+    .calculator-card {
+        padding: 1.2rem 0.8rem;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .calculator-header {
+        margin-bottom: 1.2rem;
+    }
+    
+    .calculator-header h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .calculator-header p {
+        font-size: 0.85rem;
+        line-height: 1.3;
+    }
+    
+    .calculator-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 0.8rem;
+    }
+    
+    .calculator-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .calculator-form {
+        margin-bottom: 1.2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 0.8rem;
+    }
+    
+    .form-group label {
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 10px;
+    }
+    
+    .calculate-btn {
+        padding: 0.9rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+    
+    .calculator-results {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .result-item {
+        padding: 0.6rem 0;
+    }
+    
+    .result-label {
+        font-size: 0.8rem;
+    }
+    
+    .result-value {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra small mobile devices: 360px and down */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .calculators-section {
+        padding: 1rem 0.5rem;
+    }
+    
+    .calculators-container {
+        gap: 1rem;
+        margin: 1rem auto 0;
+    }
+    
+    .calculator-card {
+        padding: 1rem 0.6rem;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .calculator-header {
+        margin-bottom: 1rem;
+    }
+    
+    .calculator-header h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .calculator-header p {
+        font-size: 0.8rem;
+        line-height: 1.2;
+    }
+    
+    .calculator-icon {
+        width: 45px;
+        height: 45px;
+        margin: 0 auto 0.6rem;
+    }
+    
+    .calculator-icon i {
+        font-size: 1.3rem;
+    }
+    
+    .calculator-form {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group {
+        margin-bottom: 0.7rem;
+    }
+    
+    .form-group label {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 0.6rem 0.7rem;
+        font-size: 0.8rem;
+        border-radius: 8px;
+    }
+    
+    .calculate-btn {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+        margin-top: 0.4rem;
+    }
+    
+    .calculator-results {
+        padding: 0.8rem;
+        border-radius: 10px;
+    }
+    
+    .result-item {
+        padding: 0.5rem 0;
+    }
+    
+    .result-label {
+        font-size: 0.75rem;
+    }
+    
+    .result-value {
+        font-size: 0.85rem;
+    }
+}
 </style>
 {% endblock %}
 
@@ -655,6 +1214,10 @@
     <div class="hero-particles"></div>
     <div class="hero-content-container">
         <div class="hero-content">
+            <div class="hero-badge">
+                    <i class="fas fa-star"></i>
+                    Dubai's Premier Real Estate Partner
+                </div>
             <h1>Property expert in Dubai, UAE</h1>
             <p class="hero-subtitle">Offplan | Ready to move project | Land broker | Property investment consultant | Super Agent for new Developers</p>
             <div class="cta-buttons">
@@ -812,6 +1375,145 @@
     </div>
 </section>
 
+<!-- Investment Calculators Section -->
+<section class="calculators-section">
+    <div class="section-title">
+        <h2>Investment Planning Tools</h2>
+        <p>Make informed decisions with our advanced calculators designed specifically for Dubai real estate investments. Plan your mortgage payments and analyze potential returns with precision.</p>
+    </div>
+    
+    <div class="calculators-container">
+        <!-- Mortgage Calculator -->
+        <div class="calculator-card">
+            <div class="calculator-header">
+                <div class="calculator-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Mortgage Calculator</h3>
+                <p>Calculate your monthly mortgage payments for Dubai properties with flexible payment terms and competitive interest rates.</p>
+            </div>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="property-price">Property Price (AED)</label>
+                    <input type="number" id="property-price" placeholder="2,000,000" min="0" step="100000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="down-payment">Down Payment (AED)</label>
+                    <input type="number" id="down-payment" placeholder="400,000" min="0" step="10000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="interest-rate">Interest Rate (%)</label>
+                    <input type="number" id="interest-rate" placeholder="4.5" min="0" max="20" step="0.1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="loan-term">Loan Term (Years)</label>
+                    <select id="loan-term">
+                        <option value="15">15 Years</option>
+                        <option value="20" selected>20 Years</option>
+                        <option value="25">25 Years</option>
+                        <option value="30">30 Years</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="calculate-btn" onclick="calculateMortgage()">
+                    <i class="fas fa-calculator"></i>
+                    Calculate Mortgage
+                </button>
+            </div>
+            
+            <div class="calculator-results" id="mortgage-results">
+                <div class="result-item">
+                    <span class="result-label">Monthly Payment</span>
+                    <span class="result-value" id="monthly-payment">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Interest</span>
+                    <span class="result-value" id="total-interest">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Amount</span>
+                    <span class="result-value" id="total-amount">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Loan Amount</span>
+                    <span class="result-value" id="loan-amount">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROI Calculator -->
+        <div class="calculator-card">
+            <div class="calculator-header">
+                <div class="calculator-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>ROI Calculator</h3>
+                <p>Analyze potential returns on your Dubai property investment with comprehensive ROI calculations and market insights.</p>
+            </div>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="purchase-price">Purchase Price (AED)</label>
+                    <input type="number" id="purchase-price" placeholder="2,500,000" min="0" step="100000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="current-value">Current Market Value (AED)</label>
+                    <input type="number" id="current-value" placeholder="3,000,000" min="0" step="100000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="annual-rent">Annual Rental Income (AED)</label>
+                    <input type="number" id="annual-rent" placeholder="180,000" min="0" step="1000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="annual-expenses">Annual Expenses (AED)</label>
+                    <input type="number" id="annual-expenses" placeholder="25,000" min="0" step="1000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="holding-period">Holding Period (Years)</label>
+                    <select id="holding-period">
+                        <option value="1">1 Year</option>
+                        <option value="3">3 Years</option>
+                        <option value="5" selected>5 Years</option>
+                        <option value="10">10 Years</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="calculate-btn" onclick="calculateROI()">
+                    <i class="fas fa-chart-bar"></i>
+                    Calculate ROI
+                </button>
+            </div>
+            
+            <div class="calculator-results" id="roi-results">
+                <div class="result-item">
+                    <span class="result-label">Capital Appreciation</span>
+                    <span class="result-value" id="capital-appreciation">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Rental Yield</span>
+                    <span class="result-value" id="rental-yield">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total ROI</span>
+                    <span class="result-value" id="total-roi">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Annual ROI</span>
+                    <span class="result-value" id="annual-roi">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- CTA Section -->
 <section class="cta-section">
     <div class="cta-content">
@@ -824,4 +1526,145 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Mortgage Calculator Function
+function calculateMortgage() {
+    const propertyPrice = parseFloat(document.getElementById('property-price').value.replace(/,/g, '')) || 0;
+    const downPayment = parseFloat(document.getElementById('down-payment').value.replace(/,/g, '')) || 0;
+    const interestRate = parseFloat(document.getElementById('interest-rate').value) || 0;
+    const loanTerm = parseInt(document.getElementById('loan-term').value) || 20;
+    
+    if (propertyPrice <= 0 || downPayment < 0 || interestRate <= 0) {
+        alert('Please enter valid values for all fields.');
+        return;
+    }
+    
+    if (downPayment >= propertyPrice) {
+        alert('Down payment cannot be greater than or equal to property price.');
+        return;
+    }
+    
+    const loanAmount = propertyPrice - downPayment;
+    const monthlyInterestRate = (interestRate / 100) / 12;
+    const numberOfPayments = loanTerm * 12;
+    
+    // Calculate monthly payment using the mortgage formula
+    const monthlyPayment = loanAmount * 
+        (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
+        (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+    
+    const totalAmount = monthlyPayment * numberOfPayments;
+    const totalInterest = totalAmount - loanAmount;
+    
+    // Format numbers with commas
+    function formatNumber(num) {
+        return new Intl.NumberFormat('en-AE', {
+            style: 'currency',
+            currency: 'AED',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(num);
+    }
+    
+    // Update results
+    document.getElementById('monthly-payment').textContent = formatNumber(monthlyPayment);
+    document.getElementById('total-interest').textContent = formatNumber(totalInterest);
+    document.getElementById('total-amount').textContent = formatNumber(totalAmount);
+    document.getElementById('loan-amount').textContent = formatNumber(loanAmount);
+    
+    // Add animation to results
+    const results = document.getElementById('mortgage-results');
+    results.style.animation = 'none';
+    results.offsetHeight; // Trigger reflow
+    results.style.animation = 'fadeInUp 0.5s ease forwards';
+}
+
+// ROI Calculator Function
+function calculateROI() {
+    const purchasePrice = parseFloat(document.getElementById('purchase-price').value.replace(/,/g, '')) || 0;
+    const currentValue = parseFloat(document.getElementById('current-value').value.replace(/,/g, '')) || 0;
+    const annualRent = parseFloat(document.getElementById('annual-rent').value.replace(/,/g, '')) || 0;
+    const annualExpenses = parseFloat(document.getElementById('annual-expenses').value.replace(/,/g, '')) || 0;
+    const holdingPeriod = parseInt(document.getElementById('holding-period').value) || 5;
+    
+    if (purchasePrice <= 0) {
+        alert('Please enter a valid purchase price.');
+        return;
+    }
+    
+    // Calculate capital appreciation
+    const capitalAppreciation = currentValue - purchasePrice;
+    const capitalAppreciationPercent = (capitalAppreciation / purchasePrice) * 100;
+    
+    // Calculate rental yield
+    const netAnnualRent = annualRent - annualExpenses;
+    const rentalYield = (netAnnualRent / purchasePrice) * 100;
+    
+    // Calculate total ROI
+    const totalROI = ((capitalAppreciation + (netAnnualRent * holdingPeriod)) / purchasePrice) * 100;
+    
+    // Calculate annual ROI
+    const annualROI = totalROI / holdingPeriod;
+    
+    // Format numbers
+    function formatCurrency(num) {
+        return new Intl.NumberFormat('en-AE', {
+            style: 'currency',
+            currency: 'AED',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(num);
+    }
+    
+    function formatPercent(num) {
+        return num.toFixed(2) + '%';
+    }
+    
+    // Update results
+    document.getElementById('capital-appreciation').textContent = formatCurrency(capitalAppreciation) + ' (' + formatPercent(capitalAppreciationPercent) + ')';
+    document.getElementById('rental-yield').textContent = formatPercent(rentalYield);
+    document.getElementById('total-roi').textContent = formatPercent(totalROI);
+    document.getElementById('annual-roi').textContent = formatPercent(annualROI);
+    
+    // Add animation to results
+    const results = document.getElementById('roi-results');
+    results.style.animation = 'none';
+    results.offsetHeight; // Trigger reflow
+    results.style.animation = 'fadeInUp 0.5s ease forwards';
+}
+
+// Add input validation and formatting
+document.addEventListener('DOMContentLoaded', function() {
+    // Add number formatting to inputs
+    const numberInputs = document.querySelectorAll('input[type="number"]');
+    numberInputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value) {
+                const num = parseFloat(this.value.replace(/,/g, ''));
+                if (!isNaN(num)) {
+                    this.value = num.toLocaleString('en-AE');
+                }
+            }
+        });
+        
+        input.addEventListener('focus', function() {
+            if (this.value) {
+                this.value = this.value.replace(/,/g, '');
+            }
+        });
+    });
+    
+    // Add enter key support for calculations
+    document.getElementById('property-price').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') calculateMortgage();
+    });
+    
+    document.getElementById('purchase-price').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') calculateROI();
+    });
+});
+</script>
 {% endblock %}

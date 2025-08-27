@@ -673,6 +673,18 @@
     box-sizing: border-box;
 }
 
+/* Dropdown specific styling */
+.form-group select {
+    background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+    cursor: pointer;
+}
+
+.form-group select option {
+    background: #2a2a2a;
+    color: var(--text-light);
+    padding: 0.5rem;
+}
+
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
@@ -1638,22 +1650,88 @@ function calculateROI() {
 
 // Add input validation and formatting
 document.addEventListener('DOMContentLoaded', function() {
-    // Add number formatting to inputs
-    const numberInputs = document.querySelectorAll('input[type="number"]');
-    numberInputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            if (this.value) {
-                const num = parseFloat(this.value.replace(/,/g, ''));
-                if (!isNaN(num)) {
-                    this.value = num.toLocaleString('en-AE');
-                }
+    // Clear all calculator fields on page load/refresh
+    function clearCalculatorFields() {
+        // Clear all number inputs
+        const numberInputs = document.querySelectorAll('input[type="number"]');
+        numberInputs.forEach(input => {
+            input.value = '';
+        });
+        
+        // Reset select dropdowns to default values
+        const selectInputs = document.querySelectorAll('select');
+        selectInputs.forEach(select => {
+            if (select.id === 'loan-term') {
+                select.value = '20'; // Default to 20 years
+            } else if (select.id === 'holding-period') {
+                select.value = '5'; // Default to 5 years
             }
         });
         
+        // Clear all result displays
+        const resultElements = document.querySelectorAll('.result-value');
+        resultElements.forEach(element => {
+            element.textContent = '-';
+        });
+    }
+    
+    // Clear fields on page load
+    clearCalculatorFields();
+    
+    // Add number formatting to inputs
+    const numberInputs = document.querySelectorAll('input[type="number"]');
+    numberInputs.forEach(input => {
+        // Store original value when focusing
+        let originalValue = '';
+        
         input.addEventListener('focus', function() {
+            // Store the current value before formatting
+            originalValue = this.value;
+            // Remove commas for editing
             if (this.value) {
                 this.value = this.value.replace(/,/g, '');
             }
+        });
+        
+        input.addEventListener('blur', function() {
+            if (this.value && this.value.trim() !== '') {
+                const num = parseFloat(this.value.replace(/,/g, ''));
+                if (!isNaN(num) && num > 0) {
+                    // Format with commas only if it's a valid positive number
+                    this.value = num.toLocaleString('en-AE');
+                } else {
+                    // If invalid, restore original value or clear
+                    this.value = originalValue || '';
+                }
+            } else {
+                // If empty, keep it empty
+                this.value = '';
+            }
+        });
+        
+        // Prevent non-numeric input (except decimal point and backspace)
+        input.addEventListener('keypress', function(e) {
+            const charCode = e.which ? e.which : e.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
+                e.preventDefault();
+            }
+            // Allow only one decimal point
+            if (charCode === 46 && this.value.indexOf('.') !== -1) {
+                e.preventDefault();
+            }
+        });
+        
+        // Handle paste events to clean up pasted content
+        input.addEventListener('paste', function(e) {
+            setTimeout(() => {
+                let pastedValue = this.value.replace(/[^\d.]/g, '');
+                // Ensure only one decimal point
+                const parts = pastedValue.split('.');
+                if (parts.length > 2) {
+                    pastedValue = parts[0] + '.' + parts.slice(1).join('');
+                }
+                this.value = pastedValue;
+            }, 0);
         });
     });
     
@@ -1664,6 +1742,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('purchase-price').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') calculateROI();
+    });
+    
+    // Add enter key support for all calculator inputs
+    const calculatorInputs = document.querySelectorAll('.calculator-form input, .calculator-form select');
+    calculatorInputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                // Find which calculator this input belongs to and trigger calculation
+                const calculatorCard = this.closest('.calculator-card');
+                if (calculatorCard) {
+                    const calculateBtn = calculatorCard.querySelector('.calculate-btn');
+                    if (calculateBtn) {
+                        calculateBtn.click();
+                    }
+                }
+            }
+        });
+    });
+    
+    // Add clear functionality on page refresh/reload
+    window.addEventListener('beforeunload', function() {
+        // Clear any stored values if needed
+        sessionStorage.removeItem('calculatorValues');
     });
 });
 </script>

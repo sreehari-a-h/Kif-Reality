@@ -1408,17 +1408,17 @@
             <div class="calculator-form">
                 <div class="form-group">
                     <label for="property-price">Property Price (AED)</label>
-                    <input type="number" id="property-price" placeholder="2,000,000" min="0" step="100000">
+                    <input type="number" id="property-price" placeholder="2,000,000" min="0" step="100000" inputmode="numeric">
                 </div>
                 
                 <div class="form-group">
                     <label for="down-payment">Down Payment (AED)</label>
-                    <input type="number" id="down-payment" placeholder="400,000" min="0" step="10000">
+                    <input type="number" id="down-payment" placeholder="400,000" min="0" step="10000" inputmode="numeric">
                 </div>
                 
                 <div class="form-group">
                     <label for="interest-rate">Interest Rate (%)</label>
-                    <input type="number" id="interest-rate" placeholder="4.5" min="0" max="20" step="0.1">
+                    <input type="number" id="interest-rate" placeholder="4.5" min="0" max="20" step="0.1" inputmode="decimal">
                 </div>
                 
                 <div class="form-group">
@@ -1470,22 +1470,22 @@
             <div class="calculator-form">
                 <div class="form-group">
                     <label for="purchase-price">Purchase Price (AED)</label>
-                    <input type="number" id="purchase-price" placeholder="2,500,000" min="0" step="100000">
+                    <input type="number" id="purchase-price" placeholder="2,500,000" min="0" step="100000" inputmode="numeric">
                 </div>
                 
                 <div class="form-group">
                     <label for="current-value">Current Market Value (AED)</label>
-                    <input type="number" id="current-value" placeholder="3,000,000" min="0" step="100000">
+                    <input type="number" id="current-value" placeholder="3,000,000" min="0" step="100000" inputmode="numeric">
                 </div>
                 
                 <div class="form-group">
                     <label for="annual-rent">Annual Rental Income (AED)</label>
-                    <input type="number" id="annual-rent" placeholder="180,000" min="0" step="1000">
+                    <input type="number" id="annual-rent" placeholder="180,000" min="0" step="1000" inputmode="numeric">
                 </div>
                 
                 <div class="form-group">
                     <label for="annual-expenses">Annual Expenses (AED)</label>
-                    <input type="number" id="annual-expenses" placeholder="25,000" min="0" step="1000">
+                    <input type="number" id="annual-expenses" placeholder="25,000" min="0" step="1000" inputmode="numeric">
                 </div>
                 
                 <div class="form-group">
@@ -1648,103 +1648,9 @@ function calculateROI() {
     results.style.animation = 'fadeInUp 0.5s ease forwards';
 }
 
-// Add input validation and formatting
+// Simple input handling - preserve values as entered
 document.addEventListener('DOMContentLoaded', function() {
-    // Clear all calculator fields on page load/refresh
-    function clearCalculatorFields() {
-        // Clear all number inputs
-        const numberInputs = document.querySelectorAll('input[type="number"]');
-        numberInputs.forEach(input => {
-            input.value = '';
-        });
-        
-        // Reset select dropdowns to default values
-        const selectInputs = document.querySelectorAll('select');
-        selectInputs.forEach(select => {
-            if (select.id === 'loan-term') {
-                select.value = '20'; // Default to 20 years
-            } else if (select.id === 'holding-period') {
-                select.value = '5'; // Default to 5 years
-            }
-        });
-        
-        // Clear all result displays
-        const resultElements = document.querySelectorAll('.result-value');
-        resultElements.forEach(element => {
-            element.textContent = '-';
-        });
-    }
-    
-    // Clear fields on page load
-    clearCalculatorFields();
-    
-    // Add number formatting to inputs
-    const numberInputs = document.querySelectorAll('input[type="number"]');
-    numberInputs.forEach(input => {
-        // Store original value when focusing
-        let originalValue = '';
-        
-        input.addEventListener('focus', function() {
-            // Store the current value before formatting
-            originalValue = this.value;
-            // Remove commas for editing
-            if (this.value) {
-                this.value = this.value.replace(/,/g, '');
-            }
-        });
-        
-        input.addEventListener('blur', function() {
-            if (this.value && this.value.trim() !== '') {
-                const num = parseFloat(this.value.replace(/,/g, ''));
-                if (!isNaN(num) && num > 0) {
-                    // Format with commas only if it's a valid positive number
-                    this.value = num.toLocaleString('en-AE');
-                } else {
-                    // If invalid, restore original value or clear
-                    this.value = originalValue || '';
-                }
-            } else {
-                // If empty, keep it empty
-                this.value = '';
-            }
-        });
-        
-        // Prevent non-numeric input (except decimal point and backspace)
-        input.addEventListener('keypress', function(e) {
-            const charCode = e.which ? e.which : e.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
-                e.preventDefault();
-            }
-            // Allow only one decimal point
-            if (charCode === 46 && this.value.indexOf('.') !== -1) {
-                e.preventDefault();
-            }
-        });
-        
-        // Handle paste events to clean up pasted content
-        input.addEventListener('paste', function(e) {
-            setTimeout(() => {
-                let pastedValue = this.value.replace(/[^\d.]/g, '');
-                // Ensure only one decimal point
-                const parts = pastedValue.split('.');
-                if (parts.length > 2) {
-                    pastedValue = parts[0] + '.' + parts.slice(1).join('');
-                }
-                this.value = pastedValue;
-            }, 0);
-        });
-    });
-    
     // Add enter key support for calculations
-    document.getElementById('property-price').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') calculateMortgage();
-    });
-    
-    document.getElementById('purchase-price').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') calculateROI();
-    });
-    
-    // Add enter key support for all calculator inputs
     const calculatorInputs = document.querySelectorAll('.calculator-form input, .calculator-form select');
     calculatorInputs.forEach(input => {
         input.addEventListener('keypress', function(e) {
@@ -1759,12 +1665,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-    });
-    
-    // Add clear functionality on page refresh/reload
-    window.addEventListener('beforeunload', function() {
-        // Clear any stored values if needed
-        sessionStorage.removeItem('calculatorValues');
     });
 });
 </script>

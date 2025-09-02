@@ -33,7 +33,7 @@
             --text-light: #ffffff;
             --text-muted: #b0b0b0;
             --accent-gradient: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
-            --glass-bg: rgba(26, 26, 26, 0.8);
+            --glass-bg: rgba(30, 30, 30, 0.8);
             
             /* Legacy variables for compatibility */
             --primary-gold: #e8b4a0;
@@ -106,6 +106,112 @@
         }
 
         /* Enhanced Navbar - OBSIDIAN Style */
+
+        /* Dropdown container */
+.nav-item.dropdown {
+    position: relative;
+}
+
+/* Dropdown toggle link */
+.nav-item .dropdown-toggle {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 15px;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* directly below the parent */
+    left: 0;
+    min-width: 180px;
+    background-color: #0A0A0AFB
+;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    /* padding: 8px 0; */
+    z-index: 1000;
+}
+
+/* Dropdown items */
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Show dropdown on hover */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Active nav link styling */
+.nav-link.active {
+    color: #007bff; /* Highlight color */
+    font-weight: bold;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    position: absolute;   /* stays overlay */
+    top: 100%;            /* directly below the parent tab */
+    left: 0;
+    background: #1a1a1a;  /* adjust as needed */
+    min-width: 180px;
+    display: none;
+    z-index: 1000;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block; /* show on hover (desktop) */
+}
+
+.nav-item.dropdown.active .dropdown-menu {
+    display: block;
+    max-height: 500px; /* large enough to fit items */
+    opacity: 1;
+}
+
+.nav-item .nav-link i {
+    margin-right: 0.5rem;
+}
+
+/* Mobile accordion dropdown */
+@media (max-width: 768px) {
+  .nav-item.dropdown .dropdown-menu {
+    position: static;       /* inline inside menu */
+    display: block;         /* always take space */
+    max-height: 0;          /* collapsed */
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    padding-left: 1.5rem;
+  }
+
+  .nav-item.dropdown.active .dropdown-menu {
+    max-height: 500px; /* expand */
+    opacity: 1;
+  }
+
+  /* Disable hover for mobile */
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: block; /* fallback but not needed */
+  }
+}
+
+
+
+
         .navbar {
             position: fixed;
             top: 0;
@@ -388,7 +494,7 @@
             gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 3rem;
+            margin-top: 1rem;
         }
 
         .btn {
@@ -425,26 +531,28 @@
         .btn-primary {
             background: var(--accent-gradient);
             color: var(--obsidian-black);
+            font-family: 'Cormorant Garamond', serif;
             /* box-shadow: 0 15px 35px rgba(232, 180, 160, 0.4); */
         }
 
         .btn-primary:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 45px rgba(232, 180, 160, 0.6);
-            color: var(--obsidian-black);
+            /* box-shadow: 0 20px 45px rgba(232, 180, 160, 0.6); */
+            color: rgba(255, 255, 255, 0.87);
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--rose-gold);
             border: 1px solid var(--rose-gold);
+            font-family: 'Cormorant Garamond', serif;
         }
 
         .btn-secondary:hover {
             background: var(--rose-gold);
             color: var(--obsidian-black);
             transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(232, 180, 160, 0.4);
+            /* box-shadow: 0 15px 35px rgba(232, 180, 160, 0.4); */
         }
 
         /* Main Content */
@@ -878,7 +986,7 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .btn {
@@ -1328,6 +1436,16 @@
                     Home
                 </a>
             </li>
+            <li class="nav-item dropdown">
+                <a role="button" class="nav-link dropdown-toggle" id="calculatorDropdown">
+                    Calculator
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">Mortgage Calculator</a></li>
+                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">ROI Calculator</a></li>
+                </ul>
+            </li>
+
             <li>
                 <a href="{% url 'exclusive_properties:list' %}" class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
                     Exclusive
@@ -1373,6 +1491,24 @@
                         <span>Home</span>
                     </a>
                 </li>
+                <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" id="calculatorDropdown">
+            <i class="fas fa-calculator"></i> <!-- calculator icon -->
+            <span>Calculator</span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">
+                    Mortgage Calculator
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">
+                    ROI Calculator
+                </a>
+            </li>
+        </ul>
+    </li>
                 <li class="nav-item">
                     <a href="{% url 'exclusive_properties:list' %}" class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
                         <i class="fas fa-crown"></i>
@@ -1603,7 +1739,20 @@
 
             // Close mobile menu when clicking on navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function(e) {
+                    if (this.classList.contains('dropdown-toggle')) {
+                        // prevent closing when clicking "Calculator"
+                        e.preventDefault();
+                        this.parentElement.classList.toggle('active'); // toggle dropdown
+                    } else {
+                        closeMobileMenu(); // close for normal links
+                    }
+                });
+            });
+
+            // Ensure dropdown items close the menu
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
                     closeMobileMenu();
                 });
             });
@@ -1892,6 +2041,34 @@
         console.log('%cKIF Realty', 'background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32); color: #0a0a0a; font-size: 24px; font-weight: bold; padding: 8px 16px; border-radius: 8px;');
         console.log('%cPremium Dubai Real Estate Since 2011 - OBSIDIAN Edition', 'color: #e8b4a0; font-size: 12px;');
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const navbar = document.querySelector(".navbar"); // adjust if needed
+
+    function scrollWithOffset(targetId) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        const navbarHeight = navbar ? navbar.offsetHeight : 80;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = targetPosition - navbarHeight - 10;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+        });
+    }
+
+    // Check if ?scroll= parameter exists
+    const urlParams = new URLSearchParams(window.location.search);
+    const sectionId = urlParams.get("scroll");
+    if (sectionId) {
+        setTimeout(() => scrollWithOffset(sectionId), 300); // delay to allow render
+    }
+});
+</script>
+
+
 
     {% block extra_js %}{% endblock %}
 </body>

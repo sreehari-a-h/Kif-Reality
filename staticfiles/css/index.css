@@ -174,7 +174,7 @@ html {
 
 .hero-subtitle {
     font-size: 1.4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.9);
     opacity: 0.9;
     line-height: 1.8;
@@ -221,7 +221,7 @@ html {
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 3rem;
+    /* margin-top: 1rem; */
 }
 
 .btn {

@@ -13,6 +13,7 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="icon" type="image/png" sizes="48x48" href="{% static 'images/logo-kif.png' %}?v=2">
 
     <!-- Google Fonts - OBSIDIAN Theme -->
@@ -165,7 +166,7 @@
 .nav-item.dropdown .dropdown-menu {
     position: absolute;   /* stays overlay */
     top: 100%;            /* directly below the parent tab */
-    left: 0;
+    left: -30%;
     background: #1a1a1a;  /* adjust as needed */
     min-width: 180px;
     display: none;
@@ -219,7 +220,7 @@
             background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(232, 180, 160, 0.2);
-            padding: 0.5rem 5%;
+            padding: 0.3rem 2%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -230,7 +231,7 @@
         .navbar.scrolled {
             background: rgba(10, 10, 10, 0.98);
             border-bottom-color: rgba(232, 180, 160, 0.3);
-            padding: 0.5rem 5%;
+            padding: 0.3rem 2%;
         }
 
         .navbar-brand {
@@ -495,6 +496,10 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 1rem;
+        }
+
+        #calculatorIcon {
+            display: block;
         }
 
         .btn {
@@ -769,7 +774,7 @@
         /* Mobile Responsiveness */
         @media (max-width: 992px) {
             .navbar {
-                padding: 1.2rem 3%;
+                padding: 1rem 3%;
             }
 
             .mobile-toggle {
@@ -962,7 +967,7 @@
             }
 
             .navbar-brand {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
             }
 
             .header-content h1 {
@@ -1436,24 +1441,15 @@
                     Home
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a role="button" class="nav-link dropdown-toggle" id="calculatorDropdown">
-                    Calculator
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">Mortgage Calculator</a></li>
-                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">ROI Calculator</a></li>
-                </ul>
-            </li>
 
-            <li>
-                <a href="{% url 'exclusive_properties:list' %}" class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
-                    Exclusive
-                </a>
-            </li>
             <li>
                 <a href="{% url 'properties' %}" class="nav-link {% if request.resolver_match.url_name == 'properties' %}active{% endif %}">
                     Properties
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'exclusive_properties:list' %}" class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
+                    Exclusive
                 </a>
             </li>
             <li>
@@ -1470,6 +1466,15 @@
                 <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
                     Contact
                 </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a role="button" class="nav-link dropdown-toggle" id="calculatorDropdown">
+                    <i class="bi bi-calculator" id="calculatorIcon"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">Mortgage Calculator</a></li>
+                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">ROI Calculator</a></li>
+                </ul>
             </li>
             
             <!-- Mobile Header (hidden on desktop) -->

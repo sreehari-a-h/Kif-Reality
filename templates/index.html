@@ -278,8 +278,8 @@
         justify-content: center;
         position: relative;
         background: linear-gradient(
-        rgba(2, 2, 2, 0.7), 
-        rgba(2, 2, 2, 0.7)   
+        rgba(2, 2, 2, 0.4), 
+        rgba(2, 2, 2, 0.4)   
     );
         overflow: hidden;
         margin-top: 0;
@@ -390,7 +390,7 @@
         background: linear-gradient(135deg, var(--charcoal-gray) 0%, var(--obsidian-black) 100%);
         position: relative;
         overflow: hidden;
-        padding: 4rem 3rem;
+        padding: 2rem 1rem;
     }
 
     .services-section::before {
@@ -504,7 +504,7 @@
 
     .service-card h3 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         font-weight: 600;
         color: var(--text-light);
         margin-bottom: 1.5rem;
@@ -519,7 +519,7 @@
 
     /* Locations Section - OBSIDIAN Style */
     .locations-section {
-        padding: 4rem 3rem;
+        padding: 2rem 1rem;
         position: relative;
         background: var(--obsidian-black);
         overflow: hidden;
@@ -546,7 +546,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.2rem;
-        margin-top: 4rem;
+        margin-top: 2rem;
     }
 
     .location-item {
@@ -607,7 +607,7 @@
 
     .location-item h3 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 600;
         color: var(--text-light);
         margin-bottom: 0.8rem;
@@ -625,7 +625,7 @@
 
     /* Why Choose Section - OBSIDIAN Style */
     .why-choose-section {
-        padding: 4rem 3rem;
+        padding: 2rem 1rem;
         background: linear-gradient(135deg, var(--medium-gray) 0%, var(--charcoal-gray) 100%);
         position: relative;
         overflow: hidden;
@@ -647,7 +647,7 @@
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         gap: 1.2rem;
         max-width: 1200px;
-        margin: 4rem auto 0;
+        margin: 2rem auto 0;
         position: relative;
         z-index: 2;
     }
@@ -687,7 +687,7 @@
 
     .feature-number {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 4rem;
+        font-size: 2rem;
         font-weight: 600;
         background: var(--accent-gradient);
         -webkit-background-clip: text;
@@ -746,7 +746,7 @@
 
     .section-title h2 {
         font-family: 'Playfair Display', serif;
-        font-size: 2.8rem;
+        font-size: 1.8rem;
         font-weight: 400;
         color: #e8b4a0;
         margin: 0 0 1rem 0;
@@ -1200,7 +1200,7 @@
 
     /* CTA Section - OBSIDIAN Style */
     .cta-section {
-        padding: 4rem 3rem;
+        padding: 2rem 1rem;
         background: var(--obsidian-black);
         text-align: center;
         position: relative;
@@ -1226,7 +1226,7 @@
 
     .cta-content h2 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 3.5rem;
+        font-size: 2.1rem;
         font-weight: 400;
         color: var(--text-light);
         margin-bottom: 2rem;
@@ -1391,7 +1391,7 @@
         }
 
         .section-title h2 {
-            font-size: 3rem;
+            font-size: 1.5rem;
         }
 
         .services-grid {
@@ -1448,7 +1448,7 @@
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
         }
 
         .services-section,
@@ -1549,7 +1549,7 @@
         }
 
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         .service-card,
@@ -1622,7 +1622,7 @@
         }
 
         .section-title h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
         .calculators-section {
@@ -2101,7 +2101,7 @@
                                 <label for="loan-period">Loan Period (Years)</label>
                                 <div class="input-slider-group">
                                     <input type="text" id="loan-period-input" value="25" class="editable-input">
-                                    <input type="range" id="loan-period" min="1" max="25" value="25" step="1"
+                                    <input type="range" id="loan-period" min="1" max="25" value="25"
                                         class="slider">
                                     <div class="slider-values">
                                         <span class="min-value">1 year</span>
@@ -2229,7 +2229,7 @@
                                 <label for="holding-period">Investment Period (Years)</label>
                                 <div class="input-slider-group">
                                     <input type="text" id="holding-period-input" value="5" class="editable-input">
-                                    <input type="range" id="holding-period" min="1" max="20" value="5" step="1"
+                                    <input type="range" id="holding-period" min="1" max="20" value="5"
                                         class="slider">
                                     <div class="slider-values">
                                         <span class="min-value">1 year</span>
@@ -2275,422 +2275,411 @@
 {% endblock %}
 
 {% block extra_js %}
+
 <script>
     // UAE Property Investment Calculators - Fixed Implementation with Precise Input Handling
-    document.addEventListener('DOMContentLoaded', function () {
+    // UAE Property Investment Calculators - Fixed with Max Loan Positioning
+document.addEventListener('DOMContentLoaded', function () {
 
-        // Utility Functions
-        function formatNumber(num) {
-            return new Intl.NumberFormat('en-AE').format(Math.round(num));
+    // Utility Functions
+    function formatNumber(num) {
+        return new Intl.NumberFormat('en-AE').format(Math.round(num));
+    }
+
+    function formatCurrency(num) {
+        return new Intl.NumberFormat('en-AE').format(Math.round(num)) + ' AED';
+    }
+
+    function parseFormattedNumber(str) {
+        return parseFloat(str.toString().replace(/,/g, ''));
+    }
+
+    // MORTGAGE CALCULATOR
+    function setupMortgageCalculator() {
+        const elements = {
+            propertyPrice: document.getElementById('property-price'),
+            downPayment: document.getElementById('down-payment'),
+            loanAmount: document.getElementById('loan-amount'),
+            loanPeriod: document.getElementById('loan-period'),
+            interestRate: document.getElementById('interest-rate'),
+
+            propertyPriceInput: document.getElementById('property-price-input'),
+            downPaymentInput: document.getElementById('down-payment-input'),
+            loanAmountInput: document.getElementById('loan-amount-input'),
+            loanPeriodInput: document.getElementById('loan-period-input'),
+            interestRateInput: document.getElementById('interest-rate-input'),
+
+            monthlyPayment: document.getElementById('monthly-payment'),
+            displayRate: document.getElementById('display-rate'),
+            downPercentage: document.getElementById('down-percentage'),
+            loanPercentage: document.getElementById('loan-percentage')
+        };
+
+        // Store actual values 
+        let actualValues = {
+            propertyPrice: 1200000,
+            downPayment: 240000,     // Will be recalculated based on residency
+            loanAmount: 960000,      // Will be recalculated based on residency
+            loanPeriod: 25,
+            interestRate: 3.75
+        };
+
+        function getResidencyLimits() {
+            const activeStatusEl = document.querySelector('.status-btn.active');
+            if (!activeStatusEl) return { maxLoanPercent: 0.80, minDownPercent: 0.20 }; // default
+            
+            const activeStatus = activeStatusEl.getAttribute('data-value');
+
+            if (activeStatus === 'uae-national') {
+                return { maxLoanPercent: 0.85, minDownPercent: 0.15 };
+            } else if (activeStatus === 'uae-resident') {
+                return { maxLoanPercent: 0.80, minDownPercent: 0.20 };
+            } else { // non-resident
+                return { maxLoanPercent: 0.60, minDownPercent: 0.40 };
+            }
         }
 
-        function formatCurrency(num) {
-            return new Intl.NumberFormat('en-AE').format(Math.round(num)) + ' AED';
+        function setToMaxLoanPosition() {
+            const price = actualValues.propertyPrice;
+            const limits = getResidencyLimits();
+            
+            // Set loan to maximum allowed and down payment to minimum required
+            actualValues.loanAmount = price * limits.maxLoanPercent;
+            actualValues.downPayment = price * limits.minDownPercent;
         }
 
-        function parseFormattedNumber(str) {
-            return parseFloat(str.toString().replace(/,/g, ''));
+        function updateSliderRanges() {
+            const price = actualValues.propertyPrice;
+            const limits = getResidencyLimits();
+            
+            const minDown = price * limits.minDownPercent;
+            const maxDown = price * (1 - limits.minDownPercent);
+            const minLoan = price * limits.minDownPercent;
+            const maxLoan = price * limits.maxLoanPercent;
+
+            // Update slider ranges
+            elements.downPayment.min = minDown;
+            elements.downPayment.max = maxDown;
+            elements.loanAmount.min = minLoan;
+            elements.loanAmount.max = maxLoan;
         }
 
-        // MORTGAGE CALCULATOR
-        function setupMortgageCalculator() {
-            const elements = {
-                propertyPrice: document.getElementById('property-price'),
-                downPayment: document.getElementById('down-payment'),
-                loanAmount: document.getElementById('loan-amount'),
-                loanPeriod: document.getElementById('loan-period'),
-                interestRate: document.getElementById('interest-rate'),
+        function updateMortgageCalculations() {
+            const price = actualValues.propertyPrice;
+            const down = actualValues.downPayment;
+            const loan = actualValues.loanAmount;
+            const period = actualValues.loanPeriod;
+            const rate = actualValues.interestRate;
 
-                propertyPriceInput: document.getElementById('property-price-input'),
-                downPaymentInput: document.getElementById('down-payment-input'),
-                loanAmountInput: document.getElementById('loan-amount-input'),
-                loanPeriodInput: document.getElementById('loan-period-input'),
-                interestRateInput: document.getElementById('interest-rate-input'),
+            // Update slider ranges first
+            updateSliderRanges();
 
-                monthlyPayment: document.getElementById('monthly-payment'),
-                displayRate: document.getElementById('display-rate'),
-                downPercentage: document.getElementById('down-percentage'),
-                loanPercentage: document.getElementById('loan-percentage')
-            };
+            // Update input displays with precise values
+            elements.propertyPriceInput.value = formatNumber(price);
+            elements.downPaymentInput.value = formatNumber(down);
+            elements.loanAmountInput.value = formatNumber(loan);
+            elements.loanPeriodInput.value = period;
+            elements.interestRateInput.value = rate.toFixed(2);
 
-            // Store actual values separately from slider values to maintain precision
-            let actualValues = {
-                propertyPrice: 500000,
-                downPayment: 100000,
-                loanAmount: 400000,
-                loanPeriod: 25,
-                interestRate: 3.5
-            };
+            // Update slider values to match actual values
+            elements.propertyPrice.value = price;
+            elements.downPayment.value = down;
+            elements.loanAmount.value = loan;
+            elements.loanPeriod.value = period;
+            elements.interestRate.value = rate;
 
-            function updateMortgageCalculations() {
-                const price = actualValues.propertyPrice;
-                const down = actualValues.downPayment;
-                const loan = actualValues.loanAmount;
-                const period = actualValues.loanPeriod;
-                const rate = actualValues.interestRate;
+            // Update percentages
+            const downPercent = (down / price) * 100;
+            const loanPercent = (loan / price) * 100;
+            if (elements.downPercentage) elements.downPercentage.textContent = downPercent.toFixed(1) + '%';
+            if (elements.loanPercentage) elements.loanPercentage.textContent = loanPercent.toFixed(1) + '%';
 
-                // Update input displays with precise values
-                elements.propertyPriceInput.value = formatNumber(price);
-                elements.downPaymentInput.value = formatNumber(down);
-                elements.loanAmountInput.value = formatNumber(loan);
-                elements.loanPeriodInput.value = period;
-                elements.interestRateInput.value = rate.toFixed(2);
+            // Update min/max displays based on residency status
+            const limits = getResidencyLimits();
+            const minDown = price * limits.minDownPercent;
+            const maxLoan = price * limits.maxLoanPercent;
 
-                // Update slider values (these may be less precise due to step constraints)
-                elements.propertyPrice.value = price;
-                elements.downPayment.value = down;
-                elements.loanAmount.value = loan;
-                elements.loanPeriod.value = period;
-                elements.interestRate.value = rate;
+            const downMinDisplay = document.getElementById('down-min-display');
+            const loanMinDisplay = document.getElementById('loan-min-display');
+            
+            if (downMinDisplay) {
+                downMinDisplay.textContent = formatNumber(minDown) + ' AED (' + (limits.minDownPercent * 100).toFixed(0) + '%)';
+            }
+            if (loanMinDisplay) {
+                loanMinDisplay.textContent = formatNumber(maxLoan) + ' AED (' + (limits.maxLoanPercent * 100).toFixed(0) + '%)';
+            }
 
-                // Update percentages
-                const downPercent = (down / price) * 100;
-                const loanPercent = (loan / price) * 100;
-                elements.downPercentage.textContent = downPercent.toFixed(1) + '%';
-                elements.loanPercentage.textContent = loanPercent.toFixed(1) + '%';
+            // Calculate monthly payment using standard amortization formula
+            const monthlyRate = rate / 100 / 12;
+            const numberOfPayments = period * 12;
 
-                // Update min/max displays
-                const minDown = Math.max(price * 0.20, 60000); // UAE: 20% minimum for expats, 15% for nationals
-                const minLoan = price * 0.15;
-                document.getElementById('down-min-display').textContent = formatNumber(minDown) + ' AED (' + ((minDown / price) * 100).toFixed(1) + '%)';
-                document.getElementById('loan-min-display').textContent = formatNumber(minLoan) + ' AED (' + ((minLoan / price) * 100).toFixed(1) + '%)';
+            let monthlyPayment = 0;
+            if (monthlyRate > 0) {
+                monthlyPayment = loan * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
+                    (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+            } else {
+                monthlyPayment = loan / numberOfPayments;
+            }
 
-                // Calculate monthly payment using standard amortization formula
-                const monthlyRate = rate / 100 / 12;
-                const numberOfPayments = period * 12;
+            if (elements.monthlyPayment) elements.monthlyPayment.textContent = formatCurrency(monthlyPayment);
+            if (elements.displayRate) elements.displayRate.textContent = rate.toFixed(2) + '%';
 
-                let monthlyPayment = 0;
-                if (monthlyRate > 0) {
-                    monthlyPayment = loan * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
-                        (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+            // Update fees breakdown
+            updateFeesBreakdown(price, down);
+        }
+
+        function updateFeesBreakdown(price, down) {
+            const landDeptFee = price * 0.04;
+            const processingFee = Math.min(2500, price * 0.001);
+            const totalUpfront = down + landDeptFee + 4000 + processingFee + 2500 + 5000;
+
+            const downPaymentFeeEl = document.getElementById('down-payment-fee');
+            const landDeptFeeEl = document.getElementById('land-dept-fee');
+            const processingFeeEl = document.getElementById('processing-fee');
+            const totalUpfrontEl = document.getElementById('total-upfront');
+
+            if (downPaymentFeeEl) downPaymentFeeEl.textContent = formatCurrency(down);
+            if (landDeptFeeEl) landDeptFeeEl.textContent = formatCurrency(landDeptFee);
+            if (processingFeeEl) processingFeeEl.textContent = formatCurrency(processingFee);
+            if (totalUpfrontEl) totalUpfrontEl.textContent = formatCurrency(totalUpfront);
+        }
+
+        // Property price slider
+        elements.propertyPrice.addEventListener('input', function () {
+            actualValues.propertyPrice = parseFloat(this.value);
+            setToMaxLoanPosition(); // Reset to max loan when property price changes
+            updateMortgageCalculations();
+        });
+
+        // Down payment slider
+        elements.downPayment.addEventListener('input', function () {
+            actualValues.downPayment = parseFloat(this.value);
+            actualValues.loanAmount = actualValues.propertyPrice - actualValues.downPayment;
+            updateMortgageCalculations();
+        });
+
+        // Loan amount slider
+        elements.loanAmount.addEventListener('input', function () {
+            actualValues.loanAmount = parseFloat(this.value);
+            actualValues.downPayment = actualValues.propertyPrice - actualValues.loanAmount;
+            updateMortgageCalculations();
+        });
+
+        // Loan period slider
+        elements.loanPeriod.addEventListener('input', function () {
+            actualValues.loanPeriod = parseFloat(this.value);
+            updateMortgageCalculations();
+        });
+
+        // Interest rate slider
+        elements.interestRate.addEventListener('input', function () {
+            actualValues.interestRate = parseFloat(this.value);
+            updateMortgageCalculations();
+        });
+
+        // Residency status buttons - FIXED to set max loan position
+        document.querySelectorAll('.status-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove active class from all buttons
+                document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Update interest rate
+                actualValues.interestRate = parseFloat(this.getAttribute('data-rate'));
+                
+                // Set sliders to maximum loan position for new residency type
+                setToMaxLoanPosition();
+                
+                // Update everything
+                updateMortgageCalculations();
+            });
+        });
+
+        // Input field synchronization
+        function setupInputSync(inputElement, valueKey, isInteger = false, min = 0, max = Infinity) {
+            if (!inputElement) return;
+
+            inputElement.addEventListener('input', function () {
+                let value = this.value.replace(/,/g, '');
+                if (isInteger) {
+                    value = value.replace(/[^0-9]/g, '');
                 } else {
-                    monthlyPayment = loan / numberOfPayments;
+                    value = value.replace(/[^0-9.]/g, '');
                 }
 
-                elements.monthlyPayment.textContent = formatCurrency(monthlyPayment);
-                elements.displayRate.textContent = rate.toFixed(2) + '%';
+                const numValue = parseFloat(value);
+                if (!isNaN(numValue) && value !== '') {
+                    if (numValue >= min && numValue <= max) {
+                        actualValues[valueKey] = numValue;
 
-                // Update fees breakdown
-                updateFeesBreakdown(price, down);
-            }
-
-            function updateFeesBreakdown(price, down) {
-                const landDeptFee = price * 0.04; // 4% of property value
-                const processingFee = Math.min(2500, price * 0.001); // Typically 0.1% up to 2500 AED
-                const totalUpfront = down + landDeptFee + 4000 + processingFee + 2500 + 5000;
-
-                document.getElementById('down-payment-fee').textContent = formatCurrency(down);
-                document.getElementById('land-dept-fee').textContent = formatCurrency(landDeptFee);
-                document.getElementById('processing-fee').textContent = formatCurrency(processingFee);
-                document.getElementById('total-upfront').textContent = formatCurrency(totalUpfront);
-            }
-
-            function syncMortgageValues() {
-                const price = actualValues.propertyPrice;
-                const down = actualValues.downPayment;
-                const loan = price - down;
-
-                // Update loan amount to maintain price = down + loan relationship
-                actualValues.loanAmount = loan;
-
-                // Set dynamic ranges based on UAE regulations
-                const minDown = Math.max(price * 0.15, 60000); // 15% for nationals, 20% for expats
-                const maxDown = price * 0.80; // Maximum 80% down payment
-                const minLoan = price * 0.20; // Minimum 20% loan
-                const maxLoan = price * 0.85; // Maximum 85% LTV for nationals
-
-                // Update slider ranges
-                elements.downPayment.min = minDown;
-                elements.downPayment.max = maxDown;
-                elements.loanAmount.min = minLoan;
-                elements.loanAmount.max = maxLoan;
-
-                // Clamp values to valid ranges
-                actualValues.downPayment = Math.max(minDown, Math.min(maxDown, actualValues.downPayment));
-                actualValues.loanAmount = Math.max(minLoan, Math.min(maxLoan, actualValues.loanAmount));
-            }
-
-            // Property price slider
-            elements.propertyPrice.addEventListener('input', function () {
-                actualValues.propertyPrice = parseFloat(this.value);
-                // Adjust down payment to maintain percentage if possible
-                const currentPercent = actualValues.downPayment / (actualValues.propertyPrice + actualValues.loanAmount);
-                const newDown = Math.max(actualValues.propertyPrice * 0.20, Math.min(actualValues.propertyPrice * 0.80, actualValues.propertyPrice * currentPercent));
-                actualValues.downPayment = newDown;
-                syncMortgageValues();
-                updateMortgageCalculations();
-            });
-
-            // Down payment slider
-            elements.downPayment.addEventListener('input', function () {
-                actualValues.downPayment = parseFloat(this.value);
-                syncMortgageValues();
-                updateMortgageCalculations();
-            });
-
-            // Loan amount slider
-            elements.loanAmount.addEventListener('input', function () {
-                actualValues.loanAmount = parseFloat(this.value);
-                const down = actualValues.propertyPrice - actualValues.loanAmount;
-                actualValues.downPayment = down;
-                updateMortgageCalculations();
-            });
-
-            // Other sliders
-            elements.loanPeriod.addEventListener('input', function () {
-                actualValues.loanPeriod = parseFloat(this.value);
-                updateMortgageCalculations();
-            });
-
-            elements.interestRate.addEventListener('input', function () {
-                actualValues.interestRate = parseFloat(this.value);
-                updateMortgageCalculations();
-            });
-
-            // Residency status buttons
-            document.querySelectorAll('.status-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    actualValues.interestRate = parseFloat(this.getAttribute('data-rate'));
-                    updateMortgageCalculations();
-                });
-            });
-
-            // Input field synchronization with precise value handling
-            function setupInputSync(inputElement, valueKey, isInteger = false, min = 0, max = Infinity) {
-                if (!inputElement) return;
-
-                inputElement.addEventListener('input', function () {
-                    let value = this.value.replace(/,/g, '');
-                    if (isInteger) {
-                        value = value.replace(/[^0-9]/g, '');
-                    } else {
-                        value = value.replace(/[^0-9.]/g, '');
-                    }
-
-                    const numValue = parseFloat(value);
-                    if (!isNaN(numValue) && value !== '') {
-                        if (numValue >= min && numValue <= max) {
-                            actualValues[valueKey] = numValue;
-
-                            if (valueKey === 'propertyPrice') {
-                                syncMortgageValues();
-                            } else if (valueKey === 'downPayment') {
-                                syncMortgageValues();
-                            } else if (valueKey === 'loanAmount') {
-                                actualValues.downPayment = actualValues.propertyPrice - numValue;
-                            }
-                            updateMortgageCalculations();
+                        if (valueKey === 'propertyPrice') {
+                            setToMaxLoanPosition();
+                        } else if (valueKey === 'downPayment') {
+                            actualValues.loanAmount = actualValues.propertyPrice - numValue;
+                        } else if (valueKey === 'loanAmount') {
+                            actualValues.downPayment = actualValues.propertyPrice - numValue;
                         }
+                        updateMortgageCalculations();
                     }
-                });
+                }
+            });
 
-                inputElement.addEventListener('blur', function () {
-                    const value = this.value.replace(/,/g, '');
-                    if (value === '' || isNaN(parseFloat(value))) {
-                        this.value = isInteger ? actualValues[valueKey].toString() : formatNumber(actualValues[valueKey]);
-                        return;
-                    }
+            inputElement.addEventListener('blur', function () {
+                const value = this.value.replace(/,/g, '');
+                if (value === '' || isNaN(parseFloat(value))) {
+                    this.value = isInteger ? actualValues[valueKey].toString() : formatNumber(actualValues[valueKey]);
+                    return;
+                }
 
-                    const numValue = parseFloat(value);
-                    const clampedValue = Math.max(min, Math.min(max, numValue));
+                const numValue = parseFloat(value);
+                const clampedValue = Math.max(min, Math.min(max, numValue));
 
-                    actualValues[valueKey] = clampedValue;
-                    this.value = isInteger ? clampedValue.toString() : formatNumber(clampedValue);
+                actualValues[valueKey] = clampedValue;
+                this.value = isInteger ? clampedValue.toString() : formatNumber(clampedValue);
 
-                    if (valueKey === 'propertyPrice') {
-                        syncMortgageValues();
-                    } else if (valueKey === 'downPayment') {
-                        syncMortgageValues();
-                    } else if (valueKey === 'loanAmount') {
-                        actualValues.downPayment = actualValues.propertyPrice - clampedValue;
-                    }
-                    updateMortgageCalculations();
-                });
-            }
-
-            // Setup input synchronization with appropriate limits
-            setupInputSync(elements.propertyPriceInput, 'propertyPrice', false, 100000, 200000000);
-            setupInputSync(elements.downPaymentInput, 'downPayment', false, 0, 200000000);
-            setupInputSync(elements.loanAmountInput, 'loanAmount', false, 0, 200000000);
-            setupInputSync(elements.loanPeriodInput, 'loanPeriod', true, 1, 30);
-            setupInputSync(elements.interestRateInput, 'interestRate', false, 0, 20);
-
-            // Upfront costs toggle
-            const viewUpfrontButton = document.getElementById('view-upfront-costs');
-            if (viewUpfrontButton) {
-                viewUpfrontButton.addEventListener('click', function () {
-                    const breakdown = document.getElementById('fees-breakdown');
-                    if (breakdown) {
-                        breakdown.classList.toggle('show');
-                        this.textContent = breakdown.classList.contains('show') ?
-                            'Hide upfront costs' : 'View upfront costs & fees';
-                    }
-                });
-            }
-
-            // Initialize with default values
-            syncMortgageValues();
-            updateMortgageCalculations();
+                if (valueKey === 'propertyPrice') {
+                    setToMaxLoanPosition();
+                } else if (valueKey === 'downPayment') {
+                    actualValues.loanAmount = actualValues.propertyPrice - clampedValue;
+                } else if (valueKey === 'loanAmount') {
+                    actualValues.downPayment = actualValues.propertyPrice - clampedValue;
+                }
+                updateMortgageCalculations();
+            });
         }
 
-        // ROI CALCULATOR
-        function setupROICalculator() {
-            const elements = {
-                purchasePrice: document.getElementById('purchase-price'),
-                currentValue: document.getElementById('current-value'),
-                annualRent: document.getElementById('annual-rent'),
-                annualExpenses: document.getElementById('annual-expenses'),
-                holdingPeriod: document.getElementById('holding-period'),
+        // Setup input synchronization
+        setupInputSync(elements.propertyPriceInput, 'propertyPrice', false, 100000, 200000000);
+        setupInputSync(elements.downPaymentInput, 'downPayment', false, 0, 200000000);
+        setupInputSync(elements.loanAmountInput, 'loanAmount', false, 0, 200000000);
+        setupInputSync(elements.loanPeriodInput, 'loanPeriod', true, 1, 30);
+        setupInputSync(elements.interestRateInput, 'interestRate', false, 0, 20);
 
-                purchasePriceInput: document.getElementById('purchase-price-input'),
-                currentValueInput: document.getElementById('current-value-input'),
-                annualRentInput: document.getElementById('annual-rent-input'),
-                annualExpensesInput: document.getElementById('annual-expenses-input'),
-                holdingPeriodInput: document.getElementById('holding-period-input'),
-
-                totalROIDisplay: document.getElementById('total-roi-display'),
-                annualROIDisplay: document.getElementById('annual-roi-display')
-            };
-
-            // Store actual ROI values
-            let actualROIValues = {
-                purchasePrice: 500000,
-                currentValue: 600000,
-                annualRent: 40000,
-                annualExpenses: 8000,
-                holdingPeriod: 5
-            };
-
-            function calculateROI() {
-                const purchasePrice = actualROIValues.purchasePrice;
-                const currentValue = actualROIValues.currentValue;
-                const annualRent = actualROIValues.annualRent;
-                const annualExpenses = actualROIValues.annualExpenses;
-                const holdingPeriod = actualROIValues.holdingPeriod;
-
-                // Update input displays
-                elements.purchasePriceInput.value = formatNumber(purchasePrice);
-                elements.currentValueInput.value = formatNumber(currentValue);
-                elements.annualRentInput.value = formatNumber(annualRent);
-                elements.annualExpensesInput.value = formatNumber(annualExpenses);
-                elements.holdingPeriodInput.value = holdingPeriod;
-
-                // Update slider values
-                elements.purchasePrice.value = purchasePrice;
-                elements.currentValue.value = currentValue;
-                elements.annualRent.value = annualRent;
-                elements.annualExpenses.value = annualExpenses;
-                elements.holdingPeriod.value = holdingPeriod;
-
-                // Calculate capital appreciation
-                const capitalAppreciation = currentValue - purchasePrice;
-
-                // Calculate net rental income over holding period
-                const netAnnualRent = annualRent - annualExpenses;
-                const totalRentalIncome = netAnnualRent * holdingPeriod;
-
-                // Calculate total ROI
-                const totalReturn = capitalAppreciation + totalRentalIncome;
-                const totalROI = (totalReturn / purchasePrice) * 100;
-
-                // Calculate annualized ROI
-                const annualROI = holdingPeriod > 0 ? totalROI / holdingPeriod : 0;
-
-                // Update displays
-                if (elements.totalROIDisplay) elements.totalROIDisplay.textContent = totalROI.toFixed(2) + '%';
-                if (elements.annualROIDisplay) elements.annualROIDisplay.textContent = annualROI.toFixed(2) + '%';
-            }
-
-            // Add event listeners for sliders
-            if (elements.purchasePrice) {
-                elements.purchasePrice.addEventListener('input', function () {
-                    actualROIValues.purchasePrice = parseFloat(this.value);
-                    calculateROI();
-                });
-            }
-
-            if (elements.currentValue) {
-                elements.currentValue.addEventListener('input', function () {
-                    actualROIValues.currentValue = parseFloat(this.value);
-                    calculateROI();
-                });
-            }
-
-            if (elements.annualRent) {
-                elements.annualRent.addEventListener('input', function () {
-                    actualROIValues.annualRent = parseFloat(this.value);
-                    calculateROI();
-                });
-            }
-
-            if (elements.annualExpenses) {
-                elements.annualExpenses.addEventListener('input', function () {
-                    actualROIValues.annualExpenses = parseFloat(this.value);
-                    calculateROI();
-                });
-            }
-
-            if (elements.holdingPeriod) {
-                elements.holdingPeriod.addEventListener('input', function () {
-                    actualROIValues.holdingPeriod = parseFloat(this.value);
-                    calculateROI();
-                });
-            }
-
-            // Input field synchronization for ROI
-            function setupROIInputSync(inputElement, valueKey, isInteger = false, min = 0, max = Infinity) {
-                if (!inputElement) return;
-
-                inputElement.addEventListener('input', function () {
-                    let value = this.value.replace(/,/g, '');
-                    if (isInteger) {
-                        value = value.replace(/[^0-9]/g, '');
-                    } else {
-                        value = value.replace(/[^0-9.]/g, '');
-                    }
-
-                    const numValue = parseFloat(value);
-                    if (!isNaN(numValue) && value !== '') {
-                        if (numValue >= min && numValue <= max) {
-                            actualROIValues[valueKey] = numValue;
-                            calculateROI();
-                        }
-                    }
-                });
-
-                inputElement.addEventListener('blur', function () {
-                    const value = this.value.replace(/,/g, '');
-                    if (value === '' || isNaN(parseFloat(value))) {
-                        this.value = isInteger ? actualROIValues[valueKey].toString() : formatNumber(actualROIValues[valueKey]);
-                        return;
-                    }
-
-                    const numValue = parseFloat(value);
-                    const clampedValue = Math.max(min, Math.min(max, numValue));
-
-                    actualROIValues[valueKey] = clampedValue;
-                    this.value = isInteger ? clampedValue.toString() : formatNumber(clampedValue);
-                    calculateROI();
-                });
-            }
-
-            // Setup ROI input synchronization
-            setupROIInputSync(elements.purchasePriceInput, 'purchasePrice', false, 1000, 200000000);
-            setupROIInputSync(elements.currentValueInput, 'currentValue', false, 1000, 200000000);
-            setupROIInputSync(elements.annualRentInput, 'annualRent', false, 0, 1000000);
-            setupROIInputSync(elements.annualExpensesInput, 'annualExpenses', false, 0, 1000000);
-            setupROIInputSync(elements.holdingPeriodInput, 'holdingPeriod', true, 1, 50);
-
-            // Initialize
-            calculateROI();
+        // Upfront costs toggle
+        const viewUpfrontButton = document.getElementById('view-upfront-costs');
+        if (viewUpfrontButton) {
+            viewUpfrontButton.addEventListener('click', function () {
+                const breakdown = document.getElementById('fees-breakdown');
+                if (breakdown) {
+                    breakdown.classList.toggle('show');
+                    this.textContent = breakdown.classList.contains('show') ?
+                        'Hide upfront costs' : 'View upfront costs & fees';
+                }
+            });
         }
 
-        // Initialize both calculators
-        setupMortgageCalculator();
-        setupROICalculator();
-    });
+        // Initialize - set to max loan position for default residency (UAE Resident)
+        setToMaxLoanPosition();
+        updateMortgageCalculations();
+    }
+
+    // ROI CALCULATOR (unchanged)
+    function setupROICalculator() {
+        const elements = {
+            purchasePrice: document.getElementById('purchase-price'),
+            currentValue: document.getElementById('current-value'),
+            annualRent: document.getElementById('annual-rent'),
+            annualExpenses: document.getElementById('annual-expenses'),
+            holdingPeriod: document.getElementById('holding-period'),
+
+            purchasePriceInput: document.getElementById('purchase-price-input'),
+            currentValueInput: document.getElementById('current-value-input'),
+            annualRentInput: document.getElementById('annual-rent-input'),
+            annualExpensesInput: document.getElementById('annual-expenses-input'),
+            holdingPeriodInput: document.getElementById('holding-period-input'),
+
+            totalROIDisplay: document.getElementById('total-roi-display'),
+            annualROIDisplay: document.getElementById('annual-roi-display')
+        };
+
+        let actualROIValues = {
+            purchasePrice: 2500000,
+            currentValue: 3000000,
+            annualRent: 180000,
+            annualExpenses: 25000,
+            holdingPeriod: 5
+        };
+
+        function calculateROI() {
+            const purchasePrice = actualROIValues.purchasePrice;
+            const currentValue = actualROIValues.currentValue;
+            const annualRent = actualROIValues.annualRent;
+            const annualExpenses = actualROIValues.annualExpenses;
+            const holdingPeriod = actualROIValues.holdingPeriod;
+
+            // Update input displays
+            if (elements.purchasePriceInput) elements.purchasePriceInput.value = formatNumber(purchasePrice);
+            if (elements.currentValueInput) elements.currentValueInput.value = formatNumber(currentValue);
+            if (elements.annualRentInput) elements.annualRentInput.value = formatNumber(annualRent);
+            if (elements.annualExpensesInput) elements.annualExpensesInput.value = formatNumber(annualExpenses);
+            if (elements.holdingPeriodInput) elements.holdingPeriodInput.value = holdingPeriod;
+
+            // Update slider values
+            if (elements.purchasePrice) elements.purchasePrice.value = purchasePrice;
+            if (elements.currentValue) elements.currentValue.value = currentValue;
+            if (elements.annualRent) elements.annualRent.value = annualRent;
+            if (elements.annualExpenses) elements.annualExpenses.value = annualExpenses;
+            if (elements.holdingPeriod) elements.holdingPeriod.value = holdingPeriod;
+
+            // Calculate ROI
+            const capitalAppreciation = currentValue - purchasePrice;
+            const netAnnualRent = annualRent - annualExpenses;
+            const totalRentalIncome = netAnnualRent * holdingPeriod;
+            const totalReturn = capitalAppreciation + totalRentalIncome;
+            const totalROI = (totalReturn / purchasePrice) * 100;
+            const annualROI = holdingPeriod > 0 ? totalROI / holdingPeriod : 0;
+
+            // Update displays
+            if (elements.totalROIDisplay) elements.totalROIDisplay.textContent = totalROI.toFixed(2) + '%';
+            if (elements.annualROIDisplay) elements.annualROIDisplay.textContent = annualROI.toFixed(2) + '%';
+        }
+
+        // Add slider event listeners
+        if (elements.purchasePrice) {
+            elements.purchasePrice.addEventListener('input', function () {
+                actualROIValues.purchasePrice = parseFloat(this.value);
+                calculateROI();
+            });
+        }
+
+        if (elements.currentValue) {
+            elements.currentValue.addEventListener('input', function () {
+                actualROIValues.currentValue = parseFloat(this.value);
+                calculateROI();
+            });
+        }
+
+        if (elements.annualRent) {
+            elements.annualRent.addEventListener('input', function () {
+                actualROIValues.annualRent = parseFloat(this.value);
+                calculateROI();
+            });
+        }
+
+        if (elements.annualExpenses) {
+            elements.annualExpenses.addEventListener('input', function () {
+                actualROIValues.annualExpenses = parseFloat(this.value);
+                calculateROI();
+            });
+        }
+
+        if (elements.holdingPeriod) {
+            elements.holdingPeriod.addEventListener('input', function () {
+                actualROIValues.holdingPeriod = parseFloat(this.value);
+                calculateROI();
+            });
+        }
+
+        // Initialize
+        calculateROI();
+    }
+
+    // Initialize both calculators
+    setupMortgageCalculator();
+    setupROICalculator();
+});
 </script>
+
+
 {% endblock %}

@@ -283,11 +283,14 @@ API_BASE = "https://offplan.market/api/property"
 
 def index(request):
     """Homepage with featured properties"""
-    # Get featured properties
     properties_result = PropertyService.get_featured_properties()
     
+    featured = []
+    if properties_result['success']:
+        featured = properties_result.get('data', {}).get('results', [])[:4]  # limit to 4
+    
     context = {
-        'featured_properties': properties_result.get('data', {}).get('results', []) if properties_result['success'] else [],
+        'featured_properties': featured,
         'properties_error': properties_result.get('error'),
     }
     return render(request, 'index.html', context)
@@ -514,7 +517,8 @@ def model1(request):
 def about(request):
     """About us page"""
     return render(request, 'about.html')
-
+def basenw(request):
+       return render(request, 'basenew.html')
 
 def blogs(request):
     """About us page"""

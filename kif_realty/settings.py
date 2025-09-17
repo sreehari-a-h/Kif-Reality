@@ -124,6 +124,7 @@ DEFAULT_FROM_EMAIL = 'KIF Realty <noreply@kifrealty.com>'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

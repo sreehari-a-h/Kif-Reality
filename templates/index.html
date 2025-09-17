@@ -316,7 +316,8 @@
     .hero-badge {
         display: inline-block;
         padding: 0.5rem 1.5rem;
-        background: var(--glass-bg);
+        background-color: #0f1419;
+        /* background: var(--glass-bg); */
         border: 1px solid var(--border-subtle);
         border-radius: 50px;
         font-size: 0.9rem;
@@ -324,6 +325,7 @@
         margin-bottom: 2rem;
         backdrop-filter: blur(10px);
         color: var(--bright-gold);
+          
     }
 
     .hero-content-container {
@@ -342,13 +344,18 @@
 
     .hero-content h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 3.8rem;
+    font-size: 3rem;
     margin-bottom: 2.5rem;
     /* background: #EFBF04; */
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+
+     /* Simulate a box-shadow glow effect */
+
     /* letter-spacing: -0.02em; */
     /* animation: titleGlow 3s ease-in-out infinite alternate; */
 
@@ -428,6 +435,8 @@
         margin: 0 auto;
         line-height: 1.8;
         font-weight: 300;
+        margin-bottom: 20px;
+  
     }
 
     .services-grid {
@@ -720,7 +729,7 @@
     /* Calculator Container - Dark Theme Design */
     .calculators-section {
         padding: 3rem 2rem;
-        background: linear-gradient(135deg, #1a1a1a 0%, #0f1419 100%);
+        /* background: linear-gradient(135deg, #1a1a1a 0%, #0f1419 100%); */
         position: relative;
         overflow: hidden;
         min-height: 100vh;
@@ -770,9 +779,10 @@
     }
 
     .calculator-card {
-        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        /* background: linear-gradient(145deg, #1a1a1a, #2a2a2a); */
+         background: linear-gradient(145deg, #1a1a1a, #1f1f1f);
         border: 1px solid rgba(232, 180, 160, 0.1);
-        border-radius: 20px;
+        border-radius: 10px;
         padding: 2rem;
         transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
@@ -1766,6 +1776,867 @@
 }
 
 </style>
+<style>
+     .btn-1{
+             display: inline-block;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+    }
+    .btn-2{
+            display: inline-block;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+       
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+    }
+</style>
+
+  <style>
+
+ section.services-1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch; /* Equal height */
+      padding: 80px 6%;
+      position: relative;
+      overflow: hidden;
+      gap: 40px;
+      
+    }
+
+    /* Fade-up animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Left Side */
+    .services-left {
+      flex: 1;
+      max-width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .services-left h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+     background: linear-gradient(135deg, #d7bcb2, #f4d03f, #cd7f32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .services-left p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+
+    .real-estate-image {
+      width: 100%;
+      max-width: 550px;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Right Side Cards */
+    .services-right {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 55%;
+      position: relative;
+    }
+.service-card-1 svg {
+  width: 70px;              /* size of icons */
+  height: 70px;
+  fill: rgba(88, 70, 0, 0.15);            /* golden color */
+  margin-bottom: 5px;      /* spacing below */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;       /* center align */
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+
+    .service-card-1 {
+      background: rgba(88, 70, 0, 0.15);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      backdrop-filter: blur(6px);
+      padding: 10px;
+      border-radius: 15px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      height: 100%;
+      position: relative;
+    }
+
+    .service-card-1:hover {
+      transform: translateY(-8px);
+    }
+
+    /* Zig-Zag Effect */
+    .service-card-1:nth-child(odd) {
+      margin-top: 30px;
+    }
+
+    .service-card-1:nth-child(even) {
+      margin-bottom: 30px;
+    }
+
+    .service-card-1 h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .service-card-1 p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+      section.services-1 {
+        flex-direction: column;
+        align-items: center;
+        gap: 60px;
+      }
+
+      .services-left {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .real-estate-image {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .services-right {
+        max-width: 100%;
+        grid-template-columns: 1fr;
+      }
+
+      .service-card-1:nth-child(odd),
+      .service-card-1:nth-child(even) {
+        margin: 0;
+      }
+    }
+  </style>
+
+<style>
+    .carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 40px 60px;
+  box-sizing: border-box;
+  background: #111;
+}
+
+.carousel-container {
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  gap: 30px;
+}
+
+.day-card {
+               /* Set fixed width */
+  min-width: 300px;
+  max-width: 300px;           /* Prevent it from growing */
+  background: #222;
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.day-card:hover {
+  transform: translateY(-8px);
+}
+
+.day-card img {
+  width:100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.meta {
+  padding: 15px;
+  color: #fff;
+}
+
+.meta .location {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+    color: #b48a57;
+}
+
+.meta .desc {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+/* Hide description initially */
+.meta .desc {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  margin-top: 0;
+}
+
+/* Show description on hover */
+.day-card:hover .desc {
+  max-height: 100px; /* or enough height to fit full paragraph */
+  opacity: 1;
+  margin-top: 8px;
+}
+
+/* Arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.arrow:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.arrow.left {
+  left: 15px;
+}
+
+.arrow.right {
+  right: 15px;
+}
+.location-head{
+        font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-align: center;
+}
+.section-title {
+        line-height: 1.5;
+    font-weight: 300;
+    font-size: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .day-card {
+    min-width: 250px;
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+    padding: 8px 12px;
+  }
+}
+
+
+</style>  
+
+
+<style>
+.why-choose-kif {
+  position: relative;
+  padding: 80px 60px;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Container */
+.why-choose-kif-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Left */
+.why-choose-kif-left {
+  flex: 1;
+  text-align: center;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  border-radius: 12px;
+}
+
+.why-choose-kif-left h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+ background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+.why-choose-kif-left img {
+  max-width: 200px;
+  margin-top: 15px;
+}
+
+/* Right */
+.why-choose-kif-right {
+  flex: 2;
+  min-width: 350px;
+  padding-left: 60px;
+}
+
+.why-choose-kif-right .intro {
+  margin-bottom: 40px;
+  color: #ddd;
+  line-height: 1.6;
+}
+
+/* Features */
+.kif-feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.4);
+  padding-bottom: 15px;
+}
+
+/* Wrapper keeps number + symbol tight */
+.kif-count-wrapper {
+  display: flex;
+  align-items: baseline;
+  margin-right: 15px;
+}
+
+.kif-count {
+  font-size: 2.8rem;
+  font-weight: bold;
+   background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+}
+
+.kif-count-wrapper span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #d4af37;
+  margin-left: 3px; /* very small spacing */
+}
+
+.kif-text h3 {
+  margin: 0 0 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.kif-text p {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px) {
+  .why-choose-kif {
+    padding: 60px 30px;
+  }
+
+  .why-choose-kif-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .why-choose-kif-left {
+    padding: 20px 15px;
+  }
+
+  .why-choose-kif-right {
+    padding-left: 0;
+    margin-top: 30px;
+    min-width: 100%;
+  }
+
+  .why-choose-kif-right .intro {
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+  }
+
+  .kif-feature {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 12px;
+  }
+
+  .kif-count-wrapper {
+    margin-bottom: 8px;
+    margin-right: 0;
+  }
+
+  .kif-count {
+    font-size: 2.2rem;
+  }
+
+  .kif-count-wrapper span {
+    font-size: 1.2rem;
+  }
+
+  .kif-text h3 {
+    font-size: 1rem;
+  }
+
+  .kif-text p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .why-choose-kif {
+    padding: 40px 20px;
+  }
+
+  .why-choose-kif-left h2 {
+    font-size: 1.4rem;
+  }
+
+  .why-choose-kif-left img {
+    max-width: 150px;
+  }
+
+  .kif-count {
+    font-size: 1.8rem;
+  }
+
+  .kif-text h3 {
+    font-size: 0.95rem;
+  }
+}
+</style>
+<style>
+    .cta-section {
+  position: relative;
+  background:  linear-gradient(to right, rgba(0,0,0,0.1), rgba(34, 26, 2, 0.5)), /* gradient overlay */
+              url("static/images/cta-img.webp") 
+              center/cover no-repeat;
+  padding: 100px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Inside Box */
+.cta-overlay {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.84), rgba(48, 36, 4, 0.523));
+  padding: 60px 40px;
+  border-radius: 16px;
+  max-width: 1100px;   /* reduces width */
+  margin: 0 auto;     /* centers box */
+}
+
+.cta-content {
+  max-width: 700px;   /* keeps content inside narrower */
+  margin: 0 auto;
+  color: #fff;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.cta-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 35px;
+  color: #ddd;
+}
+
+
+
+.btn-primary-custom {
+  background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
+  color: #000;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+  background: #b9972f;
+  color: #fff;
+}
+
+.btn-secondary-custom {
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.btn-secondary-custom:hover {
+  background: #d4af37;
+  color: #000;
+}
+/* Button Container */
+.cta-button {
+  display: flex;
+  justify-content: center;
+
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+</style>
+<style>
+.featured-properties {
+  padding: 60px 100px;
+  background: #111;
+  color: #fff;
+}
+
+/* Heading section */
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.heading-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.heading-left .logo {
+  width: 60px;
+  height: auto;
+}
+
+.heading-left h2 {
+      font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+   background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+}
+
+.heading-right {
+  max-width: 500px;
+  font-size: 15px;
+  color: #bbb;
+  line-height: 1.6;
+}
+
+/* Grid layout */
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Card styles */
+.property-card {
+  background: #1a1a1a;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+}
+
+.property-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: filter 0.5s ease;
+}
+
+.property-card:hover img {
+  filter: grayscale(0%);   /* show color on hover */
+}
+
+.property-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.property-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+
+  margin: 0;
+  color: #b48a57;
+}
+
+.property-info h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #fff;
+}
+
+.property-info h4 span {
+  font-size: 13px;
+  color: #ccc;
+}
+
+.property-info p {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0 0 8px;
+}
+/* Learn more link */
+.learn-more {
+  display: inline-end;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #b48a57;
+  text-decoration: none;
+  margin-top: auto;  /* pushes to bottom */
+  align-self: flex-end; /* move to right */
+  transition: color 0.3s ease;
+}
+
+.learn-more::after {
+  content: "➝"; /* thin arrow */
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.learn-more:hover {
+  color: #fff;
+}
+
+.learn-more:hover::after {
+  transform: translateX(3px);
+}
+
+/* ----------------- Responsive Styles ----------------- */
+@media (max-width: 1200px) {
+  .properties-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .featured-properties {
+    padding: 40px 40px;
+  }
+  .properties-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .heading-left h2 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 600px) {
+  .featured-properties {
+    padding: 30px 20px;
+  }
+  .heading {
+    flex-direction: column;
+    text-align: center;
+  }
+  .heading-left {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .heading-left h2 {
+    font-size: 22px;
+  }
+  .heading-right {
+    font-size: 14px;
+    max-width: 100%;
+  }
+  .properties-grid {
+    grid-template-columns: 1fr;
+  }
+  .property-card img {
+    height: 180px;
+  }
+  .property-info h3 {
+    font-size: 16px;
+  }
+  .property-info h4 {
+    font-size: 14px;
+  }
+}
+.section-title-new h2{
+        /* font-family: 'Playfair Display', serif; */
+    font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #dad0cd, #998f5f, #cd7f32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+.section-title-new  p{
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    font-weight: 300;
+    font-size: 1rem;
+   text-align: center;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+.view-all-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
+  border: 1px solid #b9972f;
+  color: #111;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 2px;
+  text-decoration: none;
+  margin-top: 12px;
+  transition: background 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background: #8c6b43;
+}
+/* Existing CTA styles remain the same */
+
+/* 📱 Mobile Responsive */
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 60px 20px; /* less padding for small screens */
+  }
+
+  .cta-overlay {
+    padding: 40px 20px; /* reduce overlay padding */
+  }
+
+  .cta-content h2 {
+    font-size: 1.8rem; /* smaller heading */
+    margin-bottom: 15px;
+  }
+
+  .cta-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 25px;
+  }
+
+  .cta-button {
+    flex-direction: column; /* stack buttons vertically */
+    gap: 15px; /* space between buttons */
+  }
+
+  .btn-primary-custom,
+  .btn-secondary-custom {
+    width: 100%; /* full width on mobile */
+    text-align: center;
+    padding: 12px 10px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-content h2 {
+    font-size: 1.5rem; /* even smaller on very small screens */
+  }
+
+  .cta-content p {
+    font-size: 0.9rem;
+  }
+}
+
+
+</style>
 {% endblock %}
 
 {% load custom_filters %}
@@ -1796,16 +2667,144 @@
                 Super Agent for new Developers
             </p>
             <div class="cta-buttons">
-                <a href="/properties" class="btn btn-primary">Explore Properties</a>
-                <a href="/contact" class="btn btn-secondary">Our Services</a>
+                <a href="/properties" class="btn-1 btn-primary">Explore Properties</a>
+                <a href="/contact" class="btn-2 btn-secondary">Our Services</a>
             </div>
         </div>
     </div>
 </section>
 
 
+<section class="featured-properties">
+  <div class="heading">
+    <div class="heading-left">
+      <img src="static/images/logo-kif.png" alt="Logo" class="logo">
+      <h2>Latest  Properties</h2>
+    </div>
+    <div class="heading-right">
+      <p>
+ Find your perfect home in Dubai with KIF Realty — trusted listings, fair prices, and expert guidance
+      </p>
+          <a href="{% url 'properties' %}" class="view-all-btn">View All Properties</a>
+    </div>
+  </div>
+ <div class="properties-grid">
+      {% for property in featured_properties %}
+        <div class="property-card">
+          <img src="{{ property.cover|default:'/static/img/no-image.jpg' }}" alt="{{ property.title }}">
+          <div class="property-info">
+            <h3>{{ property.low_price }} <span>{{ property.currency|default:"AED" }}</span></h3>
+            <p>{{ property.city.name }}</p>
+            <div class="details">
+              
+       
+        </div>
+      {% endfor %}
+  </div>
+</section>
+
+
+<div class="properties-grid"></div>
+
+<script>
+function loadFeaturedProperties() {
+  const grid = document.querySelector('.properties-grid');
+  grid.innerHTML = `<p>Loading Featured Properties...</p>`;
+
+  fetch('https://offplan.market/api/properties/filter/', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ property_type: "Residential" })
+  })
+  .then(res => res.json())
+  .then(data => {
+    grid.innerHTML = ""; // clear
+
+    if (data?.data?.results?.length) {
+      data.data.results.slice(0, 8 ).forEach(p => {
+        grid.innerHTML += `
+          <div class="property-card">
+            <img src="${p.cover || '/static/img/no-image.jpg'}" alt="${p.title}">
+            <div class="property-info">
+              <h3>${p.title.en}</h3>
+              <h4>${p.low_price} <span>${p.currency || "AED"}</span></h4>
+              <p>${p.district?.name?.en || ""} / ${p.city?.name?.en || ""}  </p>
+             
+              <a href="/property/${p.id}" class="learn-more">LEARN MORE</a>
+            </div>
+          </div>
+        `;
+      });
+    } else {
+      grid.innerHTML = `<p>No Featured Properties Found</p>`;
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    grid.innerHTML = `<p>Error loading properties</p>`;
+  });
+}
+
+// Run on page load
+document.addEventListener("DOMContentLoaded", loadFeaturedProperties);
+function loadCitiesFromAPI() {
+    fetch('https://offplan.market/api/cities/')
+        .then(response => response.json())
+        .then(result => {
+            // Handle the nested structure: result.data.data
+            if (result && result.data && result.data.status && result.data.data) {
+                citiesData = result.data.data;
+                populateCitiesDropdown();
+            } else {
+                console.error('Failed to load cities:', result.error || 'Invalid response structure');
+                // Fallback to no cities if API fails
+                citiesData = [];
+            }
+        })
+        .catch(error => {
+            console.error('Error loading cities:', error);
+            // Fallback to no cities if API fails
+            citiesData = [];
+        });
+}
+
+function populateCitiesDropdown() {
+    const citySelect = document.getElementById('citySelect');
+    
+    if (!citySelect) {
+        console.error('❌ City select element not found');
+        return;
+    }
+    
+    if (!citiesData.length) {
+        console.error('❌ No cities data available');
+        return;
+    }
+    
+    // Clear existing options except the first one
+    citySelect.innerHTML = '<option value="">All Cities</option>';
+    
+    // Add cities from API - Use a Set to avoid duplicates
+    const uniqueCities = new Map();
+    citiesData.forEach(city => {
+        if (city.name && city.name.en) {
+            uniqueCities.set(city.name.en, city);
+        }
+    });
+    
+    // Add unique cities to dropdown
+    uniqueCities.forEach((city, cityName) => {
+        const option = document.createElement('option');
+        option.value = cityName; // Use English name as value
+        option.textContent = cityName; // Display English name
+        citySelect.appendChild(option);
+    });
+}
+
+</script>
+
 <!-- Services Section -->
-<section id="services" class="services-section">
+<!-- <section id="services" class="services-section">
     <div class="section-title">
         <h2>Comprehensive Dubai Real Estate Services</h2>
         <p>From luxury villas for sale in Dubai to off-plan properties with flexible payment plans - we provide
@@ -1878,10 +2877,128 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
+
+
+
+  <section class="services-1 fade-up">
+    <!-- Left Side -->
+    <div class="services-left">
+      <h2>Comprehensive Dubai Real Estate Services</h2>
+        
+      <p>From luxury villas for sale in Dubai to off-plan properties with flexible payment plans - we provide end-to-end solutions for every investor, family, and business owner in the UAE property market.</p>
+      <p>Buy Apartments in Dubai 2025: Studio apartments in JVC, luxury penthouses in Downtown Dubai, and waterfront properties in Dubai Marina with expert ROI analysis and market insights.</p>
+      <img src="{% static 'images/kif-about.jpg' %}" alt="Dubai Real Estate" class="real-estate-image">
+   
+    </div>
+
+    <!-- Right Side -->
+    <div class="services-right">
+      <div class="service-card-1">
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l8 6v12h-5v-6H9v6H4V9l8-6z"/></svg>
+        <h3 style="margin-top: 15px;">Luxury Villas & Townhouses</h3>
+        <p>Beachfront villas in Palm Jumeirah, golf course homes in Dubai Hills, and affordable villas in Dubailand with premium locations and exclusive communities.</p>
+           
+    </div>
+      <div class="service-card-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>  
+        <h3>Off-Plan Investment Properties</h3>
+        <p>Direct from developers with flexible payment plans, high-growth communities, and guaranteed returns on Dubai freehold property investments.</p>
+
+    </div>
+      <div class="service-card-1">
+        <h3  style="margin-top: 15px;">Commercial Property Dubai</h3>
+        <p>Office spaces in Business Bay, retail units in prime locations, and mixed-use buildings with strategic commercial plots for business growth.</p>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/></svg>  
+    </div>
+      <div class="service-card-1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5.33-.67 7.5-1.92L12 2 4.5 10.08C6.67 11.33 9.3 12 12 12zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>
+        <h3>Property Management</h3>
+        <p>End-to-end portfolio care, short-term rental management, and fully furnished properties with consistent passive income generation.</p>
+      </div>
+    </div>
+  </section>
+
+
+ <h1 class="location-head ">Prime Dubai Locations We Cover</h1>
+ <p class="section-title">From iconic Downtown Dubai to emerging Dubai South - discover the best property investment opportunities across Dubai's most sought-after communities.</p>
+
+
+<div class="carousel-wrapper">
+  <button id="prevBtn" class="arrow left">&#10094;</button>
+  
+  <div class="carousel-container" id="carouselContainer">
+  <ul class="carousel" id="dubaiCarousel">
+    <li class="day-card">
+      <img src="{% static 'images/dubaitown.jpeg' %}" alt="Downtown Dubai">
+      <div class="meta">
+        <h2 class="location">Downtown Dubai</h2>
+        <p class="desc">Burj Khalifa views & iconic lifestyle.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/dubai-marina.jpg' %}" alt="Dubai Marina">
+      <div class="meta">
+        <h2 class="location">Dubai Marina</h2>
+        <p class="desc">Waterfront living with nightlife & retail.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/palm-jumeirah.jpg' %}" alt="Palm Jumeirah">
+      <div class="meta">
+        <h2 class="location">Palm Jumeirah</h2>
+        <p class="desc">Ultra-luxury beachfront properties.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/dubaihill.jpg' %}" alt="Dubai Hills Estate">
+      <div class="meta">
+        <h2 class="location">Dubai Hills Estate</h2>
+        <p class="desc">Golf course communities & family living.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/bussinesbay.webp' %}" alt="Business Bay">
+      <div class="meta">
+        <h2 class="location">Business Bay</h2>
+        <p class="desc">Central commercial & residential hub.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/dubaisouth.jpg' %}" alt="Dubai South">
+      <div class="meta">
+        <h2 class="location">Dubai South</h2>
+        <p class="desc">Future growth near Al Maktoum Airport.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/Jumeirah-Village.jpg' %}" alt="JVC">
+      <div class="meta">
+        <h2 class="location">Jumeirah Village Circle</h2>
+        <p class="desc">Affordable apartments & townhouses.</p>
+      </div>
+    </li>
+    <li class="day-card">
+      <img src="{% static 'images/ras.jpg' %}" alt="Ras Al Khaimah">
+      <div class="meta">
+        <h2 class="location">Ras Al Khaimah</h2>
+        <p class="desc">Next frontier of luxury developments.</p>
+      </div>
+    </li>
+  </ul>
+  </div>
+
+  <button id="nextBtn" class="arrow right">&#10095;</button>
+</div>
+
+
+
+
+
+
 
 <!-- Top Locations Section -->
-<section class="locations-section">
+<!-- <section class="locations-section">
     <div class="locations-bg"></div>
     <div class="locations-content">
         <div class="section-title">
@@ -1932,10 +3049,10 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- Why Choose Us Section -->
-<section class="why-choose-section">
+<!-- <section class="why-choose-section">
     <div class="section-title">
         <h2>Why Choose KIF Realty for Dubai Property Investment?</h2>
         <p>Ranked among the top real estate brokers in Dubai, we deliver transparent, reliable, and profitable property
@@ -1960,11 +3077,61 @@
             </p>
         </div>
     </div>
-</section>
+</section> -->
+<!-- WHY CHOOSE KIF REALTY SECTION -->
+<section class="why-choose-kif">
+  <div class="why-choose-kif-container">
+    <!-- Left Golden Gradient Section -->
+    <div class="why-choose-kif-left">
+      <h2> Why Choose Kif Realty</h2>
+      <img src="{% static 'images/logo-kif.png' %}" alt="KIF Realty Logo" />
+    </div>
 
+    <!-- Right Content -->
+    <div class="why-choose-kif-right">
+      <p class="intro">
+        Ranked among the top real estate brokers in Dubai, we deliver transparent, 
+        reliable, and profitable property solutions since 2011.
+      </p>
+
+      <!-- Feature 1 -->
+      <div class="kif-feature">
+        <div class="kif-count-wrapper">
+          <div class="kif-count" data-target="13">0</div><span>+</span>
+        </div>
+        <div class="kif-text">
+          <h3>Years of Market Leadership</h3>
+          <p>Deep expertise in Dubai real estate market dynamics, developer relationships, and investment strategies.</p>
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="kif-feature">
+        <div class="kif-count-wrapper">
+          <div class="kif-count" data-target="100">0</div><span>%</span>
+        </div>
+        <div class="kif-text">
+          <h3>RERA Certified Team</h3>
+          <p>Licensed real estate professionals ensuring compliance, transparency, and ethical business practices.</p>
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="kif-feature">
+        <div class="kif-count-wrapper">
+          <div class="kif-count" data-target="24">0</div><span>/7</span>
+        </div>
+        <div class="kif-text">
+          <h3>Customer Support</h3>
+          <p>Dedicated support throughout your property journey - from initial consultation to post-purchase services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- Investment Calculator Section -->
 <section class="calculators-section">
-    <div class="section-title">
+    <div class="section-title-new">
         <h2>UAE Property Investment Calculators</h2>
         <p>Make informed decisions with our accurate calculators designed specifically for Dubai real estate
             investments.</p>
@@ -2260,7 +3427,7 @@
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section">
+<!-- <section class="cta-section">
     <div class="cta-content">
         <h2>Ready to Invest in Dubai Real Estate?</h2>
         <p>Join thousands of satisfied investors who chose KIF Realty for their Dubai property investments. Get expert
@@ -2270,8 +3437,22 @@
             <a href="/properties" class="btn-secondary-custom">Browse Properties</a>
         </div>
     </div>
+</section> -->
+<section class="cta-section">
+  <div class="cta-overlay">
+    <div class="cta-content">
+      <h2>Ready to Invest in Dubai Real Estate?</h2>
+      <p>
+        Join thousands of satisfied investors who chose KIF Realty for their Dubai property investments. 
+        Get expert guidance on buying apartments, luxury villas, and off-plan properties with guaranteed returns.
+      </p>
+      <div class="cta-button">
+        <a href="/contact" class="btn-primary-custom">Start Your Investment Journey</a>
+        <a href="/properties" class="btn-secondary-custom">Browse Properties</a>
+      </div>
+    </div>
+  </div>
 </section>
-
 {% endblock %}
 
 {% block extra_js %}
@@ -2680,6 +3861,111 @@ document.addEventListener('DOMContentLoaded', function () {
     setupROICalculator();
 });
 </script>
+<script>
+  const carousel = document.getElementById("dubaiCarousel");
+  const container = document.getElementById("carouselContainer");
+  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = document.getElementById("prevBtn");
 
+  let scrollAmount = 0;
+  let cardWidth = 316; // 300 card + 16 gap
+  let autoSlide;
 
+  function calculateMaxScroll() {
+    const visibleCards = Math.floor(container.offsetWidth / cardWidth);
+    return Math.max((carousel.children.length - visibleCards) * cardWidth, 0);
+  }
+
+  function updateScroll() {
+    const maxScroll = calculateMaxScroll();
+    if (scrollAmount > maxScroll) scrollAmount = 0;
+    carousel.style.transform = `translateX(-${scrollAmount}px)`;
+  }
+
+  function autoScroll() {
+    scrollAmount += cardWidth;
+    updateScroll();
+  }
+
+  function startAutoScroll() {
+    autoSlide = setInterval(autoScroll, 2500);
+  }
+
+  function stopAutoScroll() {
+    clearInterval(autoSlide);
+  }
+
+  nextBtn.addEventListener("click", () => {
+    scrollAmount += cardWidth;
+    updateScroll();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    scrollAmount -= cardWidth;
+    if (scrollAmount < 0) scrollAmount = calculateMaxScroll();
+    updateScroll();
+  });
+
+  container.addEventListener("mouseenter", stopAutoScroll);
+  container.addEventListener("mouseleave", startAutoScroll);
+
+  window.addEventListener("resize", () => {
+    updateScroll();
+  });
+
+  startAutoScroll();
+</script>
+
+<!-- <script>
+const carousel = document.getElementById("dubaiCarousel");
+let scrollAmount = 0;
+let cardWidth = 300 + 16; // card width + gap
+let visibleCards = 6;
+let autoSlide;
+
+function autoScroll() {
+  scrollAmount += cardWidth;
+  if (scrollAmount > (carousel.children.length - visibleCards) * cardWidth) {
+    scrollAmount = 0;
+  }
+  carousel.style.transform = `translateX(-${scrollAmount}px)`;
+}
+
+function startAutoScroll() {
+  autoSlide = setInterval(autoScroll, 2500);
+}
+
+function stopAutoScroll() {
+  clearInterval(autoSlide);
+}
+
+carousel.addEventListener("mouseenter", stopAutoScroll);
+carousel.addEventListener("mouseleave", startAutoScroll);
+
+startAutoScroll();
+</script> -->
+<script>
+// Counter Animation (slower and smoother)
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".kif-count");
+
+  counters.forEach((counter) => {
+    const updateCount = () => {
+      const target = +counter.getAttribute("data-target");
+      let count = +counter.innerText;
+
+      const speed = 300; // higher = slower (more time to reach target)
+      const increment = Math.max(1, Math.ceil(target / speed));
+
+      if (count < target) {
+        counter.innerText = count + increment;
+        setTimeout(updateCount, 50); // slower updates
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+});
+</script>
 {% endblock %}

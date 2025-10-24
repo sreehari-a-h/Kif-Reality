@@ -39,5 +39,21 @@ urlpatterns = [
 
     # Newsletter
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+
+
+
+    # landingpages
+    # ---------------KIF REALTY-------------
+       
+    path('retail',views.retail, name='retail'),
+    path('second',views.second, name='second'),
+    path('commercial',views.commercial, name='commercial'),
+    path('luxury',views.luxury, name='luxury'),
+    path('beach',views.beach, name='beach'),
+    path('offplan',views.offplan, name='offplan'),
+    path('labour',views.labour, name='labour'),
+    path('warehouse',views.warehouse, name='warehouse'),
+    path('plots',views.plots, name='plots'),
+    path('mansions',views.mansions, name='mansions'),
 ]
 

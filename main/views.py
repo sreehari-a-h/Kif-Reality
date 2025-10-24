@@ -961,3 +961,37 @@ def developers_api(request):
             
     except Exception as e:
         return JsonResponse({'status': False, 'error': str(e)}, status=500)
+
+
+
+
+# landingpages
+def retail(request):
+    return render(request,'landingpages/retail.html')
+
+def second(request):
+    return render(request,'landingpages/second.html')
+
+def commercial(request):
+    return render(request,'landingpages/commercial.html')
+
+def luxury(request):
+    return render(request,'landingpages/luxury.html')
+
+def beach(request):
+    return render(request,'landingpages/beach.html')
+
+def offplan(request):
+    return render(request,'landingpages/offplan.html')
+
+def labour(request):
+    return render(request,'landingpages/labour.html')
+
+def warehouse(request):
+    return render(request,'landingpagesain/warehouse.html')
+
+def plots(request):
+    return render(request,'landingpages/plots.html')
+
+def mansions(request):
+    return render(request,'landingpages/mansions.html')

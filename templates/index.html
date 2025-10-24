@@ -8,7 +8,7 @@
             downPayment: document.getElementById('down-payment'),
             loanAmount: document.getElementById('loan-amount'),
             loanPeriod: document.getElementById('loan-period'),
-            interestRate: document.getElementById('interest-rate'),
+            // interestRate: document.getElementById('interest-rate'),
 
             // Editable Inputs
             propertyPriceInput: document.getElementById('property-price-input'),
@@ -241,7 +241,7 @@
                 this.classList.add('active');
 
                 const rate = parseFloat(this.getAttribute('data-rate'));
-                mortgageElements.interestRate.value = rate;
+                // mortgageElements.interestRate.value = rate;
                 updateMortgageCalculations();
             });
         });
@@ -386,7 +386,7 @@
 
     .cta-buttons {
         display: flex;
-        gap: 2.5rem;
+        /* gap: 2.5rem; */
         justify-content: center;
         flex-wrap: wrap;
         /* margin-top: 1.2rem; */
@@ -2283,27 +2283,27 @@
 }
 </style>
 <style>
-    .cta-section {
+/* ===== CTA Section ===== */
+.cta-section {
   position: relative;
-  background:  linear-gradient(to right, rgba(0,0,0,0.1), rgba(34, 26, 2, 0.5)), /* gradient overlay */
-              url("static/images/cta-img.webp") 
-              center/cover no-repeat;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(34, 26, 2, 0.5)),
+              url("static/images/cta-img.webp") center/cover no-repeat;
   padding: 100px 80px;
   text-align: center;
   overflow: hidden;
 }
 
-/* Inside Box */
+/* Inner Overlay Box */
 .cta-overlay {
   background: linear-gradient(to right, rgba(0, 0, 0, 0.84), rgba(48, 36, 4, 0.523));
   padding: 60px 40px;
   border-radius: 16px;
-  max-width: 1100px;   /* reduces width */
-  margin: 0 auto;     /* centers box */
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .cta-content {
-  max-width: 700px;   /* keeps content inside narrower */
+  max-width: 700px;
   margin: 0 auto;
   color: #fff;
 }
@@ -2321,7 +2321,14 @@
   color: #ddd;
 }
 
-
+/* Buttons */
+.cta-button {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
 
 .btn-primary-custom {
   background: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
@@ -2352,15 +2359,77 @@
   background: #d4af37;
   color: #000;
 }
-/* Button Container */
-.cta-button {
-  display: flex;
-  justify-content: center;
 
-  flex-wrap: wrap;
-  margin-top: 30px;
+/* ===== Responsive Design ===== */
+@media (max-width: 992px) {
+  .cta-section {
+    padding: 80px 40px;
+    background-position: center;
+  }
+
+  .cta-overlay {
+    padding: 50px 30px;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+
+  .cta-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 60px 25px;
+  }
+
+  .cta-overlay {
+    padding: 40px 20px;
+    border-radius: 12px;
+  }
+
+  .cta-content h2 {
+    font-size: 1.7rem;
+  }
+
+  .cta-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .cta-button {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-primary-custom, .btn-secondary-custom {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-section {
+    padding: 50px 15px;
+  }
+
+  .cta-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-content p {
+    font-size: 0.9rem;
+  }
+
+  .cta-overlay {
+    padding: 30px 15px;
+  }
 }
 </style>
+
 <style>
 .featured-properties {
   padding: 60px 100px;
@@ -2613,7 +2682,7 @@
 
   .cta-button {
     flex-direction: column; /* stack buttons vertically */
-    gap: 15px; /* space between buttons */
+
   }
 
   .btn-primary-custom,
@@ -3277,18 +3346,22 @@ function populateCitiesDropdown() {
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="interest-rate">Annual Interest Rate (%)</label>
-                                <div class="input-slider-group">
-                                    <input type="text" id="interest-rate-input" value="3.75" class="editable-input">
-                                    <input type="range" id="interest-rate" min="2.5" max="8" value="3.75"
-                                        class="slider">
-                                    <div class="slider-values">
-                                        <span class="min-value">2.5%</span>
-                                        <span class="max-value">8%</span>
-                                    </div>
-                                </div>
+                           <div class="form-group">
+                        <label for="interest-rate">Annual Interest Rate (%)</label>
+                        <div class="input-slider-group">
+                            <!-- Manual editable input -->
+                            <input type="text" id="interest-rate-input" value="3.75" class="editable-input">
+
+                            <!-- Slider (optional) -->
+                            <!-- <input type="range" id="interest-rate" min="2.5" max="8" value="3.75" class="slider"> -->
+
+                            <div class="slider-values">
+                                <span class="min-value">2.5%</span>
+                                <span class="max-value">8%</span>
                             </div>
+                        </div>
+                    </div>
+
                         </div>
                     </div>
                 </div>
@@ -3474,6 +3547,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function parseFormattedNumber(str) {
         return parseFloat(str.toString().replace(/,/g, ''));
     }
+    let manualRateChanged = false; // tracks if user typed the rate manually
 
     // MORTGAGE CALCULATOR
     function setupMortgageCalculator() {
@@ -3482,7 +3556,7 @@ document.addEventListener('DOMContentLoaded', function () {
             downPayment: document.getElementById('down-payment'),
             loanAmount: document.getElementById('loan-amount'),
             loanPeriod: document.getElementById('loan-period'),
-            interestRate: document.getElementById('interest-rate'),
+            // interestRate: document.getElementById('interest-rate'),
 
             propertyPriceInput: document.getElementById('property-price-input'),
             downPaymentInput: document.getElementById('down-payment-input'),
@@ -3567,7 +3641,7 @@ document.addEventListener('DOMContentLoaded', function () {
             elements.downPayment.value = down;
             elements.loanAmount.value = loan;
             elements.loanPeriod.value = period;
-            elements.interestRate.value = rate;
+            // elements.interestRate.value = rate;
 
             // Update percentages
             const downPercent = (down / price) * 100;
@@ -3653,29 +3727,41 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Interest rate slider
-        elements.interestRate.addEventListener('input', function () {
-            actualValues.interestRate = parseFloat(this.value);
+      elements.interestRateInput.addEventListener('input', function () {
+        let value = this.value.replace(/,/g, '').replace(/[^0-9.]/g, '');
+        const num = parseFloat(value);
+        if (!isNaN(num)) {
+            actualValues.interestRate = num;
+            manualRateChanged = true; // user manually changed rate
             updateMortgageCalculations();
-        });
+        }
+    });
+
+    elements.interestRateInput.addEventListener('blur', function () {
+        const value = this.value.replace(/,/g, '');
+        if (value === '' || isNaN(parseFloat(value))) {
+            this.value = actualValues.interestRate.toFixed(2);
+            return;
+        }
+        actualValues.interestRate = parseFloat(value);
+        this.value = actualValues.interestRate.toFixed(2);
+    });
 
         // Residency status buttons - FIXED to set max loan position
         document.querySelectorAll('.status-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                // Remove active class from all buttons
-                document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
+        button.addEventListener('click', function () {
+            document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
 
-                // Update interest rate
+            // Only auto-set rate if user hasn't manually changed it
+            if (!manualRateChanged) {
                 actualValues.interestRate = parseFloat(this.getAttribute('data-rate'));
-                
-                // Set sliders to maximum loan position for new residency type
-                setToMaxLoanPosition();
-                
-                // Update everything
-                updateMortgageCalculations();
-            });
+            }
+
+            setToMaxLoanPosition();
+            updateMortgageCalculations();
         });
+    });
 
         // Input field synchronization
         function setupInputSync(inputElement, valueKey, isInteger = false, min = 0, max = Infinity) {
@@ -3735,7 +3821,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setupInputSync(elements.downPaymentInput, 'downPayment', false, 0, 200000000);
         setupInputSync(elements.loanAmountInput, 'loanAmount', false, 0, 200000000);
         setupInputSync(elements.loanPeriodInput, 'loanPeriod', true, 1, 30);
-        setupInputSync(elements.interestRateInput, 'interestRate', false, 0, 20);
+        // setupInputSync(elements.interestRateInput, 'interestRate', false, 0, 20);
 
         // Upfront costs toggle
         const viewUpfrontButton = document.getElementById('view-upfront-costs');

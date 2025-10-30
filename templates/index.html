@@ -2716,7 +2716,7 @@
 <section id="home" class="hero">
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="hero-video">
-        <source src="https://kifrealty.s3.us-east-1.amazonaws.com/kif_web.mp4" type="video/mp4">
+        <source src="static/videos/kif_web.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
@@ -2727,7 +2727,7 @@
     <div class="hero-content-container">
         <div class="hero-content">
             <div class="hero-badge">
-                <i class="fas fa-star"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
                 Dubai's Premier Real Estate Partner
             </div>
             <h1>Property expert in Dubai, UAE</h1>
@@ -2747,7 +2747,7 @@
 <section class="featured-properties">
   <div class="heading">
     <div class="heading-left">
-      <img src="static/images/logo-kif.png" alt="Logo" class="logo">
+      <img src="static/images/logo-kif.png" alt="Logo" class="logo" loading="lazy">
       <h2>Latest  Properties</h2>
     </div>
     <div class="heading-right">
@@ -2760,7 +2760,7 @@
  <div class="properties-grid">
       {% for property in featured_properties %}
         <div class="property-card">
-          <img src="{{ property.cover|default:'/static/img/no-image.jpg' }}" alt="{{ property.title }}">
+          <img src="{{ property.cover|default:'/static/img/no-image.jpg' }}" alt="{{ property.title }}" loading="lazy">
           <div class="property-info">
             <h3>{{ property.low_price }} <span>{{ property.currency|default:"AED" }}</span></h3>
             <p>{{ property.city.name }}</p>
@@ -2793,7 +2793,7 @@ function loadFeaturedProperties() {
       data.data.results.slice(0, 8 ).forEach(p => {
         grid.innerHTML += `
           <div class="property-card">
-            <img src="${p.cover || '/static/img/no-image.jpg'}" alt="${p.title}">
+            <img src="${p.cover || '/static/img/no-image.jpg'}" alt="${p.title}" loading="lazy">
             <div class="property-info">
               <h3>${p.title.en}</h3>
               <h4>${p.low_price} <span>${p.currency || "AED"}</span></h4>
@@ -2957,7 +2957,7 @@ function populateCitiesDropdown() {
         
       <p>From luxury villas for sale in Dubai to off-plan properties with flexible payment plans - we provide end-to-end solutions for every investor, family, and business owner in the UAE property market.</p>
       <p>Buy Apartments in Dubai 2025: Studio apartments in JVC, luxury penthouses in Downtown Dubai, and waterfront properties in Dubai Marina with expert ROI analysis and market insights.</p>
-      <img src="{% static 'images/kif-about.jpg' %}" alt="Dubai Real Estate" class="real-estate-image">
+      <img src="{% static 'images/kif-about.jpg' %}" alt="Dubai Real Estate" class="real-estate-image" loading="lazy">
    
     </div>
 
@@ -2999,56 +2999,56 @@ function populateCitiesDropdown() {
   <div class="carousel-container" id="carouselContainer">
   <ul class="carousel" id="dubaiCarousel">
     <li class="day-card">
-      <img src="{% static 'images/dubaitown.jpeg' %}" alt="Downtown Dubai">
+      <img src="{% static 'images/dubaitown.jpeg' %}" alt="Downtown Dubai" loading="lazy">
       <div class="meta">
         <h2 class="location">Downtown Dubai</h2>
         <p class="desc">Burj Khalifa views & iconic lifestyle.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/dubai-marina.jpg' %}" alt="Dubai Marina">
+      <img src="{% static 'images/dubai-marina.jpg' %}" alt="Dubai Marina" loading="lazy">
       <div class="meta">
         <h2 class="location">Dubai Marina</h2>
         <p class="desc">Waterfront living with nightlife & retail.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/Palm-Jumeirah.jpg' %}" alt="Palm Jumeirah">
+      <img src="{% static 'images/Palm-Jumeirah.jpg' %}" alt="Palm Jumeirah" loading="lazy">
       <div class="meta">
         <h2 class="location">Palm Jumeirah</h2>
         <p class="desc">Ultra-luxury beachfront properties.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/dubaihill.jpg' %}" alt="Dubai Hills Estate">
+      <img src="{% static 'images/dubaihill.jpg' %}" alt="Dubai Hills Estate" loading="lazy">
       <div class="meta">
         <h2 class="location">Dubai Hills Estate</h2>
         <p class="desc">Golf course communities & family living.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/bussinesbay.webp' %}" alt="Business Bay">
+      <img src="{% static 'images/bussinesbay.webp' %}" alt="Business Bay" loading="lazy">
       <div class="meta">
         <h2 class="location">Business Bay</h2>
         <p class="desc">Central commercial & residential hub.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/dubaisouth.jpg' %}" alt="Dubai South">
+      <img src="{% static 'images/dubaisouth.jpg' %}" alt="Dubai South" loading="lazy">
       <div class="meta">
         <h2 class="location">Dubai South</h2>
         <p class="desc">Future growth near Al Maktoum Airport.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/Jumeirah-Village.jpg' %}" alt="JVC">
+      <img src="{% static 'images/Jumeirah-Village.jpg' %}" alt="JVC" loading="lazy">
       <div class="meta">
         <h2 class="location">Jumeirah Village Circle</h2>
         <p class="desc">Affordable apartments & townhouses.</p>
       </div>
     </li>
     <li class="day-card">
-      <img src="{% static 'images/ras.jpg' %}" alt="Ras Al Khaimah">
+      <img src="{% static 'images/ras.jpg' %}" alt="Ras Al Khaimah" loading="lazy">
       <div class="meta">
         <h2 class="location">Ras Al Khaimah</h2>
         <p class="desc">Next frontier of luxury developments.</p>
@@ -3153,7 +3153,7 @@ function populateCitiesDropdown() {
     <!-- Left Golden Gradient Section -->
     <div class="why-choose-kif-left">
       <h2> Why Choose Kif Realty</h2>
-      <img src="{% static 'images/logo-kif.png' %}" alt="KIF Realty Logo" />
+      <img src="{% static 'images/logo-kif.png' %}" loading="lazy" alt="KIF Realty Logo" />
     </div>
 
     <!-- Right Content -->

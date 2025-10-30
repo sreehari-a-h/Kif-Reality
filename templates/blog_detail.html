@@ -2,7 +2,8 @@
 
 {% block title %}{{ post.title }} - KIF Realty Blog{% endblock %}
 
-{% block meta_description %}{{ post.meta_description }}{% endblock %}
+{% block description %}{{ post.meta_description }}{% endblock %}
+
 
 
 {% load static %}
@@ -912,8 +913,7 @@
             <div class="blog-hero-content">
                 <div class="breadcrumb">
                     <a href="{% url 'blogs' %}">Blog</a>
-                    <!-- <span><i class="fas fa-chevron-right"></i></span> -->
-                    <!-- <a href="{% url 'blog_category' post.category.slug %}">{{ post.category.name }}</a> -->
+                    
                     <span><i class="fas fa-chevron-right"></i></span>
                     <span>{{ post.title }}</span>
                 </div>

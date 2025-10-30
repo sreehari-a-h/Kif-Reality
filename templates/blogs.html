@@ -966,7 +966,7 @@ mark {
                 
                 {% for num in page_obj.paginator.page_range %}
                     {% if page_obj.number == num %}
-                        <a href="#" class="active">{{ num }}</a>
+                        <a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}" class="active">{{ num }}</a>
                     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                         <a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ num }}</a>
                     {% endif %}

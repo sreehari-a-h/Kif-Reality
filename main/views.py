@@ -988,7 +988,7 @@ def labour(request):
     return render(request,'landingpages/labour.html')
 
 def warehouse(request):
-    return render(request,'landingpagesain/warehouse.html')
+    return render(request,'landingpages/warehouse.html')
 
 def plots(request):
     return render(request,'landingpages/plots.html')

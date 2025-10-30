@@ -13,7 +13,6 @@
 
 
 <style>
-
     * {
         padding: 0;
         margin: 0;
@@ -21,9 +20,9 @@
         font-family: "Montserrat", sans-serif;
     }
 
-     body {
-    background-color: #030303;
-  }
+    body {
+        background-color: #030303;
+    }
 
     .retail-section {
         background: radial-gradient(120% 72% at 50% 100%,
@@ -99,7 +98,7 @@
         opacity: 0;
     }
 
-    .retail-buttons {
+    .retail-buttons_comm {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -108,8 +107,8 @@
         opacity: 0;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary_comm,
+    .btn-secondary_comm {
         display: inline-block;
         padding: 12px 20px;
         border-radius: 6px;
@@ -123,22 +122,22 @@
         letter-spacing: 1px;
     }
 
-    .btn-primary {
+    .btn-primary_comm {
         background: #eeb32b;
         color: #000;
     }
 
-    .btn-secondary {
+    .btn-secondary_comm {
         background: transparent;
         border: 2px solid #eeb32b;
         color: #fff;
     }
 
-    .btn-primary:hover {
+    .btn-primary_comm:hover {
         background: #d9a91f;
     }
 
-    .btn-secondary:hover {
+    .btn-secondary_comm:hover {
         background: #eeb32b;
         color: #000;
     }
@@ -212,7 +211,7 @@
 
     @media (max-width: 492px) {
 
- .beachfront-hero-section {
+        .beachfront-hero-section {
             padding-bottom: 1px;
         }
 
@@ -221,7 +220,7 @@
             margin-top: 1%;
         }
 
-        .retail-buttons {
+        .retail-buttons_comm {
             flex-direction: column;
             gap: 12px;
         }
@@ -235,21 +234,24 @@
             font-size: 14px;
         }
 
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary_comm,
+        .btn-secondary_comm {
             width: 100%;
             max-width: 300px;
             margin: 0 auto;
         }
-         .retail-stats h2 {
+
+        .retail-stats h2 {
             font-size: 18px;
             /* smaller heading */
             font-weight: 500;
         }
-         .retail-stats p {
+
+        .retail-stats p {
             font-size: 13px;
-             letter-spacing:normal
+            letter-spacing: normal
         }
+
         .retail-stats {
             gap: 5px;
             /* reduce spacing between items */
@@ -265,15 +267,16 @@
 
 <section class="retail-section">
     <div class="retail-content">
-       <h1>Commercial Properties in <span>Dubai</span></h1>
-<h3>Premium Offices, Shops & Business Spaces</h3>
-<p>
-Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, and Dubai Marina — with high ROI and growth potential.
-</p>
+        <h1 style="font-weight: 700;">Commercial Properties in <span>Dubai</span></h1>
+        <h3>Premium Offices, Shops & Business Spaces</h3>
+        <p>
+            Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, and Dubai Marina — with high ROI
+            and growth potential.
+        </p>
 
-        <div class="retail-buttons">
-            <a href="#location" class="btn-primary">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-secondary openModalBtn">Book Consultation</a>
+        <div class="retail-buttons_comm">
+            <a href="#location" class="btn-primary_comm">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-secondary_comm openModalBtn">Book Consultation</a>
         </div>
 
         <div class="retail-stats">
@@ -300,10 +303,11 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-      :root{
-         --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
+    :root {
+        --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
         --transition-bounce: all .4s cubic-bezier(.68, -.55, .265, 1.55);
     }
+
     .graph_section {
         background-color: #030303;
         color: #fff;
@@ -401,9 +405,9 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
 <section class="graph_section">
     <h2>10-Year Investment Growth in <span>Dubai’s Commercial Market</span></h2>
     <p>
-    Dubai’s commercial property price and rental trends over the past 10 years highlight strong ROI potential. 
-    Office spaces, shops, and coworking areas offer attractive yields and capital appreciation.
-</p>
+        Dubai’s commercial property price and rental trends over the past 10 years highlight strong ROI potential.
+        Office spaces, shops, and coworking areas offer attractive yields and capital appreciation.
+    </p>
 
 
     <div class="graph_container">
@@ -493,7 +497,7 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
         font-family: 'Montserrat', sans-serif;
         padding: 50px 20px;
         text-align: center;
-         animation: fadeUp 4s ease-out 3s backwards;
+        animation: fadeUp 4s ease-out 3s backwards;
     }
 
     .prime-locations h2 {
@@ -522,7 +526,7 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
     .locations-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -631,10 +635,11 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
 
 <section class="prime-locations" id="location">
     <h2>Prime <span>Commercial Locations</span></h2>
-    <p>Explore Dubai’s top business hubs offering offices, coworking spaces, retail shops, and warehouses for strong ROI and strategic investment.</p>
+    <p>Explore Dubai’s top business hubs offering offices, coworking spaces, retail shops, and warehouses for strong ROI
+        and strategic investment.</p>
 
     <div class="locations-grid">
-        
+
 
         <div class="location-card">
             <div class="location-icon">
@@ -644,7 +649,7 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
             <p>Luxury commercial property for sale in Dubai with premium location advantages.</p>
         </div>
 
-       <div class="location-card">
+        <div class="location-card">
             <div class="location-icon">
                 <img src="{% static 'images/location.svg' %}" alt="Location Icon">
             </div>
@@ -679,7 +684,8 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
     <div class="container">
         <div class="section-header">
             <h2>ROI & <span>Capital Appreciation</span></h2>
-            <p>Office spaces offer 6–8% rental yields. Shops and retail units generate 7–10% yields, especially in tourist zones. Commercial property for rent in Dubai maintains high occupancy due to global demand.</p>
+            <p>Office spaces offer 6–8% rental yields. Shops and retail units generate 7–10% yields, especially in
+                tourist zones. Commercial property for rent in Dubai maintains high occupancy due to global demand.</p>
         </div>
 
         <div class="cards-grid">
@@ -707,108 +713,111 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
 </section>
 
 <style>
-.roi-cards-custom {
-    background: #030303;
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.roi-cards-custom .container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.roi-cards-custom .section-header h2 {
-    font-weight: 700;
-    font-size: 36px;
-    margin: 0 0 10px;
-    letter-spacing: 1px;
-     line-height: 1.7;
-}
-
-.roi-cards-custom .section-header h2 span {
-    color: #F7B600;
-}
-
-.roi-cards-custom .section-header p {
-    color: #a3a3a3;
-    font-size: 16px;
-    max-width: 900px;
-    margin: 0 auto 50px;
-    line-height: 1.7;
-    letter-spacing: 0.2px;
-}
-
-.roi-cards-custom .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 30px;
-}
-
-.roi-cards-custom .card {
-    background: #080808;
-    border-radius: 6px;
-    padding: 30px 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #171717;
-    box-shadow: 0 10px 30px -10px hsl(0 0% 0% / .5);
-    cursor: default;
-}
-
-.roi-cards-custom .card:hover {
-    transform: translateY(-6px);
-    border-color: hsl(42 85% 55% / .6);
-    box-shadow: 0 8px 12px -6px hsl(42 85% 55% / 0.5);
-}
-
-.roi-cards-custom .card .icon img {
-    width: 45px;
-    height: 45px;
-}
-
-.roi-cards-custom .card h3 {
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 0.2px;
-    margin-top: 10px;
-    color: #a3a3a3;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .roi-cards-custom .section-header h2 {
-        font-size: 28px;
-    }
-    .roi-cards-custom .section-header p {
-        font-size: 16px;
-    }
     .roi-cards-custom {
-        padding: 50px 20px;
+        background: #030303;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        padding: 60px 20px;
+        text-align: center;
     }
-}
 
-@media (max-width: 480px) {
+    .roi-cards-custom .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
     .roi-cards-custom .section-header h2 {
-        font-size: 26px;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 36px;
+        margin: 0 0 10px;
+        letter-spacing: 1px;
+        line-height: 1.7;
     }
-    .roi-cards-custom .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
+
+    .roi-cards-custom .section-header h2 span {
+        color: #F7B600;
     }
+
     .roi-cards-custom .section-header p {
-        font-size: 14px;
+        color: #a3a3a3;
+        font-size: 16px;
+        max-width: 900px;
+        margin: 0 auto 50px;
+        line-height: 1.7;
+        letter-spacing: 0.2px;
     }
-}
+
+    .roi-cards-custom .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 10px;
+    }
+
+    .roi-cards-custom .card {
+        background: #080808;
+        border-radius: 6px;
+        padding: 30px 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #171717;
+        box-shadow: 0 10px 30px -10px hsl(0 0% 0% / .5);
+        cursor: default;
+    }
+
+    .roi-cards-custom .card:hover {
+        transform: translateY(-6px);
+        border-color: hsl(42 85% 55% / .6);
+        box-shadow: 0 8px 12px -6px hsl(42 85% 55% / 0.5);
+    }
+
+    .roi-cards-custom .card .icon img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .roi-cards-custom .card h3 {
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 0.2px;
+        margin-top: 10px;
+        color: #a3a3a3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .roi-cards-custom .section-header h2 {
+            font-size: 28px;
+        }
+
+        .roi-cards-custom .section-header p {
+            font-size: 16px;
+        }
+
+        .roi-cards-custom {
+            padding: 50px 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .roi-cards-custom .section-header h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .roi-cards-custom .cards-grid {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .roi-cards-custom .section-header p {
+            font-size: 14px;
+        }
+    }
 </style>
 
 
-<!-- ---------------------------------5 SECTION------------------------------ -->
 <!-- ---------------------------------5 SECTION------------------------------ -->
 
 <style>
@@ -860,7 +869,7 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
     .trends-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
         text-align: left;
@@ -986,7 +995,9 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
 
 <section class="market-trends">
     <h2>Market <span>Trends</span></h2>
-    <p>Surge in demand for coworking space Dubai as startups and SMEs expand. High-value commercial space for sale in Dubai in Downtown and Business Bay. Storage space for rent in Dubai and warehouse for rent in Dubai growing with e-commerce.</p>
+    <p>Surge in demand for coworking space Dubai as startups and SMEs expand. High-value commercial space for sale in
+        Dubai in Downtown and Business Bay. Storage space for rent in Dubai and warehouse for rent in Dubai growing with
+        e-commerce.</p>
 
     <div class="trends-grid">
         <div class="trend-card">
@@ -1056,7 +1067,8 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
         margin: 15px auto 45px;
         line-height: 1.7;
         letter-spacing: 0.2px;
-        white-space: pre-line; /* preserves line breaks */
+        white-space: pre-line;
+        /* preserves line breaks */
     }
 
     .kif-points-box {
@@ -1101,19 +1113,58 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
 
     /* Responsive */
     @media (max-width: 768px) {
-        .kif-investor-section h2 { font-size: 28px; }
-        .kif-investor-section .kif-subtitle { font-size: 16px; max-width: 100%; margin-bottom: 30px; }
-        .kif-point { font-size: 16px; margin-bottom: 14px; }
-        .kif-icon { width: 28px; height: 28px; margin-right: 8px; }
+        .kif-investor-section h2 {
+            font-size: 28px;
+        }
+
+        .kif-investor-section .kif-subtitle {
+            font-size: 16px;
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .kif-point {
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+
+        .kif-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 8px;
+        }
     }
 
     @media (max-width: 480px) {
-        .kif-investor-section { padding: 20px 20px; }
-        .kif-investor-section h2 { font-size: 26px; font-weight: 600; }
-        .kif-subtitle { font-size: 14px; margin-bottom: 25px; }
-        .kif-points-box { padding: 20px 15px; box-shadow: 0 6px 15px -6px hsl(0 0% 0% / .4); }
-        .kif-point { font-size: 14px; margin-bottom: 12px; }
-        .kif-icon { width: 24px; height: 24px; margin-right: 6px; }
+        .kif-investor-section {
+            padding: 20px 20px;
+        }
+
+        .kif-investor-section h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .kif-subtitle {
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .kif-points-box {
+            padding: 20px 15px;
+            box-shadow: 0 6px 15px -6px hsl(0 0% 0% / .4);
+        }
+
+        .kif-point {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .kif-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 6px;
+        }
     }
 </style>
 
@@ -1121,7 +1172,9 @@ Invest or expand in Dubai’s prime locations — <br>Business Bay, Downtown, an
     <div class="container">
         <h2>Buyer’s & Investor’s <span>Guide</span></h2>
         <p class="kif-subtitle">
-Businesses prefer flexible commercial space for rent in Dubai in central districts. Investors benefit from commercial property for sale in Dubai with high ROI potential. KIF Realty provides listings across offices, retail shops, and industrial units.
+            Businesses prefer flexible commercial space for rent in Dubai in central districts. Investors benefit from
+            commercial property for sale in Dubai with high ROI potential. KIF Realty provides listings across offices,
+            retail shops, and industrial units.
         </p>
 
         <div class="kif-points-box">
@@ -1165,7 +1218,8 @@ Businesses prefer flexible commercial space for rent in Dubai in central distric
         <div class="kif-section-header">
             <h2>Why Choose <span>KIF Realty</span></h2>
             <p>
-Access to exclusive listings of office space for rent in Dubai and shops for rent in Dubai. Expertise in commercial property Dubai ROI calculations. Tailored advisory for both investors and corporate clients.
+                Access to exclusive listings of office space for rent in Dubai and shops for rent in Dubai. Expertise in
+                commercial property Dubai ROI calculations. Tailored advisory for both investors and corporate clients.
             </p>
         </div>
 
@@ -1196,109 +1250,109 @@ Access to exclusive listings of office space for rent in Dubai and shops for ren
 </section>
 
 <style>
-.kif-why-choose {
-    background: #030303;
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    padding: 50px 20px;
-    text-align: center;
-}
-
-.kif-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.kif-section-header h2 {
-    font-weight: 700;
-    font-size: 36px;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-}
-
-.kif-section-header h2 span {
-    color: #F7B600;
-}
-
-.kif-section-header p {
-    color: #a3a3a3;
-    font-size: 16px;
-    max-width: 850px;
-    margin: 0 auto 50px;
-    line-height: 1.7;
-    letter-spacing: 0.2px;
-}
-
-.kif-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.kif-card {
-    background: #080808;
-    border-radius: 10px;
-    padding: 25px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #171717;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
-    text-align: center;
-}
-
-.kif-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(247, 182, 0, 0.6);
-    box-shadow: 0 10px 20px -6px rgba(247, 182, 0, 0.5);
-}
-
-.kif-card-icon img {
-    width: 45px;
-    height: 45px;
-    margin-bottom: 15px;
-}
-
-.kif-card p {
-    color: #a3a3a3;
-    font-size: 16px;
-    line-height: 1.7;
-    letter-spacing: 0.2px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .kif-section-header h2 {
-        font-size: 28px;
+    .kif-why-choose {
+        background: #030303;
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+        padding: 50px 20px;
+        text-align: center;
     }
 
-    .kif-section-header p,
-    .kif-card p {
+    .kif-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .kif-section-header h2 {
+        font-weight: 700;
+        font-size: 36px;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    .kif-section-header h2 span {
+        color: #F7B600;
+    }
+
+    .kif-section-header p {
+        color: #a3a3a3;
         font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .kif-section-header h2 {
-        font-size: 26px;
-        font-weight: 600;
+        max-width: 850px;
+        margin: 0 auto 50px;
+        line-height: 1.7;
+        letter-spacing: 0.2px;
     }
 
     .kif-cards-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 10px;
     }
 
     .kif-card {
-        padding: 15px 20px;
+        background: #080808;
+        border-radius: 10px;
+        padding: 25px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #171717;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+        text-align: center;
     }
 
-    .kif-section-header p,
-    .kif-card p {
-        font-size: 14px;
+    .kif-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(247, 182, 0, 0.6);
+        box-shadow: 0 10px 20px -6px rgba(247, 182, 0, 0.5);
     }
-}
+
+    .kif-card-icon img {
+        width: 45px;
+        height: 45px;
+        margin-bottom: 15px;
+    }
+
+    .kif-card p {
+        color: #a3a3a3;
+        font-size: 16px;
+        line-height: 1.7;
+        letter-spacing: 0.2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .kif-section-header h2 {
+            font-size: 28px;
+        }
+
+        .kif-section-header p,
+        .kif-card p {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .kif-section-header h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .kif-cards-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .kif-card {
+            padding: 15px 20px;
+        }
+
+        .kif-section-header p,
+        .kif-card p {
+            font-size: 14px;
+        }
+    }
 </style>
 
 
@@ -1310,11 +1364,12 @@ Access to exclusive listings of office space for rent in Dubai and shops for ren
 
         <h2>Explore Commercial Opportunities in <span>Dubai</span></h2>
         <p>
-Explore commercial space for rent in Dubai, commercial property for sale in Dubai, and coworking space Dubai with KIF Realty.
+            Explore commercial space for rent in Dubai, commercial property for sale in Dubai, and coworking space Dubai
+            with KIF Realty.
         </p>
-        <div class="cta-buttons">
-            <a href="#location" class="btn-outline_contact">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-primary_contact openModalBtn">Book Consultation</a>
+        <div class="cta-buttons_comm">
+            <a href="#location" class="btn-outline_contact_comm">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-primary_contact_comm openModalBtn">Book Consultation</a>
         </div>
     </div>
 </section>
@@ -1352,18 +1407,19 @@ Explore commercial space for rent in Dubai, commercial property for sale in Duba
         margin-bottom: 40px;
         line-height: 1.7;
         letter-spacing: 0.2px;
-        white-space: pre-line; /* preserves line breaks */
+        white-space: pre-line;
+        /* preserves line breaks */
     }
 
-    .cta-buttons {
+    .cta-buttons_comm {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .cta-buttons .btn-primary_contact,
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_comm .btn-primary_contact_comm,
+    .cta-buttons_comm .btn-outline_contact_comm {
         padding: 12px 20px;
         border-radius: 6px;
         font-weight: 500;
@@ -1376,22 +1432,22 @@ Explore commercial space for rent in Dubai, commercial property for sale in Duba
         letter-spacing: 1px;
     }
 
-    .cta-buttons .btn-primary_contact {
+    .cta-buttons_comm .btn-primary_contact_comm {
         background: #F7B600;
         color: #000;
     }
 
-    .cta-buttons .btn-primary_contact:hover {
+    .cta-buttons_comm .btn-primary_contact_comm:hover {
         background: #e6ac00;
     }
 
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_comm .btn-outline_contact_comm {
         background: transparent;
         border: 2px solid #F7B600;
         color: #fff;
     }
 
-    .cta-buttons .btn-outline_contact:hover {
+    .cta-buttons_comm .btn-outline_contact_comm:hover {
         background: #F7B600;
         color: #000;
     }
@@ -1406,10 +1462,7 @@ Explore commercial space for rent in Dubai, commercial property for sale in Duba
             font-size: 16px;
         }
 
-        .cta-buttons {
-            flex-direction: column;
-            gap: 15px;
-        }
+        
     }
 
     @media (max-width: 480px) {
@@ -1424,6 +1477,16 @@ Explore commercial space for rent in Dubai, commercial property for sale in Duba
 
         .cta-section {
             padding: 20px 20px;
+        }
+        .cta-buttons_comm{
+            flex-direction: column;
+            gap: 15px;
+        }
+           .cta-buttons_comm .btn-primary_contact_comm,
+    .cta-buttons_comm .btn-outline_contact_comm{
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
     }
 </style>
@@ -1452,8 +1515,7 @@ Explore commercial space for rent in Dubai, commercial property for sale in Duba
 <!-- Modal Trigger -->
 
 <style>
-
- /* Modal Overlay */
+    /* Modal Overlay */
     .modal-overlay {
         display: none;
         position: fixed;
@@ -1630,7 +1692,6 @@ Explore commercial space for rent in Dubai, commercial property for sale in Duba
             /* optional safety cap */
         }
     }
-
 </style>
 
 

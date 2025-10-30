@@ -2,7 +2,9 @@
 
 {% block title %}{{ post.title }} - KIF Realty Blog{% endblock %}
 
-{% block meta_description %}{{ post.meta_description|default:post.excerpt }}{% endblock %}
+<!-- {% block meta_description %}{{ post.meta_description|default:post.excerpt }}{% endblock %} -->
+{% block meta_description %}{{ post.meta_description }}{% endblock %}
+
 
 {% load static %}
 

@@ -15,7 +15,7 @@
 <!-- Labour Camps Hero Section -->
 <section class="labour-hero-section">
     <div class="labour-hero-content">
-        <h1>Labour Camps in <span>Dubai</span></h1>
+        <h1 style="font-weight: 700;">Labour Camps in <span>Dubai</span></h1>
         <h3>High-Yield Staff Accommodation Investments</h3>
         <p>
             Dubai’s growing workforce drives high demand for labour accommodation. Investors enjoy stable income from
@@ -25,8 +25,8 @@
 
 
         <div class="labour-hero-buttons">
-            <a href="#location" class="btn-primary">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-secondary openModalBtn">Book Consultation</a>
+            <a href="#location" class="btn-primary_labour">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-secondary_labour openModalBtn">Book Consultation</a>
         </div>
 
         <div class="labour-hero-stats">
@@ -53,7 +53,8 @@
         box-sizing: border-box;
         font-family: "Montserrat", sans-serif;
     }
-    body{
+
+    body {
         background-color: #030303;
     }
 
@@ -137,8 +138,8 @@
         opacity: 0;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary_labour,
+    .btn-secondary_labour {
         display: inline-block;
         padding: 12px 20px;
         border-radius: 6px;
@@ -152,22 +153,22 @@
         letter-spacing: 1px;
     }
 
-    .btn-primary {
+    .btn-primary_labour {
         background: #eeb32b;
         color: #000;
     }
 
-    .btn-secondary {
+    .btn-secondary_labour {
         background: transparent;
         border: 2px solid #eeb32b;
         color: #fff;
     }
 
-    .btn-primary:hover {
+    .btn-primary_labour:hover {
         background: #d9a91f;
     }
 
-    .btn-secondary:hover {
+    .btn-secondary_labour:hover {
         background: #eeb32b;
         color: #000;
     }
@@ -263,8 +264,8 @@
             font-size: 14px;
         }
 
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary_labour,
+        .btn-secondary_labour {
             width: 100%;
             max-width: 300px;
             margin: 0 auto;
@@ -317,7 +318,7 @@
         color: #fff;
         letter-spacing: 1px;
         line-height: 1.7;
- 
+
 
     }
 
@@ -332,7 +333,7 @@
         max-width: 900px;
         letter-spacing: 0.2px;
         line-height: 1.7;
-       
+
     }
 
     .graph_container {
@@ -344,7 +345,7 @@
         width: 100%;
         height: 450px;
         box-sizing: border-box;
-        
+
     }
 
     canvas {
@@ -353,7 +354,7 @@
         height: 100% !important;
     }
 
-    
+
     @keyframes fadeUp {
         0% {
             opacity: 0;
@@ -533,7 +534,7 @@
     .locations-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -599,7 +600,7 @@
         text-align: center;
     }
 
-      @keyframes fadeUp {
+    @keyframes fadeUp {
         0% {
             opacity: 0;
             transform: translateY(40px);
@@ -762,7 +763,7 @@
     .roi-cards-custom .cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .roi-cards-custom .card {
@@ -869,7 +870,7 @@
     .trends-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
         text-align: left;
@@ -1244,7 +1245,7 @@
     .kif-cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .kif-card {
@@ -1318,9 +1319,7 @@
         <div class="kif-section-header">
             <h2>Why Choose <span>KIF Realty</span></h2>
             <p>
-                Expertise in sourcing labour accommodation in Dubai that meets regulatory standards. Access to exclusive
-                listings in Jebel Ali, DIP, and Al Quoz. Guidance on ROI calculations and compliance with labour laws in
-                Dubai.
+                Partner with a trusted real estate expert specializing in compliant, high-quality labour accommodations across Dubai’s key industrial zones.
             </p>
         </div>
 
@@ -1329,25 +1328,26 @@
                 <div class="kif-card-icon">
                     <img src="{% static 'images/rental.svg' %}" alt="Labour Accommodation">
                 </div>
-                <p>Expertise in sourcing labour accommodation Dubai that meets regulatory standards</p>
+                <p>Expertise in sourcing labour accommodation in Dubai that meets regulatory standards.</p>
             </div>
 
             <div class="kif-card">
                 <div class="kif-card-icon">
                     <img src="{% static 'images/location.svg' %}" alt="Exclusive Listings">
                 </div>
-                <p>Access to exclusive listings in Jebel Ali, DIP, and Al Quoz</p>
+                <p>Access to exclusive listings in Jebel Ali, DIP, and Al Quoz.</p>
             </div>
 
             <div class="kif-card">
                 <div class="kif-card-icon">
                     <img src="{% static 'images/checklist.svg' %}" alt="ROI Guidance">
                 </div>
-                <p>Guidance on ROI calculations and compliance with labour laws in Dubai</p>
+                <p>Guidance on ROI calculations and compliance with labour laws in Dubai.</p>
             </div>
         </div>
     </div>
 </section>
+
 
 
 <!-- -------------------------------------------8 SECTION---------------------------------------- -->
@@ -1358,11 +1358,12 @@
 
         <h2>Explore <span>Labour Accommodation in Dubai</span></h2>
         <p>
-            Explore labour camps in Dubai, staff accommodation in Dubai, and labour accommodation in DIP 1 & DIP 2 with KIF Realty today.
+            Explore labour camps in Dubai, staff accommodation in Dubai, and labour accommodation in DIP 1 & DIP 2 with
+            KIF Realty today.
         </p>
-        <div class="cta-buttons">
-            <a href="#location" class="btn-outline_contact">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-primary_contact openModalBtn">Book Consultation</a>
+        <div class="cta-buttons_labour">
+            <a href="#location" class="btn-outline_contact_labour">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-primary_contact_labour openModalBtn">Book Consultation</a>
         </div>
     </div>
 </section>
@@ -1403,15 +1404,15 @@
         white-space: pre-line;
     }
 
-    .cta-buttons {
+    .cta-buttons_labour {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .cta-buttons .btn-primary_contact,
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_labour .btn-primary_contact_labour,
+    .cta-buttons_labour .btn-outline_contact_labour {
         padding: 12px 20px;
         border-radius: 6px;
         font-weight: 500;
@@ -1424,22 +1425,22 @@
         letter-spacing: 1px;
     }
 
-    .cta-buttons .btn-primary_contact {
+    .cta-buttons_labour .btn-primary_contact_labour {
         background: #F7B600;
         color: #000;
     }
 
-    .cta-buttons .btn-primary_contact:hover {
+    .cta-buttons_labour .btn-primary_contact_labour:hover {
         background: #e6ac00;
     }
 
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_labour .btn-outline_contact_labour {
         background: transparent;
         border: 2px solid #F7B600;
         color: #fff;
     }
 
-    .cta-buttons .btn-outline_contact:hover {
+    .cta-buttons_labour .btn-outline_contact_labour:hover {
         background: #F7B600;
         color: #000;
     }
@@ -1454,10 +1455,7 @@
             font-size: 16px;
         }
 
-        .cta-buttons {
-            flex-direction: column;
-            gap: 15px;
-        }
+       
     }
 
     @media (max-width: 480px) {
@@ -1472,6 +1470,18 @@
 
         .cta-section {
             padding: 20px 20px;
+        }
+
+        .cta-buttons_labour {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cta-buttons_labour .btn-primary_contact_labour,
+        .cta-buttons_labour .btn-outline_contact_labour {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
     }
 </style>

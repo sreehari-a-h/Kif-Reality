@@ -8,20 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
 
-    <!-- Intl Tel Input CSS -->
+<!-- Intl Tel Input CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
 
 
 <!-- Off-Plan Hero Section -->
 <section class="offplan-hero-section">
     <div class="offplan-hero-content">
-        <h1>Off-Plan Residential Properties in <span>Dubai</span></h1>
+        <h1 style="font-weight: 700;">Off-Plan Residential Properties in <span>Dubai</span></h1>
         <h3>Flexible Payment Plans & High ROI</h3>
         <p>
-Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive prices. <br>KIF Realty offers exclusive access to top developments for strong capital growth and long-term returns.
+            Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive prices. <br>KIF Realty offers
+            exclusive access to top developments for strong capital growth and long-term returns.
         <div class="offplan-hero-buttons">
-            <a href="#location" class="btn-primary">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-secondary openModalBtn">Book Consultation</a>
+            <a href="#location" class="btn-primary_off">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-secondary_off openModalBtn">Book Consultation</a>
         </div>
 
         <div class="offplan-hero-stats">
@@ -48,9 +49,10 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         box-sizing: border-box;
         font-family: "Montserrat", sans-serif;
     }
-     body {
-    background-color: #030303;
-  }
+
+    body {
+        background-color: #030303;
+    }
 
     .offplan-hero-section {
         background: radial-gradient(120% 72% at 50% 100%, rgba(42, 60, 68, 0) 0, rgb(7 28 53 / 3%) 66.59%, rgb(7 28 53 / 44%) 99.98%),
@@ -121,7 +123,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         margin-bottom: 40px;
         animation: fadeUp 1s ease-out 0.9s forwards;
         opacity: 0;
-       
+
     }
 
     .offplan-hero-buttons {
@@ -133,8 +135,8 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         opacity: 0;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary_off,
+    .btn-secondary_off {
         display: inline-block;
         padding: 12px 20px;
         border-radius: 6px;
@@ -148,22 +150,22 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         letter-spacing: 1px;
     }
 
-    .btn-primary {
+    .btn-primary_off {
         background: #eeb32b;
         color: #000;
     }
 
-    .btn-secondary {
+    .btn-secondary_off {
         background: transparent;
         border: 2px solid #eeb32b;
         color: #fff;
     }
 
-    .btn-primary:hover {
+    .btn-primary_off:hover {
         background: #d9a91f;
     }
 
-    .btn-secondary:hover {
+    .btn-secondary_off:hover {
         background: #eeb32b;
         color: #000;
     }
@@ -259,8 +261,8 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
             font-size: 14px;
         }
 
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary_off,
+        .btn-secondary_off {
             width: 100%;
             max-width: 300px;
             margin: 0 auto;
@@ -292,11 +294,11 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
-     :root{
-         --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
+    :root {
+        --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
         --transition-bounce: all .4s cubic-bezier(.68, -.55, .265, 1.55);
     }
+
     .graph_section {
         background-color: #030303;
         color: #fff;
@@ -308,7 +310,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         text-align: center;
         position: relative;
         z-index: 1;
-         animation: fadeUp 3s ease-out 1.5s backwards;
+        animation: fadeUp 3s ease-out 1.5s backwards;
     }
 
     .graph_section h2 {
@@ -352,23 +354,45 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
     }
 
     @media (max-width: 768px) {
-        .graph_section { padding: 30px 20px; }
-        .graph_section h2 { font-size: 28px; }
-        .graph_section p { font-size: 16px; }
-        .graph_container { height: 300px; }
+        .graph_section {
+            padding: 30px 20px;
+        }
+
+        .graph_section h2 {
+            font-size: 28px;
+        }
+
+        .graph_section p {
+            font-size: 16px;
+        }
+
+        .graph_container {
+            height: 300px;
+        }
     }
 
     @media (max-width: 480px) {
-        .graph_section h2 { font-size: 24px; font-weight: 600; line-height: 1.7; }
-        .graph_section p { font-size: 14px; }
-        .graph_container { height: 250px; }
+        .graph_section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.7;
+        }
+
+        .graph_section p {
+            font-size: 14px;
+        }
+
+        .graph_container {
+            height: 250px;
+        }
     }
 </style>
 
 <section class="graph_section">
     <h2>10-Year Investment Growth in <span>Off-Plan Properties</span></h2>
     <p>
-        Comparison of off-plan vs ready properties over the past decade, showing appreciation trends and ROI for investors.
+        Comparison of off-plan vs ready properties over the past decade, showing appreciation trends and ROI for
+        investors.
     </p>
 
     <div class="graph_container">
@@ -488,7 +512,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
     .locations-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -644,7 +668,8 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         <div class="section-header">
             <h2>ROI & <span>Capital Appreciation</span></h2>
             <p>
-                Appreciation of 30–60% pre-handover across prime off-plan Dubai projects. Rental yields up to 8% after handover. 
+                Appreciation of 30–60% pre-handover across prime off-plan Dubai projects. Rental yields up to 8% after
+                handover.
                 Investors who buy off-plan property in Dubai benefit from phased payments and flexible resale options.
             </p>
         </div>
@@ -692,7 +717,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         font-size: 36px;
         margin: 0 0 10px;
         letter-spacing: 1px;
-         line-height: 1.7;
+        line-height: 1.7;
     }
 
     .roi-cards-custom .section-header h2 span {
@@ -711,7 +736,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
     .roi-cards-custom .cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .roi-cards-custom .card {
@@ -831,7 +856,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
     .trends-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
         text-align: left;
@@ -958,7 +983,9 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
 <section class="market-trends">
     <h2>Market <span>Trends</span></h2>
     <p>
-        Growing number of investors seeking off-plan properties in Dubai due to flexible 20-80 and 50-50 payment plans. Strong overseas demand for off-plan apartments Dubai in waterfront and luxury communities. Developers offering buy off plan property in Dubai with Golden Visa eligibility.
+        Growing number of investors seeking off-plan properties in Dubai due to flexible 20-80 and 50-50 payment plans.
+        Strong overseas demand for off-plan apartments Dubai in waterfront and luxury communities. Developers offering
+        buy off plan property in Dubai with Golden Visa eligibility.
     </p>
 
     <div class="trends-grid">
@@ -1132,8 +1159,9 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
     <div class="container">
         <h2>Buyer’s & Investor’s <span>Guide</span></h2>
         <p class="kif-subtitle">
-    Invest in off plan apartments, villas, and townhouses in Dubai. Affordable entry for first-time buyers, long-term gains for families, and expert guidance from KIF Realty on profitable off plan investments.
-</p>
+            Invest in off plan apartments, villas, and townhouses in Dubai. Affordable entry for first-time buyers,
+            long-term gains for families, and expert guidance from KIF Realty on profitable off plan investments.
+        </p>
 
 
         <div class="kif-points-box">
@@ -1209,7 +1237,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
     .kif-cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .kif-card {
@@ -1283,7 +1311,8 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         <div class="kif-section-header">
             <h2>Why Choose <span>KIF Realty</span></h2>
             <p>
-                Access to the latest off-plan Dubai projects, expert ROI guidance, and priority deals through strong developer connections.
+                Access to the latest off-plan Dubai projects, expert ROI guidance, and priority deals through strong
+                developer connections.
             </p>
         </div>
 
@@ -1322,11 +1351,12 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
 
         <h2>Explore <span>Off-Plan Properties in Dubai</span></h2>
         <p>
-            Explore off-plan properties in Dubai, off-plan apartments for sale in Dubai, and off-plan villas for sale in Dubai with KIF Realty today.
+            Explore off-plan properties in Dubai, off-plan apartments for sale in Dubai, and off-plan villas for sale in
+            Dubai with KIF Realty today.
         </p>
-        <div class="cta-buttons">
-            <a href="#location" class="btn-outline_contact">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-primary_contact openModalBtn">Book Consultation</a>
+        <div class="cta-buttons_off">
+            <a href="#location" class="btn-outline_contact_off">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-primary_contact_off openModalBtn">Book Consultation</a>
         </div>
     </div>
 </section>
@@ -1367,15 +1397,15 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         white-space: pre-line;
     }
 
-    .cta-buttons {
+    .cta-buttons_off {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .cta-buttons .btn-primary_contact,
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_off .btn-primary_contact_off,
+    .cta-buttons_off .btn-outline_contact_off {
         padding: 12px 20px;
         border-radius: 6px;
         font-weight: 500;
@@ -1388,22 +1418,22 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
         letter-spacing: 1px;
     }
 
-    .cta-buttons .btn-primary_contact {
+    .cta-buttons_off .btn-primary_contact_off {
         background: #F7B600;
         color: #000;
     }
 
-    .cta-buttons .btn-primary_contact:hover {
+    .cta-buttons_off .btn-primary_contact_off:hover {
         background: #e6ac00;
     }
 
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_off .btn-outline_contact_off {
         background: transparent;
         border: 2px solid #F7B600;
         color: #fff;
     }
 
-    .cta-buttons .btn-outline_contact:hover {
+    .cta-buttons_off .btn-outline_contact_off:hover {
         background: #F7B600;
         color: #000;
     }
@@ -1418,10 +1448,7 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
             font-size: 16px;
         }
 
-        .cta-buttons {
-            flex-direction: column;
-            gap: 15px;
-        }
+        
     }
 
     @media (max-width: 480px) {
@@ -1436,6 +1463,17 @@ Invest in Dubai’s off-plan apartments, villas, and townhouses with attractive 
 
         .cta-section {
             padding: 20px 20px;
+        }
+        .cta-buttons_off {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cta-buttons_off .btn-primary_contact_off,
+    .cta-buttons_off .btn-outline_contact_off {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
     }
 </style>

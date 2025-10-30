@@ -13,14 +13,14 @@
 <!-- Mansions Hero Section -->
 <section class="mansion-hero-section">
   <div class="mansion-hero-content">
-    <h1>Mansions for Sale in <span>Dubai</span></h1>
+    <h1 style="font-weight: 700;">Mansions for Sale in <span>Dubai</span></h1>
     <h3>Ultra-Luxury Homes for Elite Living</h3>
     <p>
       Discover Dubai’s most exclusive mansions — where luxury, prestige, and investment value meet. Explore iconic homes in Palm Jumeirah, Dubai Hills, and more with KIF Realty.    </p>
 
     <div class="mansion-hero-buttons">
-      <a href="#locations" class="btn-primary">Explore Spaces</a>
-      <a href="#consultationModal" class="btn-secondary openModalBtn">Book Consultation</a>
+      <a href="#locations" class="btn-primary_man">Explore Spaces</a>
+      <a href="#consultationModal" class="btn-secondary_man openModalBtn">Book Consultation</a>
     </div>
 
     <div class="mansion-hero-stats">
@@ -132,8 +132,8 @@
     opacity: 0;
   }
 
-  .btn-primary,
-  .btn-secondary {
+  .btn-primary_man,
+  .btn-secondary_man {
     display: inline-block;
     padding: 12px 20px;
     border-radius: 6px;
@@ -147,22 +147,22 @@
     letter-spacing: 1px;
   }
 
-  .btn-primary {
+  .btn-primary_man {
     background: #eeb32b;
     color: #000;
   }
 
-  .btn-secondary {
+  .btn-secondary_man {
     background: transparent;
     border: 2px solid #eeb32b;
     color: #fff;
   }
 
-  .btn-primary:hover {
+  .btn-primary_man:hover {
     background: #d9a91f;
   }
 
-  .btn-secondary:hover {
+  .btn-secondary_man:hover {
     background: #eeb32b;
     color: #000;
   }
@@ -258,8 +258,8 @@
       font-size: 14px;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary_man,
+    .btn-secondary_man {
       width: 100%;
       max-width: 300px;
       margin: 0 auto;
@@ -525,7 +525,7 @@
     .locations-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -753,7 +753,7 @@
     .roi-cards-custom .cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .roi-cards-custom .card {
@@ -900,7 +900,7 @@
 .trends-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    gap: 10px;
     max-width: 1200px;
     margin: 0 auto;
     text-align: left;
@@ -1245,7 +1245,7 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
 .kif-cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
+    gap: 10px;
 }
 
 .kif-card {
@@ -1324,9 +1324,9 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
         <p>
             Explore Palm Jumeirah mansions for sale, District One mansions for sale, and other premium properties with KIF Realty today.
         </p>
-        <div class="cta-buttons">
-            <a href="#locations" class="btn-outline_contact">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-primary_contact openModalBtn">Book Consultation</a>
+        <div class="cta-buttons_man">
+            <a href="#locations" class="btn-outline_contact_man">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-primary_contact_man openModalBtn">Book Consultation</a>
         </div>
     </div>
 </section>
@@ -1367,15 +1367,15 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
         white-space: pre-line;
     }
 
-    .cta-buttons {
+    .cta-buttons_man {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .cta-buttons .btn-primary_contact,
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_man .btn-primary_contact_man,
+    .cta-buttons_man .btn-outline_contact_man {
         padding: 12px 20px;
         border-radius: 6px;
         font-weight: 500;
@@ -1388,22 +1388,22 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
         letter-spacing: 1px;
     }
 
-    .cta-buttons .btn-primary_contact {
+    .cta-buttons_man .btn-primary_contact_man {
         background: #F7B600;
         color: #000;
     }
 
-    .cta-buttons .btn-primary_contact:hover {
+    .cta-buttons_man .btn-primary_contact_man:hover {
         background: #e6ac00;
     }
 
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_man .btn-outline_contact_man {
         background: transparent;
         border: 2px solid #F7B600;
         color: #fff;
     }
 
-    .cta-buttons .btn-outline_contact:hover {
+    .cta-buttons_man .btn-outline_contact_man:hover {
         background: #F7B600;
         color: #000;
     }
@@ -1416,11 +1416,6 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
 
         .cta-section p {
             font-size: 16px;
-        }
-
-        .cta-buttons {
-            flex-direction: column;
-            gap: 15px;
         }
     }
 
@@ -1436,6 +1431,18 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
 
         .cta-section {
             padding: 20px 20px;
+        }
+
+        .cta-buttons_man {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cta-buttons_man .btn-primary_contact_man,
+    .cta-buttons_man .btn-outline_contact_man {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
     }
 </style>
@@ -1644,7 +1651,7 @@ Exclusive Dubai mansions for sale, including Palm Jumeirah and Dubai Hills. Expe
 
         <form id="propertyForm" action="https://api.web3forms.com/submit" method="POST">
             <!-- Web3Forms Access Key -->
-            <input type="hidden" name="access_key" value="e6d0d24d-c0a0-466b-8df6-250fefd4205e">
+            <input type="hidden" name="access_key" value="8449e901-8d0d-4108-a9b3-fb8716cd275d">
             <input type="hidden" name="subject" value="New Contact Form Submission">
             <input type="hidden" name="replyto" value="{{ email }}" />
 

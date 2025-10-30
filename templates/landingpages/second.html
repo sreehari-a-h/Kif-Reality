@@ -19,9 +19,11 @@
         box-sizing: border-box;
         font-family: "Montserrat", sans-serif;
     }
- body {
-    background-color: #030303;
-  }
+
+    body {
+        background-color: #030303;
+    }
+
     .retail-section {
         background: radial-gradient(120% 72% at 50% 100%,
             rgba(42, 60, 68, 0) 0,
@@ -96,7 +98,7 @@
         opacity: 0;
     }
 
-    .retail-buttons {
+    .retail-buttons_second {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -105,8 +107,8 @@
         opacity: 0;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary_second,
+    .btn-secondary_second {
         display: inline-block;
         padding: 12px 20px;
         border-radius: 6px;
@@ -120,22 +122,22 @@
         letter-spacing: 1px;
     }
 
-    .btn-primary {
+    .btn-primary_second {
         background: #eeb32b;
         color: #000;
     }
 
-    .btn-secondary {
+    .btn-secondary_second {
         background: transparent;
         border: 2px solid #eeb32b;
         color: #fff;
     }
 
-    .btn-primary:hover {
+    .btn-primary_second:hover {
         background: #d9a91f;
     }
 
-    .btn-secondary:hover {
+    .btn-secondary_second:hover {
         background: #eeb32b;
         color: #000;
     }
@@ -209,7 +211,7 @@
 
     @media (max-width: 492px) {
 
-         .beachfront-hero-section {
+        .beachfront-hero-section {
             padding-bottom: 1px;
         }
 
@@ -218,7 +220,7 @@
             margin-top: 2%;
         }
 
-        .retail-buttons {
+        .retail-buttons_second {
             flex-direction: column;
             gap: 12px;
         }
@@ -232,21 +234,24 @@
             font-size: 14px;
         }
 
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary_second,
+        .btn-secondary_second {
             width: 100%;
             max-width: 300px;
             margin: 0 auto;
         }
-         .retail-stats h2 {
+
+        .retail-stats h2 {
             font-size: 18px;
             /* smaller heading */
             font-weight: 500;
         }
-         .retail-stats p {
+
+        .retail-stats p {
             font-size: 13px;
-             letter-spacing:normal
+            letter-spacing: normal
         }
+
         .retail-stats {
             gap: 5px;
             /* reduce spacing between items */
@@ -261,16 +266,16 @@
 
 <section class="retail-section">
     <div class="retail-content">
-        <h1>Secondary Residential Properties in <span>Dubai</span></h1>
+        <h1 style="font-weight: 700;">Secondary Residential Properties in <span>Dubai</span></h1>
         <h3>Ready-to-Move Homes & Resale Opportunities</h3>
         <p>
             Immediate ownership and rental income. KIF Realty offers the best ready-to-move apartments,<br>
             villas, and townhouses in Dubai for faster ROI and flexible resale.
         </p>
 
-        <div class="retail-buttons">
-            <a href="#location" class="btn-primary">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-secondary openModalBtn">Book Consultation</a>
+        <div class="retail-buttons_second">
+            <a href="#location" class="btn-primary_second">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-secondary_second openModalBtn">Book Consultation</a>
         </div>
 
         <div class="retail-stats">
@@ -298,11 +303,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-    
-    :root{
-         --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
+    :root {
+        --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
         --transition-bounce: all .4s cubic-bezier(.68, -.55, .265, 1.55);
     }
+
     .graph_section {
         background-color: #030303;
         color: #fff;
@@ -314,7 +319,7 @@
         text-align: center;
         position: relative;
         z-index: 1;
-         animation: fadeUp 3s ease-out 1.5s backwards;
+        animation: fadeUp 3s ease-out 1.5s backwards;
     }
 
     .graph_section h2 {
@@ -324,7 +329,7 @@
         color: #fff;
         letter-spacing: 1px;
         line-height: 1.7;
-         animation: fadeUp 3s ease-out 1.5s backwards;
+        animation: fadeUp 3s ease-out 1.5s backwards;
     }
 
     .graph_section h2 span {
@@ -400,7 +405,7 @@
 <section class="graph_section">
     <h2>10-Year Investment Growth in <span>Dubai’s Residential Market</span></h2>
     <p>
-        Resale property price appreciation and rental trends over the last decade highlight Dubai’s strong 
+        Resale property price appreciation and rental trends over the last decade highlight Dubai’s strong
         secondary residential market. Ready-to-move homes continue to offer stable returns and growing demand.
     </p>
 
@@ -489,7 +494,7 @@
         font-family: 'Montserrat', sans-serif;
         padding: 50px 20px;
         text-align: center;
-         animation: fadeUp 4s ease-out 3s backwards;
+        animation: fadeUp 4s ease-out 3s backwards;
     }
 
     .prime-locations h2 {
@@ -518,7 +523,7 @@
     .locations-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -627,7 +632,8 @@
 
 <section class="prime-locations" id="location">
     <h2>Prime <span>Residential Locations</span></h2>
-    <p>Explore Dubai’s top communities offering ready-to-move apartments, villas, and townhouses with exceptional resale potential and strong ROI.</p>
+    <p>Explore Dubai’s top communities offering ready-to-move apartments, villas, and townhouses with exceptional resale
+        potential and strong ROI.</p>
 
     <div class="locations-grid">
         <div class="location-card">
@@ -635,7 +641,8 @@
                 <img src="{% static 'images/location.svg' %}" alt="Location Icon">
             </div>
             <h3>Downtown Dubai</h3>
-            <p>Luxury ready-to-move apartments in Dubai’s most iconic location, ideal for premium living and strong resale value.</p>
+            <p>Luxury ready-to-move apartments in Dubai’s most iconic location, ideal for premium living and strong
+                resale value.</p>
         </div>
 
         <div class="location-card">
@@ -659,7 +666,8 @@
                 <img src="{% static 'images/location.svg' %}" alt="Location Icon">
             </div>
             <h3>Arabian Ranches & Dubai Hills</h3>
-            <p>Premium ready-to-move villas offering spacious living, landscaped surroundings, and high appreciation potential.</p>
+            <p>Premium ready-to-move villas offering spacious living, landscaped surroundings, and high appreciation
+                potential.</p>
         </div>
     </div>
 </section>
@@ -670,7 +678,8 @@
     <div class="container">
         <div class="section-header">
             <h2>ROI & <span>Capital Appreciation</span></h2>
-            <p>Average rental yields: 6–8%. Established communities drive strong resale values. Liquidity is higher compared to off-plan properties.</p>
+            <p>Average rental yields: 6–8%. Established communities drive strong resale values. Liquidity is higher
+                compared to off-plan properties.</p>
         </div>
 
         <div class="cards-grid">
@@ -698,104 +707,108 @@
 </section>
 
 <style>
-.roi-cards-custom {
-    background: #030303;
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.roi-cards-custom .container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.roi-cards-custom .section-header h2 {
-    font-weight: 700;
-    font-size: 36px;
-    margin: 0 0 10px;
-    letter-spacing: 1px;
-     line-height: 1.7;
-}
-
-.roi-cards-custom .section-header h2 span {
-    color: #F7B600;
-}
-
-.roi-cards-custom .section-header p {
-    color: #a3a3a3;
-    font-size: 16px;
-    max-width: 900px;
-    margin: 0 auto 50px;
-    line-height: 1.7;
-    letter-spacing: 0.2px;
-}
-
-.roi-cards-custom .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 30px;
-}
-
-.roi-cards-custom .card {
-    background: #080808;
-    border-radius: 6px;
-    padding: 30px 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #171717;
-    box-shadow: 0 10px 30px -10px hsl(0 0% 0% / .5);
-    cursor: default;
-}
-
-.roi-cards-custom .card:hover {
-    transform: translateY(-6px);
-    border-color: hsl(42 85% 55% / .6);
-    box-shadow: 0 8px 12px -6px hsl(42 85% 55% / 0.5);
-}
-
-.roi-cards-custom .card .icon img {
-    width: 45px;
-    height: 45px;
-}
-
-.roi-cards-custom .card h3 {
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 0.2px;
-    margin-top: 10px;
-    color: #a3a3a3;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .roi-cards-custom .section-header h2 {
-        font-size: 28px;
-    }
-    .roi-cards-custom .section-header p {
-        font-size: 16px;
-    }
     .roi-cards-custom {
-        padding: 50px 20px;
+        background: #030303;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        padding: 60px 20px;
+        text-align: center;
     }
-}
 
-@media (max-width: 480px) {
+    .roi-cards-custom .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
     .roi-cards-custom .section-header h2 {
-        font-size: 26px;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 36px;
+        margin: 0 0 10px;
+        letter-spacing: 1px;
+        line-height: 1.7;
     }
-    .roi-cards-custom .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
+
+    .roi-cards-custom .section-header h2 span {
+        color: #F7B600;
     }
+
     .roi-cards-custom .section-header p {
-        font-size: 14px;
+        color: #a3a3a3;
+        font-size: 16px;
+        max-width: 900px;
+        margin: 0 auto 50px;
+        line-height: 1.7;
+        letter-spacing: 0.2px;
     }
-}
+
+    .roi-cards-custom .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 10px;
+    }
+
+    .roi-cards-custom .card {
+        background: #080808;
+        border-radius: 6px;
+        padding: 30px 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #171717;
+        box-shadow: 0 10px 30px -10px hsl(0 0% 0% / .5);
+        cursor: default;
+    }
+
+    .roi-cards-custom .card:hover {
+        transform: translateY(-6px);
+        border-color: hsl(42 85% 55% / .6);
+        box-shadow: 0 8px 12px -6px hsl(42 85% 55% / 0.5);
+    }
+
+    .roi-cards-custom .card .icon img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .roi-cards-custom .card h3 {
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 0.2px;
+        margin-top: 10px;
+        color: #a3a3a3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .roi-cards-custom .section-header h2 {
+            font-size: 28px;
+        }
+
+        .roi-cards-custom .section-header p {
+            font-size: 16px;
+        }
+
+        .roi-cards-custom {
+            padding: 50px 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .roi-cards-custom .section-header h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .roi-cards-custom .cards-grid {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .roi-cards-custom .section-header p {
+            font-size: 14px;
+        }
+    }
 </style>
 
 
@@ -852,7 +865,7 @@
     .trends-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
         text-align: left;
@@ -978,7 +991,9 @@
 
 <section class="market-trends">
     <h2>Market <span>Trends</span></h2>
-    <p>Growing preference for ready to move apartments in Dubai due to immediate rental potential. Resale properties in Dubai appreciated by 40–60% in the last decade. Demand rising for residential properties in Dubai with schools, malls, and connectivity nearby.</p>
+    <p>Growing preference for ready to move apartments in Dubai due to immediate rental potential. Resale properties in
+        Dubai appreciated by 40–60% in the last decade. Demand rising for residential properties in Dubai with schools,
+        malls, and connectivity nearby.</p>
 
     <div class="trends-grid">
         <div class="trend-card">
@@ -1037,7 +1052,8 @@
         margin: 15px auto 45px;
         line-height: 1.7;
         letter-spacing: 0.2px;
-        white-space: pre-line; /* preserves line breaks */
+        white-space: pre-line;
+        /* preserves line breaks */
     }
 
     .kif-points-box {
@@ -1082,19 +1098,58 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .kif-investor-section h2 { font-size: 28px; }
-        .kif-investor-section .kif-subtitle { font-size: 16px; max-width: 100%; margin-bottom: 30px; }
-        .kif-point { font-size: 16px; margin-bottom: 14px; }
-        .kif-icon { width: 28px; height: 28px; margin-right: 8px; }
+        .kif-investor-section h2 {
+            font-size: 28px;
+        }
+
+        .kif-investor-section .kif-subtitle {
+            font-size: 16px;
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .kif-point {
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+
+        .kif-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 8px;
+        }
     }
 
     @media (max-width: 480px) {
-        .kif-investor-section { padding: 20px 20px; }
-        .kif-investor-section h2 { font-size: 26px; font-weight: 600; }
-        .kif-subtitle { font-size: 14px; margin-bottom: 25px; }
-        .kif-points-box { padding: 20px 15px; box-shadow: 0 6px 15px -6px hsl(0 0% 0% / .4); }
-        .kif-point { font-size: 14px; margin-bottom: 12px; }
-        .kif-icon { width: 24px; height: 24px; margin-right: 6px; }
+        .kif-investor-section {
+            padding: 20px 20px;
+        }
+
+        .kif-investor-section h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .kif-subtitle {
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .kif-points-box {
+            padding: 20px 15px;
+            box-shadow: 0 6px 15px -6px hsl(0 0% 0% / .4);
+        }
+
+        .kif-point {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .kif-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 6px;
+        }
     }
 </style>
 
@@ -1102,9 +1157,9 @@
     <div class="container">
         <h2>Buyer’s & Investor’s <span>Guide</span></h2>
         <p class="kif-subtitle">
-End-users prefer ready to move villas in Dubai and townhouses in Dubai for family living. Investors
-focus on resale properties in Dubai for immediate rental yields. Financing options available for
-secondary residential properties in Dubai through major UAE banks.
+            End-users prefer ready to move villas in Dubai and townhouses in Dubai for family living. Investors
+            focus on resale properties in Dubai for immediate rental yields. Financing options available for
+            secondary residential properties in Dubai through major UAE banks.
         </p>
 
         <div class="kif-points-box">
@@ -1147,7 +1202,9 @@ secondary residential properties in Dubai through major UAE banks.
         <div class="kif-section-header">
             <h2>Why Choose <span>KIF Realty</span></h2>
             <p>
-Access to exclusive listings of ready-to-move apartments in Dubai and ready-to-move villas in Dubai. Expert guidance on resale properties in Dubai ROI and appreciation. Trusted by investors and end-users for sourcing the best residential properties in Dubai.
+                Access to exclusive listings of ready-to-move apartments in Dubai and ready-to-move villas in Dubai.
+                Expert guidance on resale properties in Dubai ROI and appreciation. Trusted by investors and end-users
+                for sourcing the best residential properties in Dubai.
             </p>
         </div>
 
@@ -1214,7 +1271,7 @@ Access to exclusive listings of ready-to-move apartments in Dubai and ready-to-m
     .kif-cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .kif-card {
@@ -1293,11 +1350,12 @@ Access to exclusive listings of ready-to-move apartments in Dubai and ready-to-m
 
         <h2>Explore Residential Opportunities in <span>Dubai</span></h2>
         <p>
-Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and resale properties in Dubai with KIF Realty today.
+            Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and resale properties in Dubai
+            with KIF Realty today.
         </p>
-        <div class="cta-buttons">
-            <a href="#location" class="btn-outline_contact">Explore Spaces</a>
-            <a href="#consultationModal" class="btn-primary_contact openModalBtn">Book Consultation</a>
+        <div class="cta-buttons_second">
+            <a href="#location" class="btn-outline_contact_second">Explore Spaces</a>
+            <a href="#consultationModal" class="btn-primary_contact_second openModalBtn">Book Consultation</a>
         </div>
     </div>
 </section>
@@ -1335,18 +1393,19 @@ Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and
         margin-bottom: 40px;
         line-height: 1.7;
         letter-spacing: 0.2px;
-        white-space: pre-line; /* preserves line breaks */
+        white-space: pre-line;
+        /* preserves line breaks */
     }
 
-    .cta-buttons {
+    .cta-buttons_second {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .cta-buttons .btn-primary_contact,
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_second .btn-primary_contact_second,
+    .cta-buttons_second .btn-outline_contact_second {
         padding: 12px 20px;
         border-radius: 6px;
         font-weight: 500;
@@ -1359,22 +1418,22 @@ Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and
         letter-spacing: 1px;
     }
 
-    .cta-buttons .btn-primary_contact {
+    .cta-buttons_second .btn-primary_contact_second {
         background: #F7B600;
         color: #000;
     }
 
-    .cta-buttons .btn-primary_contact:hover {
+    .cta-buttons_second .btn-primary_contact_second:hover {
         background: #e6ac00;
     }
 
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_second .btn-outline_contact_second {
         background: transparent;
         border: 2px solid #F7B600;
         color: #fff;
     }
 
-    .cta-buttons .btn-outline_contact:hover {
+    .cta-buttons_second .btn-outline_contact_second:hover {
         background: #F7B600;
         color: #000;
     }
@@ -1389,10 +1448,6 @@ Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and
             font-size: 16px;
         }
 
-        .cta-buttons {
-            flex-direction: column;
-            gap: 15px;
-        }
     }
 
     @media (max-width: 480px) {
@@ -1407,6 +1462,18 @@ Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and
 
         .cta-section {
             padding: 20px 20px;
+        }
+
+        .cta-buttons_second {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cta-buttons_second .btn-primary_contact_second,
+        .cta-buttons_second .btn-outline_contact_second {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
     }
 </style>
@@ -1423,8 +1490,7 @@ Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and
 <!-- Modal Trigger -->
 
 <style>
-
- /* Modal Overlay */
+    /* Modal Overlay */
     .modal-overlay {
         display: none;
         position: fixed;
@@ -1601,7 +1667,6 @@ Browse ready-to-move apartments in Dubai, ready-to-move townhouses in Dubai, and
             /* optional safety cap */
         }
     }
-
 </style>
 
 

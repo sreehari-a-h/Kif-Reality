@@ -4,9 +4,13 @@
     {% if search_query %}
         Search Results for "{{ search_query }}" - KIF Realty Blog
     {% else %}
-        Blogs - KIF Realty
+        KIF Realty Blogs | Dubai Property News & Expert Insights
     {% endif %}
 {% endblock %}
+
+<meta name="description" content="{% block description %}Explore insightful blogs on Dubai real estate trends, investment tips, and market analysis. Stay updated with KIF Realty's expert property advice.
+
+{% endblock %}">
 
 {% load static %}
 

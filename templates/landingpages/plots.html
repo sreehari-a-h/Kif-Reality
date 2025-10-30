@@ -18,7 +18,7 @@
 
 <section class="warehouse-hero-section">
   <div class="warehouse-hero-content">
-    <h1>Plots for Sale in <span>Dubai</span></h1>
+    <h1 style="font-weight: 700;">Plots for Sale in <span>Dubai</span></h1>
     <h3>Freehold Land with High ROI</h3>
     <p>
      
@@ -26,8 +26,8 @@ Explore prime residential, mixed-use, and beachfront plots in Dubai with high RO
     </p>
 
     <div class="warehouse-hero-buttons">
-      <a href="#location" class="btn-primary">Explore Plots</a>
-      <a href="#consultationModal" class="btn-secondary openModalBtn">Book Consultation</a>
+      <a href="#location" class="btn-primary_plot">Explore Plots</a>
+      <a href="#consultationModal" class="btn-secondary_plot openModalBtn">Book Consultation</a>
     </div>
 
     <div class="warehouse-hero-stats">
@@ -140,8 +140,8 @@ Explore prime residential, mixed-use, and beachfront plots in Dubai with high RO
     opacity: 0;
   }
 
-  .btn-primary,
-  .btn-secondary {
+  .btn-primary_plot,
+  .btn-secondary_plot {
     display: inline-block;
     padding: 12px 20px;
     border-radius: 6px;
@@ -155,22 +155,22 @@ Explore prime residential, mixed-use, and beachfront plots in Dubai with high RO
     letter-spacing: 1px;
   }
 
-  .btn-primary {
+  .btn-primary_plot {
     background: #eeb32b;
     color: #000;
   }
 
-  .btn-secondary {
+  .btn-secondary_plot {
     background: transparent;
     border: 2px solid #eeb32b;
     color: #fff;
   }
 
-  .btn-primary:hover {
+  .btn-primary_plot:hover {
     background: #d9a91f;
   }
 
-  .btn-secondary:hover {
+  .btn-secondary_plot:hover {
     background: #eeb32b;
     color: #000;
   }
@@ -257,8 +257,8 @@ Explore prime residential, mixed-use, and beachfront plots in Dubai with high RO
     .warehouse-hero-content p {
       font-size: 14px;
     }
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary_plot,
+    .btn-secondary_plot {
       width: 100%;
       max-width: 300px;
       margin: 0 auto;
@@ -504,7 +504,7 @@ Explore prime residential, mixed-use, and beachfront plots in Dubai with high RO
     .locations-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -739,7 +739,7 @@ ROI plots in Dubai deliver 60–100% appreciation upon project completion. Subdi
     .roi-cards-custom .cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .roi-cards-custom .card {
@@ -884,7 +884,7 @@ Surge in off-market plots Dubai with private investment opportunities. Growing d
     .trends-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        gap: 10px;
         max-width: 1200px;
         margin: 0 auto;
         text-align: left;
@@ -1251,7 +1251,7 @@ Exclusive listings of La Mer, Pearl Jumeirah, and Emirates Hills plots. Expert i
     .kif-cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
+        gap: 10px;
     }
 
     .kif-card {
@@ -1318,9 +1318,9 @@ Exclusive listings of La Mer, Pearl Jumeirah, and Emirates Hills plots. Expert i
         <p>
             Explore plots in Dubai, buy plots in Dubai, and discover premium land for sale in Dubai with KIF Realty today.
         </p>
-        <div class="cta-buttons">
-            <a href="#location" class="btn-outline_contact">Explore Plots</a>
-            <a href="#consultationModal" class="btn-primary_contact openModalBtn">Book Consultation</a>
+        <div class="cta-buttons_plot">
+            <a href="#location" class="btn-outline_contact_plot">Explore Plots</a>
+            <a href="#consultationModal" class="btn-primary_contact_plot openModalBtn">Book Consultation</a>
         </div>
     </div>
 </section>
@@ -1361,15 +1361,15 @@ Exclusive listings of La Mer, Pearl Jumeirah, and Emirates Hills plots. Expert i
         white-space: pre-line;
     }
 
-    .cta-buttons {
+    .cta-buttons_plot {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .cta-buttons .btn-primary_contact,
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_plot .btn-primary_contact_plot,
+    .cta-buttons_plot .btn-outline_contact_plot {
         padding: 12px 20px;
         border-radius: 6px;
         font-weight: 500;
@@ -1382,22 +1382,22 @@ Exclusive listings of La Mer, Pearl Jumeirah, and Emirates Hills plots. Expert i
         letter-spacing: 1px;
     }
 
-    .cta-buttons .btn-primary_contact {
+    .cta-buttons_plot .btn-primary_contact_plot {
         background: #F7B600;
         color: #000;
     }
 
-    .cta-buttons .btn-primary_contact:hover {
+    .cta-buttons_plot .btn-primary_contact_plot:hover {
         background: #e6ac00;
     }
 
-    .cta-buttons .btn-outline_contact {
+    .cta-buttons_plot .btn-outline_contact_plot {
         background: transparent;
         border: 2px solid #F7B600;
         color: #fff;
     }
 
-    .cta-buttons .btn-outline_contact:hover {
+    .cta-buttons_plot .btn-outline_contact_plot:hover {
         background: #F7B600;
         color: #000;
     }
@@ -1410,11 +1410,6 @@ Exclusive listings of La Mer, Pearl Jumeirah, and Emirates Hills plots. Expert i
 
         .cta-section p {
             font-size: 16px;
-        }
-
-        .cta-buttons {
-            flex-direction: column;
-            gap: 15px;
         }
     }
 
@@ -1430,6 +1425,18 @@ Exclusive listings of La Mer, Pearl Jumeirah, and Emirates Hills plots. Expert i
 
         .cta-section {
             padding: 20px 20px;
+        }
+
+        .cta-buttons_plot {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cta-buttons_plot .btn-primary_contact_plot,
+    .cta-buttons_plot .btn-outline_contact_plot {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
     }
 </style>

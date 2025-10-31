@@ -43,6 +43,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',  # compress responses
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

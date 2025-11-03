@@ -265,9 +265,16 @@
 
 {% block title %}Home - KIF Realty{% endblock %}
 
+<!-- home.html -->
+
+{% block canonical %}
+<link rel="canonical" href="https://kifrealty.com/">{% endblock %}
+
 {% load static %}
 
 {% block extra_css %}
+<link rel="canonical" href="https://www.example.com/preferred-page/" />
+
 <style>
     /* Hero Section - OBSIDIAN Style */
     .hero {
@@ -2999,7 +3006,7 @@ function populateCitiesDropdown() {
   <div class="carousel-container" id="carouselContainer">
   <ul class="carousel" id="dubaiCarousel">
     <li class="day-card">
-      <img src="{% static 'images/dubaitown.jpeg' %}" alt="Downtown Dubai" loading="lazy">
+      <img src="{% static 'images/bussinesbay.webp' %}" alt="Downtown Dubai" loading="lazy">
       <div class="meta">
         <h2 class="location">Downtown Dubai</h2>
         <p class="desc">Burj Khalifa views & iconic lifestyle.</p>

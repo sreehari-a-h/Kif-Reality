@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ post.title }} - KIF Realty Blog{% endblock %}
+{% block title %}{{ post.title|truncatewords:60|safe }}{% endblock %}
 
 
 {% block description %} {{ post.meta_description|default:post.excerpt }} {% endblock %}
 
-
+{% block canonical %}
+<link rel="canonical" href="https://kifrealty.com/blogs/{{ post.slug }}/">{% endblock %}
 
 {% load static %}
 

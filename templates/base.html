@@ -3,6 +3,18 @@
 <html lang="en">
 
 <head>
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-K9RR26QK');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}KIF Realty - Premium Dubai Real Estate | Buy Property in Dubai 2025{% endblock %}</title>
@@ -10,6 +22,11 @@
         content="{% block description %}KIF Realty - Top Dubai real estate company since 2011. Buy apartments, luxury villas, off-plan properties in Dubai. Expert investment guidance for Dubai property ROI.{% endblock %}">
     <meta name="keywords"
         content="Dubai real estate, buy property Dubai, luxury villas Dubai, off-plan properties Dubai, Dubai investment properties, real estate Dubai 2025">
+
+<!-- home.html -->
+ {% block canonical %}
+  <link rel="canonical" href="https://kifrealty.com/">
+  {% endblock %}
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -19,7 +36,9 @@
     <!-- Google Fonts - OBSIDIAN Theme -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -35,7 +54,7 @@
             --text-muted: #b0b0b0;
             --accent-gradient: linear-gradient(135deg, #e8b4a0, #f4d03f, #cd7f32);
             --glass-bg: rgba(30, 30, 30, 0.8);
-            
+
             /* Legacy variables for compatibility */
             --primary-gold: #e8b4a0;
             --light-gold: #f4d03f;
@@ -74,8 +93,8 @@
             height: 100%;
             z-index: -1;
             background: radial-gradient(circle at 20% 80%, rgba(232, 180, 160, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(244, 208, 63, 0.06) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(205, 127, 50, 0.04) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(244, 208, 63, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(205, 127, 50, 0.04) 0%, transparent 50%);
         }
 
         .floating-orb {
@@ -87,13 +106,40 @@
             filter: blur(2px);
         }
 
-        .orb-1 { width: 300px; height: 300px; top: 10%; left: 70%; animation-delay: 0s; }
-        .orb-2 { width: 200px; height: 200px; top: 70%; left: 20%; animation-delay: 5s; }
-        .orb-3 { width: 150px; height: 150px; top: 30%; left: 10%; animation-delay: 10s; }
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 70%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 200px;
+            height: 200px;
+            top: 70%;
+            left: 20%;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 150px;
+            height: 150px;
+            top: 30%;
+            left: 10%;
+            animation-delay: 10s;
+        }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-50px) scale(1.1); }
+
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-50px) scale(1.1);
+            }
         }
 
         .modal-logo {
@@ -101,6 +147,7 @@
             width: 56px;
             filter: brightness(1.2);
         }
+
         .modal-logo span {
             margin-left: -15%;
             filter: brightness(1.2);
@@ -109,106 +156,117 @@
         /* Enhanced Navbar - OBSIDIAN Style */
 
         /* Dropdown container */
-.nav-item.dropdown {
-    position: relative;
-}
+        .nav-item.dropdown {
+            position: relative;
+        }
 
-/* Dropdown toggle link */
-.nav-item .dropdown-toggle {
-    cursor: pointer;
-    display: inline-block;
-    padding: 10px 15px;
-}
+        /* Dropdown toggle link */
+        .nav-item .dropdown-toggle {
+            cursor: pointer;
+            display: inline-block;
+            padding: 10px 15px;
+        }
 
-/* Dropdown menu */
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%; /* directly below the parent */
-    left: 0;
-    min-width: 180px;
-    background-color: #0A0A0AFB
-;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    border-radius: 6px;
-    /* padding: 8px 0; */
-    z-index: 1000;
-}
+        /* Dropdown menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            /* directly below the parent */
+            left: 0;
+            min-width: 180px;
+            background-color: #0A0A0AFB;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            /* padding: 8px 0; */
+            z-index: 1000;
+        }
 
-/* Dropdown items */
-.dropdown-menu li {
-    list-style: none;
-}
+        /* Dropdown items */
+        .dropdown-menu li {
+            list-style: none;
+        }
 
-.dropdown-menu a {
-    display: block;
-    padding: 10px 15px;
-    color: #333;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-}
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
 
-.dropdown-menu a:hover {
-    background-color: #f5f5f5;
-}
+        .dropdown-menu a:hover {
+            background-color: #f5f5f5;
+        }
 
-/* Show dropdown on hover */
-.nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-}
+        /* Show dropdown on hover */
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
 
-/* Active nav link styling */
-.nav-link.active {
-    color: #007bff; /* Highlight color */
-    font-weight: bold;
-}
+        /* Active nav link styling */
+        .nav-link.active {
+            color: #007bff;
+            /* Highlight color */
+            font-weight: bold;
+        }
 
-.nav-item.dropdown .dropdown-menu {
-    position: absolute;   /* stays overlay */
-    top: 100%;            /* directly below the parent tab */
-    left: -30%;
-    background: #1a1a1a;  /* adjust as needed */
-    min-width: 180px;
-    display: none;
-    z-index: 1000;
-}
+        .nav-item.dropdown .dropdown-menu {
+            position: absolute;
+            /* stays overlay */
+            top: 100%;
+            /* directly below the parent tab */
+            left: -30%;
+            background: #1a1a1a;
+            /* adjust as needed */
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+        }
 
-.nav-item.dropdown:hover .dropdown-menu {
-    display: block; /* show on hover (desktop) */
-}
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            /* show on hover (desktop) */
+        }
 
-.nav-item.dropdown.active .dropdown-menu {
-    display: block;
-    max-height: 500px; /* large enough to fit items */
-    opacity: 1;
-}
+        .nav-item.dropdown.active .dropdown-menu {
+            display: block;
+            max-height: 500px;
+            /* large enough to fit items */
+            opacity: 1;
+        }
 
-.nav-item .nav-link i {
-    margin-right: 0.5rem;
-}
+        .nav-item .nav-link i {
+            margin-right: 0.5rem;
+        }
 
-/* Mobile accordion dropdown */
-@media (max-width: 768px) {
-  .nav-item.dropdown .dropdown-menu {
-    position: static;       /* inline inside menu */
-    display: block;         /* always take space */
-    max-height: 0;          /* collapsed */
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
-    padding-left: 1.5rem;
-  }
+        /* Mobile accordion dropdown */
+        @media (max-width: 768px) {
+            .nav-item.dropdown .dropdown-menu {
+                position: static;
+                /* inline inside menu */
+                display: block;
+                /* always take space */
+                max-height: 0;
+                /* collapsed */
+                overflow: hidden;
+                opacity: 0;
+                transition: max-height 0.4s ease, opacity 0.3s ease;
+                padding-left: 1.5rem;
+            }
 
-  .nav-item.dropdown.active .dropdown-menu {
-    max-height: 500px; /* expand */
-    opacity: 1;
-  }
+            .nav-item.dropdown.active .dropdown-menu {
+                max-height: 500px;
+                /* expand */
+                opacity: 1;
+            }
 
-  /* Disable hover for mobile */
-  .nav-item.dropdown:hover .dropdown-menu {
-    display: block; /* fallback but not needed */
-  }
-}
+            /* Disable hover for mobile */
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                /* fallback but not needed */
+            }
+        }
 
 
 
@@ -330,8 +388,12 @@
             display: none;
         }
 
+
+        
+
         /* Show icons and spans in mobile navigation */
         @media (max-width: 768px) {
+
             .nav-links .nav-link i,
             .nav-links .nav-link span {
                 display: inline-block !important;
@@ -719,6 +781,37 @@
             transform: translateX(0);
         }
 
+        /* Footer "More..." Toggle Styles */
+        .footer-list li.extra {
+            display: none;
+            /* hide additional items initially */
+        }
+
+        .show-more-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .show-more-btn:hover {
+            color: var(--rose-gold);
+            text-decoration: underline;
+        }
+
+        /* Optional smooth reveal effect */
+        .footer-list li {
+            transition: all 0.3s ease;
+        }
+
+
+
+
         /* Floating Contact Button - OBSIDIAN Style */
         .floating-contact {
             position: fixed;
@@ -754,6 +847,7 @@
             0% {
                 filter: brightness(1);
             }
+
             100% {
                 filter: brightness(1.2);
             }
@@ -763,9 +857,11 @@
             0% {
                 box-shadow: 0 15px 35px rgba(232, 180, 160, 0.5);
             }
+
             50% {
                 box-shadow: 0 15px 35px rgba(232, 180, 160, 0.9), 0 0 0 15px rgba(232, 180, 160, 0.1);
             }
+
             100% {
                 box-shadow: 0 15px 35px rgba(232, 180, 160, 0.5);
             }
@@ -853,19 +949,54 @@
             }
 
             /* Stagger animation for menu items */
-            .nav-links.mobile-open li:nth-child(1) { transition-delay: 0.1s; }
-            .nav-links.mobile-open li:nth-child(2) { transition-delay: 0.2s; }
-            .nav-links.mobile-open li:nth-child(3) { transition-delay: 0.3s; }
-            .nav-links.mobile-open li:nth-child(4) { transition-delay: 0.4s; }
-            .nav-links.mobile-open li:nth-child(5) { transition-delay: 0.5s; }
-            .nav-links.mobile-open li:nth-child(6) { transition-delay: 0.6s; }
+            .nav-links.mobile-open li:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-links.mobile-open li:nth-child(2) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-links.mobile-open li:nth-child(3) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-links.mobile-open li:nth-child(4) {
+                transition-delay: 0.4s;
+            }
+
+            .nav-links.mobile-open li:nth-child(5) {
+                transition-delay: 0.5s;
+            }
+
+            .nav-links.mobile-open li:nth-child(6) {
+                transition-delay: 0.6s;
+            }
+
             /* Stagger animation for menu items */
-            .nav-links.mobile-open .nav-item:nth-child(2) { transition-delay: 0.1s; }
-            .nav-links.mobile-open .nav-item:nth-child(3) { transition-delay: 0.2s; }
-            .nav-links.mobile-open .nav-item:nth-child(4) { transition-delay: 0.3s; }
-            .nav-links.mobile-open .nav-item:nth-child(5) { transition-delay: 0.4s; }
-            .nav-links.mobile-open .nav-item:nth-child(6) { transition-delay: 0.5s; }
-            .nav-links.mobile-open .nav-item:nth-child(7) { transition-delay: 0.6s; }
+            .nav-links.mobile-open .nav-item:nth-child(2) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(4) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(5) {
+                transition-delay: 0.4s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(6) {
+                transition-delay: 0.5s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(7) {
+                transition-delay: 0.6s;
+            }
 
             /* Mobile Footer */
             .mobile-footer {
@@ -905,7 +1036,7 @@
                 width: 16px;
             }
 
-            
+
 
             .nav-link {
                 display: flex;
@@ -920,13 +1051,13 @@
                 border: none;
             }
 
-                         .nav-link:hover,
-             .nav-link.active {
-                 background: rgba(232, 180, 160, 0.1);
-                 color: var(--rose-gold);
-                 transform: translateX(10px);
-                 text-decoration: none;
-             }
+            .nav-link:hover,
+            .nav-link.active {
+                background: rgba(232, 180, 160, 0.1);
+                color: var(--rose-gold);
+                transform: translateX(10px);
+                text-decoration: none;
+            }
 
             .nav-link i {
                 width: 20px;
@@ -951,6 +1082,7 @@
         }
 
         @media (max-width: 768px) {
+
             /* Ensure navbar is properly fixed */
             .navbar {
                 padding: 1rem 2%;
@@ -963,7 +1095,8 @@
 
             /* Add top margin to main content to prevent navbar overlap */
             main {
-                margin-top: 80px; /* Adjust based on navbar height */
+                margin-top: 80px;
+                /* Adjust based on navbar height */
             }
 
             .navbar-brand {
@@ -1002,7 +1135,8 @@
             .page-header {
                 height: 60vh;
                 min-height: 500px;
-                margin-top: 80px; /* Add margin to prevent navbar overlap */
+                margin-top: 80px;
+                /* Add margin to prevent navbar overlap */
             }
 
             .footer-grid {
@@ -1044,7 +1178,8 @@
                 align-items: stretch;
                 padding: 0;
                 transition: left 0.4s ease;
-                z-index: 1001; /* Higher than navbar */
+                z-index: 1001;
+                /* Higher than navbar */
                 border-right: 1px solid rgba(232, 180, 160, 0.2);
                 overflow-y: auto;
                 box-sizing: border-box;
@@ -1075,7 +1210,7 @@
             }
 
             /* Hide desktop navigation links on mobile */
-            .nav-links > li:not(.mobile-header):not(.mobile-footer):not(.nav-items-container) {
+            .nav-links>li:not(.mobile-header):not(.mobile-footer):not(.nav-items-container) {
                 display: none;
             }
 
@@ -1154,11 +1289,13 @@
                 font-size: 1.1rem;
                 padding: 1.2rem 2rem;
                 text-decoration: none;
-                color: #ffffff !important; /* Force white color for visibility */
+                color: #ffffff !important;
+                /* Force white color for visibility */
                 transition: all 0.3s ease;
                 border: none;
                 background: transparent;
-                font-weight: 500; /* Make text slightly bolder */
+                font-weight: 500;
+                /* Make text slightly bolder */
                 visibility: visible !important;
                 opacity: 1 !important;
             }
@@ -1182,7 +1319,8 @@
 
             .nav-link span {
                 display: inline-block !important;
-                color: inherit !important; /* Inherit color from parent */
+                color: inherit !important;
+                /* Inherit color from parent */
                 visibility: visible !important;
                 opacity: 1 !important;
             }
@@ -1209,12 +1347,29 @@
             }
 
             /* Stagger animation for menu items */
-            .nav-links.mobile-open .nav-item:nth-child(2) { transition-delay: 0.1s; }
-            .nav-links.mobile-open .nav-item:nth-child(3) { transition-delay: 0.2s; }
-            .nav-links.mobile-open .nav-item:nth-child(4) { transition-delay: 0.3s; }
-            .nav-links.mobile-open .nav-item:nth-child(5) { transition-delay: 0.4s; }
-            .nav-links.mobile-open .nav-item:nth-child(6) { transition-delay: 0.5s; }
-            .nav-links.mobile-open .nav-item:nth-child(7) { transition-delay: 0.6s; }
+            .nav-links.mobile-open .nav-item:nth-child(2) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(4) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(5) {
+                transition-delay: 0.4s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(6) {
+                transition-delay: 0.5s;
+            }
+
+            .nav-links.mobile-open .nav-item:nth-child(7) {
+                transition-delay: 0.6s;
+            }
 
             /* Mobile Footer */
             .mobile-footer {
@@ -1324,6 +1479,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -1369,7 +1525,7 @@
             width: 70%;
             height: 100%;
             background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-            box-shadow: -2px 0 20px rgba(0,0,0,0.5);
+            box-shadow: -2px 0 20px rgba(0, 0, 0, 0.5);
             padding: 2rem 1rem;
             z-index: 9999;
         }
@@ -1379,16 +1535,18 @@
             list-style: none;
             padding: 0;
         }
+
         .mobile-menu li {
             margin-bottom: 1.5rem;
         }
+
         .mobile-menu a {
             color: var(--rose-gold);
             text-decoration: none;
             font-size: 1.2rem;
         }
 
-        .mobile-icon{
+        .mobile-icon {
             display: none;
         }
 
@@ -1397,7 +1555,8 @@
             .menu-toggle {
                 display: block;
             }
-            .mobile-icon{
+
+            .mobile-icon {
                 display: block;
                 transform: scale(1.25) !important;
             }
@@ -1408,6 +1567,12 @@
 </head>
 
 <body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9RR26QK" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <!-- Animated Background -->
     <div class="bg-animation">
         <div class="floating-orb orb-1"></div>
@@ -1437,33 +1602,59 @@
         <ul class="nav-links" id="navLinks">
             <!-- Desktop Navigation Links -->
             <li>
-                <a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                <a href="{% url 'index' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                     Home
                 </a>
             </li>
 
             <li>
-                <a href="{% url 'properties' %}" class="nav-link {% if request.resolver_match.url_name == 'properties' %}active{% endif %}">
+                <a href="{% url 'properties' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'properties' %}active{% endif %}">
                     Properties
                 </a>
             </li>
-            <li>
-                <a href="{% url 'exclusive_properties:list' %}" class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
+            <!-- <li>
+                <a href="{% url 'exclusive_properties:list' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
                     Exclusive
                 </a>
-            </li>
+            </li> -->
+
+            <!-- EXPLORE DROPDOWN -->
+<li class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle">
+        Explore
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
+        <li><a class="dropdown-item" href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
+        <li><a class="dropdown-item" href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial Properties</a></li>
+        <li><a class="dropdown-item" href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a></li>
+        <li><a class="dropdown-item" href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a></li>
+        <li><a class="dropdown-item" href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
+        <li><a class="dropdown-item" href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
+        <li><a class="dropdown-item" href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a></li>
+        <li><a class="dropdown-item" href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
+        <li><a class="dropdown-item" href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a></li>
+    </ul>
+</li>
+            
             <li>
-                <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                <a href="{% url 'about' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
                     About
                 </a>
             </li>
             <li>
-                <a href="{% url 'blogs' %}" class="nav-link {% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">
+                <a href="{% url 'blogs' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">
                     Blogs
                 </a>
             </li>
             <li>
-                <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                <a href="{% url 'contact' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
                     Contact
                 </a>
             </li>
@@ -1472,12 +1663,14 @@
                     <i class="bi bi-calculator" id="calculatorIcon"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">Mortgage Calculator</a></li>
-                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">ROI Calculator</a></li>
-                   
+                    <li><a class="dropdown-item scroll-link"
+                            href="{% url 'index' %}?scroll=mortgage-calculator">Mortgage Calculator</a></li>
+                    <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">ROI
+                            Calculator</a></li>
+
                 </ul>
             </li>
-            
+
             <!-- Mobile Header (hidden on desktop) -->
             <li class="mobile-header">
                 <a href="{% url 'index' %}" class="navbar-brand">
@@ -1488,65 +1681,83 @@
                     <i class="fas fa-times"></i>
                 </button> -->
             </li>
-            
+
             <!-- Navigation Items Container -->
             <div class="nav-items-container">
                 <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                    <a href="{% url 'index' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                         <i class="fas fa-home"></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" id="calculatorDropdown">
-            <i class="fas fa-calculator"></i> <!-- calculator icon -->
-            <span>Calculator</span>
+                    <a href="#" class="nav-link dropdown-toggle" id="calculatorDropdown">
+                        <i class="fas fa-calculator"></i> <!-- calculator icon -->
+                        <span>Calculator</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">
+                                Mortgage Calculator
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">
+                                ROI Calculator
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+              <!-- EXPLORE DROPDOWN FOR MOBILE -->
+    <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-compass"></i>
+            <span>Explore</span>
         </a>
         <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=mortgage-calculator">
-                    Mortgage Calculator
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">
-                    ROI Calculator
-                </a>
-            </li>
+            <li><a class="dropdown-item" href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
+            <li><a class="dropdown-item" href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
+            <li><a class="dropdown-item" href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial Properties</a></li>
+            <li><a class="dropdown-item" href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a></li>
+            <li><a class="dropdown-item" href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a></li>
+            <li><a class="dropdown-item" href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
+            <li><a class="dropdown-item" href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
+            <li><a class="dropdown-item" href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a></li>
+            <li><a class="dropdown-item" href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
+            <li><a class="dropdown-item" href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a></li>
         </ul>
     </li>
                 <li class="nav-item">
-                    <a href="{% url 'exclusive_properties:list' %}" class="nav-link {% if request.resolver_match.url_name == 'exclusive' %}active{% endif %}">
-                        <i class="fas fa-crown"></i>
-                        <span>Exclusive</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'properties' %}" class="nav-link {% if request.resolver_match.url_name == 'properties' %}active{% endif %}">
+                    <a href="{% url 'properties' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'properties' %}active{% endif %}">
                         <i class="fas fa-building"></i>
                         <span>Properties</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                    <a href="{% url 'about' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
                         <i class="fas fa-info-circle"></i>
                         <span>About</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'blogs' %}" class="nav-link {% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">
+                    <a href="{% url 'blogs' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">
                         <i class="fas fa-blog"></i>
                         <span>Blogs</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                    <a href="{% url 'contact' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
                         <i class="fas fa-envelope"></i>
                         <span>Contact</span>
                     </a>
                 </li>
             </div>
-            
+
             <!-- Mobile Footer (hidden on desktop) -->
             <li class="mobile-footer">
                 <div class="mobile-contact">
@@ -1572,46 +1783,77 @@
                     <p>Your premier Dubai real estate partner since 2011. We specialize in luxury properties, off-plan
                         investments, and commercial real estate across Dubai's most prestigious locations. From Downtown
                         Dubai to Palm Jumeirah, we deliver exceptional properties with guaranteed returns.</p>
+
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://wa.me/971509647864" target="_blank" aria-label="WhatsApp"><i
-                                class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/people/Kifrealty/61559082934240/" target="_blank"
+                            rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <!-- <a href="https://twitter.com/YourProfile" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a> -->
+                        <a href="https://www.instagram.com/kifrealty/?hl=en" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/kif-realty" target="_blank" rel="noopener noreferrer"
+                            aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/+971569599966" target="_blank" rel="noopener noreferrer"
+                            aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
+
                 </div>
 
                 <div class="footer-links-section">
-                    <h5>Services</h5>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-building"></i>Buy Apartments</a></li>
-                        <li><a href="#"><i class="fas fa-home"></i>Luxury Villas</a></li>
-                        <li><a href="#"><i class="fas fa-chart-line"></i>Off-Plan Properties</a></li>
-                        <li><a href="#"><i class="fas fa-briefcase"></i>Commercial Real Estate</a></li>
-                        <li><a href="#"><i class="fas fa-key"></i>Property Management</a></li>
-                        <li><a href="#"><i class="fas fa-calculator"></i>Investment Planning</a></li>
+                    <h5>Our Expertise</h5>
+                    <ul class="footer-list">
+                        <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i>Retail Spaces</a></li> <!-- storefront / shop -->
+                        <li><a href="{% url 'second' %}"><i class="fas fa-home"></i>Secondary Residential Properties</a></li>
+                        <!-- home / house -->
+                        <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i>Commercial Properties</a></li>
+                        <!-- office building -->
+                        <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i>Beachfront Properties</a></li>
+                        <!-- beach / coastal -->
+                        <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i>Luxury Villas & Townhouses</a></li>
+                        <!-- villa / high-end home -->
+                        <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i>Mansions for Sale</a></li> <!-- luxury / premium -->
+                        <li class="extra"><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i>Plots for Sale</a></li>
+                        <!-- land / plot -->
+                        <li class="extra"><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i>Off-Plan Properties</a></li>
+                        <!-- construction / plan -->
+                        <li class="extra"><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i>Labour Camps</a></li>
+                        <!-- construction / workers -->
+                        <li class="extra"><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i>Warehouses for Sale</a></li>
+                        <!-- warehouse / storage -->
+
                     </ul>
+
+                    <button class="show-more-btn">More...</button>
                 </div>
+
+
 
                 <div class="footer-locations">
                     <h5>Dubai Locations</h5>
                     <ul>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Downtown Dubai</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Dubai Marina</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Palm Jumeirah</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Business Bay</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Dubai Hills Estate</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Jumeirah Village Circle</a></li>
+                        <li><a href="{% url 'properties' %}?city=Dubai&district=Dubai Downtown"><i
+                                    class="fas fa-map-marker-alt"></i>Downtown Dubai</a></li>
+                        <li><a href="{% url 'properties' %}?city=Dubai&district=Dubai Marina"><i
+                                    class="fas fa-map-marker-alt"></i>Dubai Marina</a></li>
+                        <li><a href="{% url 'properties' %}?city=Dubai&district=Palm Jumeirah"><i
+                                    class="fas fa-map-marker-alt"></i>Palm Jumeirah</a></li>
+                        <li><a href="{% url 'properties' %}?city=Dubai&district=Business Bay"><i
+                                    class="fas fa-map-marker-alt"></i>Business Bay</a></li>
+                        <li><a href="{% url 'properties' %}?city=Dubai&district=Dubai Hills"><i
+                                    class="fas fa-map-marker-alt"></i>Dubai Hills Estate</a></li>
+                        <li><a href="{% url 'properties' %}?city=Dubai&district=JVC"><i
+                                    class="fas fa-map-marker-alt"></i>Jumeirah Village Circle</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-contact">
                     <h5>Contact Info</h5>
-                    <p><i class="fas fa-map-marker-alt"></i>Office 1204, Business Bay Tower, Dubai, UAE</p>
-                    <p><i class="fas fa-phone"></i>+971 50 964 7864</p>
-                    <p><i class="fas fa-envelope"></i>info@kifrealty.com</p>
-                    <p><i class="fas fa-clock"></i>Sun-Thu: 9AM-7PM, Sat: 10AM-4PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Office No - 19, 31st floor, API World Tower, Sheikh Zayed
+                        Road, Dubai, UAE</p>
+                    <p><a href="tel:+971569599966"><i class="fas fa-phone"></i>+971 569599966</a></p>
+                    <p><a href="mailto:info@kifrealty.com"><i class="fas fa-envelope"></i>info@kifrealty.com</a></p>
+                    <!-- <p><i class="fas fa-clock"></i>Sun-Thu: 9AM-7PM, Sat: 10AM-4PM</p> -->
+                    <p><i class="fas fa-clock"></i> Sun–Thu 9AM–7PM | Sat 10AM–4PM</p>
+
                     <p><i class="fas fa-certificate"></i>RERA Certified Broker</p>
                 </div>
             </div>
@@ -1634,8 +1876,27 @@
         </a>
     </div>
 
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", () => {
+            const showMoreBtn = document.querySelector(".show-more-btn");
+            const extraItems = document.querySelectorAll(".footer-list li.extra");
+
+            if (showMoreBtn) {
+                showMoreBtn.addEventListener("click", () => {
+                    const expanded = showMoreBtn.textContent.trim() === "Less...";
+                    extraItems.forEach(li => {
+                        li.style.display = expanded ? "none" : "block";
+                    });
+                    showMoreBtn.textContent = expanded ? "More..." : "Less...";
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
             // Enhanced navbar scroll effect - OBSIDIAN Style
             window.addEventListener('scroll', function () {
                 const navbar = document.getElementById('navbar');
@@ -1668,7 +1929,7 @@
             // Toggle mobile menu
             function toggleMobileMenu() {
                 const isOpen = navLinks.classList.contains('mobile-open');
-                
+
                 if (isOpen) {
                     closeMobileMenu();
                 } else {
@@ -1682,14 +1943,14 @@
                 mobileMenuBackdrop.classList.add('active');
                 mobileToggle.classList.add('active');
                 body.classList.add('mobile-menu-open');
-                
+
                 // Change icon to X
                 toggleIcon.classList.remove('fa-bars');
                 toggleIcon.classList.add('fa-times');
-                
+
                 // Prevent body scroll
                 body.style.overflow = 'hidden';
-                
+
                 // Add event listener to close menu when clicking outside
                 setTimeout(() => {
                     document.addEventListener('click', outsideClickHandler);
@@ -1702,14 +1963,14 @@
                 mobileMenuBackdrop.classList.remove('active');
                 mobileToggle.classList.remove('active');
                 body.classList.remove('mobile-menu-open');
-                
+
                 // Change icon back to hamburger
                 toggleIcon.classList.remove('fa-times');
                 toggleIcon.classList.add('fa-bars');
-                
+
                 // Restore body scroll
                 body.style.overflow = '';
-                
+
                 // Remove outside click listener
                 document.removeEventListener('click', outsideClickHandler);
             }
@@ -1724,28 +1985,28 @@
             }
 
             // Event listeners
-            mobileToggle.addEventListener('click', function(e) {
+            mobileToggle.addEventListener('click', function (e) {
                 e.stopPropagation();
                 toggleMobileMenu();
             });
 
             // Close button event listener (if exists)
             if (mobileClose) {
-                mobileClose.addEventListener('click', function(e) {
+                mobileClose.addEventListener('click', function (e) {
                     e.stopPropagation();
                     closeMobileMenu();
                 });
             }
 
             // Backdrop click event listener
-            mobileMenuBackdrop.addEventListener('click', function(e) {
+            mobileMenuBackdrop.addEventListener('click', function (e) {
                 e.stopPropagation();
                 closeMobileMenu();
             });
 
             // Close mobile menu when clicking on navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     if (this.classList.contains('dropdown-toggle')) {
                         // prevent closing when clicking "Calculator"
                         e.preventDefault();
@@ -1758,20 +2019,20 @@
 
             // Ensure dropdown items close the menu
             document.querySelectorAll('.dropdown-item').forEach(item => {
-                item.addEventListener('click', function() {
+                item.addEventListener('click', function () {
                     closeMobileMenu();
                 });
             });
 
             // Handle escape key
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && navLinks.classList.contains('mobile-open')) {
                     closeMobileMenu();
                 }
             });
 
             // Handle window resize
-            window.addEventListener('resize', function() {
+            window.addEventListener('resize', function () {
                 if (window.innerWidth > 992 && navLinks.classList.contains('mobile-open')) {
                     closeMobileMenu();
                 }
@@ -1808,7 +2069,7 @@
                         if (navLinks.classList.contains('mobile-open')) {
                             closeMobileMenu();
                         }
-                        
+
                         // Smooth scroll to target
                         target.scrollIntoView({
                             behavior: 'smooth',
@@ -2048,31 +2309,31 @@
         console.log('%cPremium Dubai Real Estate Since 2011 - OBSIDIAN Edition', 'color: #e8b4a0; font-size: 12px;');
     </script>
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const navbar = document.querySelector(".navbar"); // adjust if needed
+        document.addEventListener("DOMContentLoaded", function () {
+            const navbar = document.querySelector(".navbar"); // adjust if needed
 
-    function scrollWithOffset(targetId) {
-        const target = document.getElementById(targetId);
-        if (!target) return;
+            function scrollWithOffset(targetId) {
+                const target = document.getElementById(targetId);
+                if (!target) return;
 
-        const navbarHeight = navbar ? navbar.offsetHeight : 80;
-        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = targetPosition - navbarHeight - 10;
+                const navbarHeight = navbar ? navbar.offsetHeight : 80;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = targetPosition - navbarHeight - 10;
 
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+
+            // Check if ?scroll= parameter exists
+            const urlParams = new URLSearchParams(window.location.search);
+            const sectionId = urlParams.get("scroll");
+            if (sectionId) {
+                setTimeout(() => scrollWithOffset(sectionId), 200); // delay to allow render
+            }
         });
-    }
-
-    // Check if ?scroll= parameter exists
-    const urlParams = new URLSearchParams(window.location.search);
-    const sectionId = urlParams.get("scroll");
-    if (sectionId) {
-        setTimeout(() => scrollWithOffset(sectionId), 200); // delay to allow render
-    }
-});
-</script>
+    </script>
 
 
 

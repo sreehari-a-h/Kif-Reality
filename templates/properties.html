@@ -6,6 +6,11 @@
 <meta name="description" content="{% block description %}Browse a wide range of properties with KIF Realty. Find your dream home or investment opportunity in Dubai's prime locations. Start your property search today
 {% endblock %}">
 
+<!-- properties.html -->
+
+{% block canonical %}
+<link rel="canonical" href="https://kifrealty.com/properties/">{% endblock %}
+
 
 {% load static %}
 
@@ -1145,44 +1150,79 @@
             loadInitialProperties();
         });
 
-        function initializeFilters() {
-            console.log('🔧 Initializing filters...');
+       function initializeFilters() {
+    console.log('🔧 Initializing filters...');
 
-            // Set default property type to residential
-            const propertyTypeInput = document.getElementById('propertyTypeInput');
-            if (propertyTypeInput) {
-                propertyTypeInput.value = 'residential';
+    // ✅ Check for city and district in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityParam = urlParams.get('city');
+    const districtParam = urlParams.get('district');
+    
+    if (cityParam || districtParam) {
+        console.log('🏙️ URL parameters found - City:', cityParam, 'District:', districtParam);
+        
+        // Set the city and district dropdowns after data is loaded
+        setTimeout(() => {
+            // Set city first
+            if (cityParam) {
+                const citySelect = document.getElementById('citySelect');
+                if (citySelect) {
+                    citySelect.value = cityParam;
+                    console.log('🏙️ City dropdown set to:', cityParam);
+                    
+                    // Load neighborhoods for this city
+                    updateNeighborhoods(cityParam);
+                    
+                    // Then set district after a short delay
+                    if (districtParam) {
+                        setTimeout(() => {
+                            const districtSelect = document.getElementById('neighborhoodSelect');
+                            if (districtSelect) {
+                                districtSelect.value = districtParam;
+                                console.log('🏘️ District dropdown set to:', districtParam);
+                            }
+                        }, 500);
+                    }
+                }
             }
+        }, 1500); // Wait for cities to load from API
+    }
 
-            // Update visual state to show residential as active
-            updatePropertyType('residential');
+    // Set default property type to residential
+    const propertyTypeInput = document.getElementById('propertyTypeInput');
+    if (propertyTypeInput) {
+        propertyTypeInput.value = 'residential';
+    }
 
-            // Ensure residential button is active by default
-            const residentialBtn = document.getElementById('residentialBtn');
-            const commercialBtn = document.getElementById('commercialBtn');
+    // Update visual state to show residential as active
+    updatePropertyType('residential');
 
-            if (residentialBtn && commercialBtn) {
-                residentialBtn.classList.add('active');
-                commercialBtn.classList.remove('active');
-                console.log('🏠 Set residential as default property type');
-            }
+    // Ensure residential button is active by default
+    const residentialBtn = document.getElementById('residentialBtn');
+    const commercialBtn = document.getElementById('commercialBtn');
 
-            // Initialize ranges
-            updatePriceRange();
-            updateAreaRange();
+    if (residentialBtn && commercialBtn) {
+        residentialBtn.classList.add('active');
+        commercialBtn.classList.remove('active');
+        console.log('🏠 Set residential as default property type');
+    }
 
-            // Load cities and developers from API
-            loadCitiesFromAPI();
-            loadDevelopersFromAPI();
-        }
+    // Initialize ranges
+    updatePriceRange();
+    updateAreaRange();
 
-        function loadInitialProperties() {
-            console.log('🏠 Loading initial properties from API...');
+    // Load cities and developers from API
+    loadCitiesFromAPI();
+    loadDevelopersFromAPI();
+}
 
-            // Show loading state
-            const propertiesGrid = document.querySelector('.properties-grid');
-            if (propertiesGrid) {
-                propertiesGrid.innerHTML = `
+       function loadInitialProperties() {
+    console.log('🏠 Loading initial properties from API...');
+
+    // Show loading state
+    const propertiesGrid = document.querySelector('.properties-grid');
+    if (propertiesGrid) {
+        propertiesGrid.innerHTML = `
             <div class="no-properties">
                 <div class="no-properties-icon">
                     <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
@@ -1191,137 +1231,72 @@
                 <p>Please wait while we fetch the latest properties for you.</p>
             </div>
         `;
+    }
+
+    // ✅ Check for both city and district parameters in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityParam = urlParams.get('city');
+    const districtParam = urlParams.get('district');
+    
+    const filters = {};
+    
+    // Always include property_type
+    filters.property_type = 'Residential';
+
+    // ✅ If city is in URL, add it to filters
+    if (cityParam) {
+        filters.city = cityParam;
+        console.log('🏙️ Filtering by city from URL:', cityParam);
+    }
+
+    // ✅ If district is in URL, add it to filters
+    if (districtParam) {
+        filters.district = districtParam;
+        console.log('🏘️ Filtering by district from URL:', districtParam);
+    }
+
+    console.log('🏠 Initial filters being sent:', filters);
+
+    // Make API call to get initial properties
+    fetch('https://offplan.market/api/properties/filter/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(filters)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('🏠 Initial properties API response:', result);
+
+        if (result?.status && result?.data) {
+            const propertiesData = result.data;
+            const properties = propertiesData.results || [];
+
+            console.log('🏠 Found', properties.length, 'initial properties');
+            console.log('🏠 Total count:', propertiesData.count);
+
+            // Update properties grid
+            updatePropertiesGrid(properties);
+
+            // Update pagination
+            updatePagination(propertiesData);
+
+            // Update total count
+            if (propertiesData.count !== undefined) {
+                updateTotalCount(propertiesData.count);
             }
-
-
-
-            // Get current form data to send as initial filters
-            const filterForm = document.querySelector('.filter-form');
-            const formData = new FormData(filterForm);
-
-            // Convert form data to filters object (same logic as performSearch)
-            const propertyTypeValue = formData.get('property_type') || 'residential';
-            let propertyTypeText = 'Residential';
-            if (propertyTypeValue === 'commercial') {
-                propertyTypeText = 'Commercial';
-            }
-
-            const filters = {};
-
-            // Always include property_type
-            filters.property_type = propertyTypeText;
-
-            // Only add non-empty string values
-            const city = formData.get('city');
-            if (city && city.trim()) {
-                filters.city = city.trim();
-            }
-
-            const district = formData.get('district');
-            if (district && district.trim()) {
-                filters.district = district.trim();
-            }
-
-            const unitType = formData.get('unit_type');
-            if (unitType && unitType.trim()) {
-                filters.unit_type = unitType.trim();
-            }
-
-            // Only send rooms for Residential and if selected
-            if (propertyTypeText === 'Residential') {
-                const rooms = formData.get('bedrooms');
-                if (rooms && rooms.trim()) {
-                    filters.rooms = rooms.trim();
-                }
-            }
-
-            // Only add delivery_year if explicitly selected
-            const deliveryYear = formData.get('delivery_year');
-            if (deliveryYear && deliveryYear.trim() && deliveryYear !== '0') {
-                filters.delivery_year = parseInt(deliveryYear);
-            }
-
-            // Only add price range if modified from defaults
-            const minPrice = parseInt(formData.get('min_price')) || 0;
-            const maxPrice = parseInt(formData.get('max_price')) || 100000000;
-            if (minPrice > 0) {
-                filters.low_price = minPrice;
-            }
-            if (maxPrice < 100000000) {
-                filters.max_price = maxPrice;
-            }
-
-            // Only add area range if modified from defaults
-            const minArea = parseInt(formData.get('min_area')) || 0;
-            const maxArea = parseInt(formData.get('max_area')) || 50000;
-            if (minArea > 0) {
-                filters.min_area = minArea;
-            }
-            if (maxArea < 50000) {
-                filters.max_area = maxArea;
-            }
-
-            // Only add if provided
-            const title = formData.get('project_name');
-            if (title && title.trim()) {
-                filters.title = title.trim();
-            }
-
-            const developer = formData.get('developer');
-            if (developer && developer.trim()) {
-                filters.developer = developer.trim();
-            }
-
-            // Add property_status conditionally
-            const propertyStatus = formData.get('property_status');
-            if (propertyStatus && propertyStatus.trim() && propertyStatus !== 'Total') {
-                filters.property_status = propertyStatus.trim();
-            }
-
-            console.log('🏠 Initial filters:', filters);
-
-            // Make API call to get initial properties
-            fetch('https://offplan.market/api/properties/filter/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({}) // Empty filters for initial load
-            })
-                .then(response => response.json())
-                .then(result => {
-                    console.log('🏠 Initial properties API response:', result);
-
-                    if (result?.status && result?.data) {
-                        const propertiesData = result.data;
-                        const properties = propertiesData.results || [];
-
-                        console.log('🏠 Found', properties.length, 'initial properties');
-                        console.log('🏠 Total count:', propertiesData.count);
-
-                        // Update properties grid
-                        updatePropertiesGrid(properties);
-
-                        // Update pagination
-                        updatePagination(propertiesData);
-
-                        // Update total count
-                        if (propertiesData.count !== undefined) {
-                            updateTotalCount(propertiesData.count);
-                        }
-                    } else {
-                        console.error('❌ Initial properties API error:', result?.error || result?.message || 'No properties found');
-                        // Show empty properties grid
-                        updatePropertiesGrid([]);
-                        updatePagination({ count: 0, current_page: 1, last_page: 1 });
-                        updateTotalCount(0);
-                    }
-                })
-                .catch(error => {
-                    console.error('❌ Initial properties error:', error);
-                    // Show error state
-                    if (propertiesGrid) {
-                        propertiesGrid.innerHTML = `
+        } else {
+            console.error('❌ Initial properties API error:', result?.error || result?.message || 'No properties found');
+            updatePropertiesGrid([]);
+            updatePagination({ count: 0, current_page: 1, last_page: 1 });
+            updateTotalCount(0);
+        }
+    })
+    .catch(error => {
+        console.error('❌ Initial properties error:', error);
+        if (propertiesGrid) {
+            propertiesGrid.innerHTML = `
                 <div class="no-properties">
                     <div class="no-properties-icon">
                         <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
@@ -1334,9 +1309,9 @@
                     </button>
                 </div>
             `;
-                    }
-                });
         }
+    });
+}
 
         function setupEventListeners() {
             // Property type toggle

@@ -333,6 +333,8 @@ def properties(request):
 
     else:
         filters['page'] = request.GET.get('page')
+        filters['city'] = request.GET.get('city')
+        filters['district'] = request.GET.get('district')  # Add this line
 
     filters = {k: v for k, v in filters.items() if v}
 
@@ -441,6 +443,8 @@ def properties(request):
         }
 
     return render(request, 'properties.html', context)
+
+
 
 def property_detail(request, pk):
     """

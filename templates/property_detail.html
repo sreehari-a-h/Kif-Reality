@@ -2,6 +2,10 @@
 
 {% block title %}{{ property.title.en }} - KIF Realty{% endblock %}
 
+
+{% block canonical %}
+<link rel="canonical" href="https://kifrealty.com/property/{{ property.id }}/">{% endblock %}
+
 {% load static %}
 {% load custom_filters %}
 {% load date_extras %}

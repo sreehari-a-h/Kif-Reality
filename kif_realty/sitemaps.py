@@ -4,6 +4,22 @@ from django.urls import reverse
 from main.models import BlogPost
 from exclusive_properties.models import ExclusiveProperty
 
+
+# Static pages sitemap
+class StaticViewSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.6
+
+    # List all the named URL patterns for static and landing pages
+    def items(self):
+        return [
+            'index','about','properties','contact','blogs','model1','basenew','retail','second','commercial','luxury','beach','offplan','labour','warehouse','plots','mansions',
+        ]
+
+    def location(self, item):
+        return reverse(item)
+
+
 # Blog sitemap
 class BlogSitemap(Sitemap):
     changefreq = "weekly"
@@ -32,33 +48,4 @@ class ExclusivePropertySitemap(Sitemap):
     def location(self, obj):
         return reverse('exclusive_properties:detail', kwargs={'slug': obj.slug})
 
-# Static pages sitemap
-class StaticViewSitemap(Sitemap):
-    changefreq = "monthly"
-    priority = 0.6
 
-    # List all the named URL patterns for static and landing pages
-    def items(self):
-        return [
-            'index',
-            'about',
-            'properties',
-            'contact',
-            'blogs',
-            'model1',
-            'basenew',
-            # Landing pages
-            'retail',
-            'second',
-            'commercial',
-            'luxury',
-            'beach',
-            'offplan',
-            'labour',
-            'warehouse',
-            'plots',
-            'mansions',
-        ]
-
-    def location(self, item):
-        return reverse(item)

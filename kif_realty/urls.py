@@ -3,14 +3,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
-from .sitemaps import BlogSitemap, ExclusivePropertySitemap, StaticViewSitemap
+from .sitemaps import BlogSitemap, PropertySitemap, StaticViewSitemap
 
 
 
 
 sitemaps_dict = {
     'blogs':BlogSitemap,
-    'exclusive_properties': ExclusivePropertySitemap,
+    'property': PropertySitemap,
     'static':StaticViewSitemap
 }
 

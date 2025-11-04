@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ post.title|truncatewords:60|safe }}{% endblock %}
+{% block title %}{{ post.title|truncatechars:59 }} | KIF Realty{% endblock %}
+
 
 
 {% block description %} {{ post.meta_description|default:post.excerpt }} {% endblock %}
 
 {% block canonical %}
-<link rel="canonical" href="https://kifrealty.com/blogs/{{ post.slug }}/">{% endblock %}
+<!-- <link rel="canonical" href="https://kifrealty.com/blogs/{{ post.slug }}/"> -->
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+
+
 
 {% load static %}
 

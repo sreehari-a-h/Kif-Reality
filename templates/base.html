@@ -3,6 +3,15 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2J9BE982CV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2J9BE982CV');
+</script>
 
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
@@ -23,10 +32,10 @@
     <meta name="keywords"
         content="Dubai real estate, buy property Dubai, luxury villas Dubai, off-plan properties Dubai, Dubai investment properties, real estate Dubai 2025">
 
-<!-- home.html -->
- {% block canonical %}
-  <link rel="canonical" href="https://kifrealty.com/">
-  {% endblock %}
+    <!-- home.html -->
+    {% block canonical %}
+    <link rel="canonical" href="https://kifrealty.com/">
+    {% endblock %}
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -153,7 +162,14 @@
             filter: brightness(1.2);
         }
 
+
+
         /* Enhanced Navbar - OBSIDIAN Style */
+
+        /* ============================================
+   REPLACE YOUR EXISTING DROPDOWN CSS WITH THIS
+   (Replace the entire section you showed me)
+   ============================================ */
 
         /* Dropdown container */
         .nav-item.dropdown {
@@ -167,19 +183,32 @@
             padding: 10px 15px;
         }
 
-        /* Dropdown menu */
+        /* Dropdown menu - MODIFIED FOR 2 COLUMNS */
         .dropdown-menu {
             display: none;
             position: absolute;
             top: 100%;
-            /* directly below the parent */
-            left: 0;
-            min-width: 180px;
+            left: -30%;
+            min-width: 520px;
+            /* CHANGED: Wider for 2 columns */
             background-color: #0A0A0AFB;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 6px;
-            /* padding: 8px 0; */
+            padding: 1rem;
+            /* CHANGED: Added padding */
             z-index: 1000;
+            border: 1px solid rgba(232, 180, 160, 0.2);
+            /* ADDED: Border for better look */
+        }
+
+        /* NEW: 2-Column Grid Layout */
+        .dropdown-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         /* Dropdown items */
@@ -187,16 +216,40 @@
             list-style: none;
         }
 
+        /* Dropdown menu items - MODIFIED */
         .dropdown-menu a {
-            display: block;
+            display: flex;
+            /* CHANGED: flex for icon alignment */
+            align-items: center;
+            /* ADDED */
+            gap: 0.75rem;
+            /* ADDED: space between icon and text */
             padding: 10px 15px;
-            color: #333;
+            color: #ffffff;
+            /* CHANGED: white text */
             text-decoration: none;
             transition: background-color 0.2s ease;
+            border-radius: 6px;
+            /* ADDED: rounded corners */
         }
 
+        /* Icon styling - NEW */
+        .dropdown-menu a i {
+            color: #e8b4a0;
+            /* rose-gold */
+            width: 18px;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        /* Hover effect - MODIFIED */
         .dropdown-menu a:hover {
-            background-color: #f5f5f5;
+            background: rgba(232, 180, 160, 0.15);
+            /* CHANGED: rose-gold tint */
+            color: #e8b4a0;
+            /* CHANGED: rose-gold text */
+            transform: translateX(5px);
+            /* ADDED: slide effect */
         }
 
         /* Show dropdown on hover */
@@ -206,33 +259,29 @@
 
         /* Active nav link styling */
         .nav-link.active {
-            color: #007bff;
-            /* Highlight color */
+            color: #e8b4a0;
+            /* CHANGED: to match your theme */
             font-weight: bold;
         }
 
+        /* This section stays the same */
         .nav-item.dropdown .dropdown-menu {
             position: absolute;
-            /* stays overlay */
             top: 100%;
-            /* directly below the parent tab */
             left: -30%;
             background: #1a1a1a;
-            /* adjust as needed */
-            min-width: 180px;
             display: none;
             z-index: 1000;
         }
 
         .nav-item.dropdown:hover .dropdown-menu {
             display: block;
-            /* show on hover (desktop) */
         }
 
         .nav-item.dropdown.active .dropdown-menu {
             display: block;
-            max-height: 500px;
-            /* large enough to fit items */
+            max-height: 600px;
+            /* INCREASED: for more items */
             opacity: 1;
         }
 
@@ -240,34 +289,37 @@
             margin-right: 0.5rem;
         }
 
-        /* Mobile accordion dropdown */
+        /* Mobile accordion dropdown - MODIFIED */
         @media (max-width: 768px) {
             .nav-item.dropdown .dropdown-menu {
                 position: static;
-                /* inline inside menu */
                 display: block;
-                /* always take space */
                 max-height: 0;
-                /* collapsed */
                 overflow: hidden;
                 opacity: 0;
                 transition: max-height 0.4s ease, opacity 0.3s ease;
                 padding-left: 1.5rem;
+                min-width: 100%;
+                /* ADDED */
+            }
+
+            /* Single column for mobile - NEW */
+            .dropdown-menu-grid {
+                grid-template-columns: 1fr;
+                /* Single column */
             }
 
             .nav-item.dropdown.active .dropdown-menu {
-                max-height: 500px;
-                /* expand */
+                max-height: 600px;
+                /* INCREASED */
                 opacity: 1;
             }
 
             /* Disable hover for mobile */
             .nav-item.dropdown:hover .dropdown-menu {
                 display: block;
-                /* fallback but not needed */
             }
         }
-
 
 
 
@@ -389,7 +441,7 @@
         }
 
 
-        
+
 
         /* Show icons and spans in mobile navigation */
         @media (max-width: 768px) {
@@ -1394,6 +1446,7 @@
                 text-align: center;
                 margin-bottom: 1rem;
                 color: #ffffff !important;
+                
             }
 
             .mobile-contact p {
@@ -1409,6 +1462,25 @@
             .mobile-contact i {
                 color: var(--rose-gold);
             }
+            .mobile-contact .mob_nav_email{
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem ;
+            border-radius: 25px;
+            letter-spacing: 0.1em;
+            text-transform: none;
+            }
+            .mobile-contact .mob_nav_email:hover,
+            .mobile-contact .mob_nav_email.active{
+                color: var(--rose-gold);
+            background: rgba(232, 180, 160, 0.1);
+            text-decoration: none;
+            }
+
         }
 
         @media (max-width: 480px) {
@@ -1591,7 +1663,7 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <a href="{% url 'index' %}" class="navbar-brand">
-            <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo">
+            <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo" alt="kif_realty_logo">
             <span>KIF Realty</span>
         </a>
 
@@ -1622,24 +1694,33 @@
             </li> -->
 
             <!-- EXPLORE DROPDOWN -->
-<li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle">
-        Explore
-    </a>
-    <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
-        <li><a class="dropdown-item" href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
-        <li><a class="dropdown-item" href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial Properties</a></li>
-        <li><a class="dropdown-item" href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a></li>
-        <li><a class="dropdown-item" href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a></li>
-        <li><a class="dropdown-item" href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
-        <li><a class="dropdown-item" href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
-        <li><a class="dropdown-item" href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a></li>
-        <li><a class="dropdown-item" href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
-        <li><a class="dropdown-item" href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a></li>
-    </ul>
-</li>
-            
+            <!-- DESKTOP VERSION - Replace your existing Explore dropdown: -->
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">
+                    Explore
+                </a>
+                <div class="dropdown-menu">
+                    <ul class="dropdown-menu-grid">
+                        <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
+                        <li><a href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
+                        <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial Properties</a>
+                        </li>
+                        <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a>
+                        </li>
+                        <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a>
+                        </li>
+                        <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
+                        <li><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
+                        <li><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a>
+                        </li>
+                        <li><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
+                        <li><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             <li>
                 <a href="{% url 'about' %}"
                     class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
@@ -1674,7 +1755,7 @@
             <!-- Mobile Header (hidden on desktop) -->
             <li class="mobile-header">
                 <a href="{% url 'index' %}" class="navbar-brand">
-                    <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo">
+                    <img src="{% static 'images/logo-kif.png' %}?v=2" class="modal-logo" alt="kif_realty_logo">
                     <span>KIF Realty</span>
                 </a>
                 <!-- <button class="mobile-close" aria-label="Close menu" id="mobileClose">
@@ -1709,25 +1790,34 @@
                         </li>
                     </ul>
                 </li>
-              <!-- EXPLORE DROPDOWN FOR MOBILE -->
-    <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle">
-            <i class="fas fa-compass"></i>
-            <span>Explore</span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
-            <li><a class="dropdown-item" href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
-            <li><a class="dropdown-item" href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial Properties</a></li>
-            <li><a class="dropdown-item" href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a></li>
-            <li><a class="dropdown-item" href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a></li>
-            <li><a class="dropdown-item" href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
-            <li><a class="dropdown-item" href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
-            <li><a class="dropdown-item" href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a></li>
-            <li><a class="dropdown-item" href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
-            <li><a class="dropdown-item" href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a></li>
-        </ul>
-    </li>
+                <!-- MOBILE VERSION - Replace your existing mobile Explore dropdown: -->
+
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-compass"></i>
+                        <span>Explore</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul class="dropdown-menu-grid">
+                            <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
+                            <li><a href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
+                            <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial
+                                    Properties</a></li>
+                            <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront
+                                    Properties</a></li>
+                            <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas &
+                                    Townhouses</a></li>
+                            <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
+                            <li><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a>
+                            </li>
+                            <li><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan
+                                    Properties</a></li>
+                            <li><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
+                            <li><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a href="{% url 'properties' %}"
                         class="nav-link {% if request.resolver_match.url_name == 'properties' %}active{% endif %}">
@@ -1761,8 +1851,8 @@
             <!-- Mobile Footer (hidden on desktop) -->
             <li class="mobile-footer">
                 <div class="mobile-contact">
-                    <p><i class="fas fa-phone"></i> +971 50 964 7864</p>
-                    <p><i class="fas fa-envelope"></i> info@kifrealty.com</p>
+                    <p><a href="tel:+971569599966"><i class="fas fa-phone"></i> +971 569599966</a></p>
+                    <p><a class="mob_nav_email" href="mailto:info@kifrealty.com"><i class="fas fa-envelope"></i> info@kifrealty.com</a></p>
                 </div>
             </li>
         </ul>
@@ -1801,23 +1891,33 @@
                 <div class="footer-links-section">
                     <h5>Our Expertise</h5>
                     <ul class="footer-list">
-                        <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i>Retail Spaces</a></li> <!-- storefront / shop -->
-                        <li><a href="{% url 'second' %}"><i class="fas fa-home"></i>Secondary Residential Properties</a></li>
+                        <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i>Retail Spaces</a></li>
+                        <!-- storefront / shop -->
+                        <li><a href="{% url 'second' %}"><i class="fas fa-home"></i>Secondary Residential Properties</a>
+                        </li>
                         <!-- home / house -->
-                        <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i>Commercial Properties</a></li>
+                        <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i>Commercial Properties</a>
+                        </li>
                         <!-- office building -->
-                        <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i>Beachfront Properties</a></li>
+                        <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i>Beachfront Properties</a>
+                        </li>
                         <!-- beach / coastal -->
-                        <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i>Luxury Villas & Townhouses</a></li>
+                        <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i>Luxury Villas & Townhouses</a>
+                        </li>
                         <!-- villa / high-end home -->
-                        <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i>Mansions for Sale</a></li> <!-- luxury / premium -->
-                        <li class="extra"><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i>Plots for Sale</a></li>
+                        <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i>Mansions for Sale</a></li>
+                        <!-- luxury / premium -->
+                        <li class="extra"><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i>Plots for
+                                Sale</a></li>
                         <!-- land / plot -->
-                        <li class="extra"><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i>Off-Plan Properties</a></li>
+                        <li class="extra"><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i>Off-Plan
+                                Properties</a></li>
                         <!-- construction / plan -->
-                        <li class="extra"><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i>Labour Camps</a></li>
+                        <li class="extra"><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i>Labour Camps</a>
+                        </li>
                         <!-- construction / workers -->
-                        <li class="extra"><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i>Warehouses for Sale</a></li>
+                        <li class="extra"><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i>Warehouses for
+                                Sale</a></li>
                         <!-- warehouse / storage -->
 
                     </ul>
@@ -1877,6 +1977,10 @@
     </div>
 
 
+   
+
+    
+<!-- more ...link -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const showMoreBtn = document.querySelector(".show-more-btn");

@@ -2,7 +2,8 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from main.models import BlogPost
-from exclusive_properties.models import ExclusiveProperty
+from main.services import PropertyService
+
 
 
 # Static pages sitemap
@@ -34,18 +35,35 @@ class BlogSitemap(Sitemap):
     def location(self, obj):
         return reverse('blog_detail', kwargs={'slug': obj.slug})
 
-# ExclusiveProperty sitemap
-class ExclusivePropertySitemap(Sitemap):
-    changefreq = "weekly"
+
+class PropertySitemap(Sitemap):
+    changefreq = "daily"
     priority = 0.9
 
     def items(self):
-        return ExclusiveProperty.objects.filter(status="available")
+        page = 1
+        while True:
+            result = PropertyService.get_properties({'page': page})
+            if not result['success']:
+                break
 
-    def lastmod(self, obj):
-        return obj.updated_at
+            properties = result['data'].get('results', [])
+            if not properties:
+                break
+
+            for prop in properties:
+                yield prop  # yield one property at a time
+
+            total_pages = result['data'].get('total_pages', 1)
+            if page >= total_pages:
+                break
+
+            page += 1
 
     def location(self, obj):
-        return reverse('exclusive_properties:detail', kwargs={'slug': obj.slug})
+        return f"/property/{obj['id']}/"
 
+    def lastmod(self, obj):
+        # Optional: if the property dict has an 'updated_at' field
+        return obj.get('updated_at')
 

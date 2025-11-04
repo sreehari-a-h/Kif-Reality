@@ -9,8 +9,9 @@ from .sitemaps import BlogSitemap, ExclusivePropertySitemap, StaticViewSitemap
 
 
 sitemaps_dict = {
-  
+    'blogs':BlogSitemap,
     'exclusive_properties': ExclusivePropertySitemap,
+    'static':StaticViewSitemap
 }
 
 

@@ -5,16 +5,15 @@ from main.models import BlogPost
 from main.services import PropertyService
 
 
-
 # Static pages sitemap
 class StaticViewSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.6
 
-    # List all the named URL patterns for static and landing pages
     def items(self):
         return [
-            'index','about','properties','contact','blogs','model1','basenew','retail','second','commercial','luxury','beach','offplan','labour','warehouse','plots','mansions',
+            'index','about','properties','contact','blogs','model1','basenew','retail','second',
+            'commercial','luxury','beach','offplan','labour','warehouse','plots','mansions',
         ]
 
     def location(self, item):
@@ -36,12 +35,17 @@ class BlogSitemap(Sitemap):
         return reverse('blog_detail', kwargs={'slug': obj.slug})
 
 
+# Property sitemap with limit support
 class PropertySitemap(Sitemap):
     changefreq = "daily"
     priority = 0.9
+    limit = 1000  # Django will split sitemap into files of 1000 items each
 
     def items(self):
+        """Fetch all properties from PropertyService."""
+        all_properties = []
         page = 1
+
         while True:
             result = PropertyService.get_properties({'page': page})
             if not result['success']:
@@ -51,8 +55,7 @@ class PropertySitemap(Sitemap):
             if not properties:
                 break
 
-            for prop in properties:
-                yield prop  # yield one property at a time
+            all_properties.extend(properties)
 
             total_pages = result['data'].get('total_pages', 1)
             if page >= total_pages:
@@ -60,10 +63,10 @@ class PropertySitemap(Sitemap):
 
             page += 1
 
+        return all_properties  # Must return a list, not a generator
+
     def location(self, obj):
         return f"/property/{obj['id']}/"
 
     def lastmod(self, obj):
-        # Optional: if the property dict has an 'updated_at' field
         return obj.get('updated_at')
-

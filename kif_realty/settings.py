@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'ckeditor',  # For rich text editing
     'ckeditor_uploader',  # For image uploads in editor
     'exclusive_properties',
+    'django.contrib.sitemaps',
 ]
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -135,6 +136,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
+     
 }
 
 AUTH_PASSWORD_VALIDATORS = [

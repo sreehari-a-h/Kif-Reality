@@ -9,7 +9,6 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from .models import Contact
 import json
-
 import requests
 
 from .services import PropertyService
@@ -45,7 +44,7 @@ def blog_list(request):
         posts = posts.filter(tags__slug=tag_slug)
     
     # Search functionality
-    search_query = request.GET.get('search')
+    search_query = request.GET.get('q')
     if search_query:
         posts = posts.filter(
             Q(title__icontains=search_query) |

@@ -22,33 +22,40 @@ class PropertySitemap(Sitemap):
             while page <= max_pages:
                 result = PropertyService.get_properties(filters={'page': page})
                 
-                if not result['success'] or not result['data']:
-                    logger.warning(f"Failed to fetch properties page {page}")
+                # Check if API call was successful
+                if not result['success']:
+                    logger.warning(f"Failed to fetch properties page {page}: {result.get('error')}")
                     break
                 
-                # Adjust based on your API response structure
-                # Common structures: {'results': [...], 'next': '...', 'count': ...}
-                data = result['data']
+                # Check if the nested status is True
+                if not result['data'].get('status'):
+                    logger.warning(f"API returned status False on page {page}")
+                    break
                 
-                # Try to get properties from different possible structures
-                if isinstance(data, list):
-                    properties = data
-                elif 'results' in data:
-                    properties = data['results']
-                elif 'data' in data:
-                    properties = data['data']
-                else:
-                    properties = []
+                # Navigate to the actual data: result['data']['data']['results']
+                data_block = result['data'].get('data', {})
+                properties = data_block.get('results', [])
                 
                 if not properties:
+                    logger.info(f"No more properties found on page {page}")
                     break
                 
-                all_properties.extend(properties)
-                logger.info(f"Fetched {len(properties)} properties from page {page}")
+                # Filter out non-dict items (safety check)
+                valid_properties = [prop for prop in properties if isinstance(prop, dict)]
                 
-                # Check if there are more pages
-                has_next = data.get('next') or (page < data.get('total_pages', page))
-                if not has_next:
+                if not valid_properties:
+                    break
+                
+                all_properties.extend(valid_properties)
+                logger.info(f"Fetched {len(valid_properties)} properties from page {page}")
+                
+                # Check if there's a next page
+                next_page_url = data_block.get('next_page_url')
+                current_page = data_block.get('current_page', page)
+                last_page = data_block.get('last_page', 1)
+                
+                if not next_page_url or current_page >= last_page:
+                    logger.info(f"Reached last page: {current_page}")
                     break
                 
                 page += 1
@@ -57,26 +64,38 @@ class PropertySitemap(Sitemap):
             return all_properties
             
         except Exception as e:
-            logger.error(f"Error fetching properties for sitemap: {e}")
+            logger.error(f"Error fetching properties for sitemap: {str(e)}", exc_info=True)
             return []
     
     def location(self, obj):
         """
         Return the URL for each property using 'pk' or 'id'
         """
-        # Try 'id' first, then 'pk', then 'property_id'
-        property_id = obj.get('id') or obj.get('pk') or obj.get('property_id')
+        # Safety check
+        if not isinstance(obj, dict):
+            logger.error(f"Expected dict but got {type(obj)}: {obj}")
+            return None
+        
+        # Get property ID
+        property_id = obj.get('id')
         
         if property_id:
-            return reverse('property_detail', kwargs={'pk': property_id})
+            try:
+                return reverse('property_detail', kwargs={'pk': int(property_id)})
+            except (ValueError, TypeError) as e:
+                logger.error(f"Invalid property ID: {property_id} - {e}")
+                return None
         
-        logger.warning(f"Property missing ID field: {obj}")
+        logger.warning(f"Property missing ID field. Available keys: {list(obj.keys())}")
         return None
     
     def lastmod(self, obj):
         """
         Return last modified date if available in API response
         """
+        if not isinstance(obj, dict):
+            return None
+            
         from datetime import datetime
         
         # Try different common field names
@@ -86,7 +105,9 @@ class PropertySitemap(Sitemap):
             try:
                 # Handle ISO format dates
                 if isinstance(date_field, str):
-                    return datetime.fromisoformat(date_field.replace('Z', '+00:00'))
+                    # Remove 'Z' and add timezone info
+                    date_str = date_field.replace('Z', '+00:00')
+                    return datetime.fromisoformat(date_str)
                 return date_field
             except Exception as e:
                 logger.warning(f"Could not parse date {date_field}: {e}")

@@ -7,8 +7,8 @@ urlpatterns = [
     #Exclusive
     path('exclusive/', include('exclusive_properties.urls')),
 
-    path('model1/', views.model1, name='model1'),
-     path('basenew/', views.basenw, name='basenew'),
+    # path('model1/', views.model1, name='model1'),
+    #  path('basenew/', views.basenw, name='basenew'),
 
     # Properties
     path('properties/', views.properties, name='properties'),

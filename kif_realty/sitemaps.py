@@ -36,7 +36,6 @@ class BlogSitemap(Sitemap):
 
 
 
-
 class PropertySitemap(Sitemap):
     changefreq = "daily"
     priority = 0.9
@@ -77,8 +76,17 @@ class PropertySitemap(Sitemap):
         return all_properties
 
     def location(self, obj):
-        return f"/property/{obj.get('id')}/"
+        # 🧠 Handle both string and dict formats
+        if isinstance(obj, dict):
+            return f"/property/{obj.get('id')}/"
+        elif isinstance(obj, str) or isinstance(obj, int):
+            return f"/property/{obj}/"
+        else:
+            return "/property/"
 
     def lastmod(self, obj):
-        return obj.get('updated_at')
+        if isinstance(obj, dict):
+            return obj.get('updated_at')
+        return None
+
 

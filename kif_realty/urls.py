@@ -3,7 +3,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
-from .sitemaps import BlogSitemap, PropertySitemap, StaticViewSitemap
+from .sitemaps import BlogSitemap, StaticViewSitemap
+from  main .sitemaps import PropertySitemap
 
 
 

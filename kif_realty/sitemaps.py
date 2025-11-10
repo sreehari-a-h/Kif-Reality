@@ -1,7 +1,7 @@
 
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from main.models import BlogPost
+from main.models import BlogPost, Property
 
 
 
@@ -36,4 +36,35 @@ class BlogSitemap(Sitemap):
 
 
 
+# class PropertySitemap(Sitemap):
+#     changefreq = 'daily'
+#     priority = 0.9
 
+#     def items(self):
+#         return Property.objects.filter(is_active=True)
+
+#     def lastmod(self, obj):
+#         return obj.updated_at
+
+#     def location(self, obj):
+#         return obj.get_absolute_url()
+    
+    
+    
+# Property sitemap with pagination (50 properties per page)
+class PropertySitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.9
+    limit = 50  # Number of properties per sitemap page (adjust as needed)
+
+    def items(self):
+        # Only fetch id, slug, updated_at to reduce memory usage
+        return Property.objects.filter(is_active=True).only(
+            'api_id', 'slug', 'updated_at', 'title'
+        ).order_by('-updated_at')
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+    def location(self, obj):
+        return obj.get_absolute_url()

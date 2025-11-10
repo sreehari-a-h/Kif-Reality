@@ -40,7 +40,9 @@ urlpatterns = [
     # Newsletter
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
 
-
+    path('privacy-policy/',views.privacy, name='privacy-policy'),
+    path('terms&conditions/',views.terms, name='terms&conditions'),
+    path('rera-compliance/',views.rera, name='rera-compliance'),
 
     # landingpages
     # ---------------KIF REALTY-------------

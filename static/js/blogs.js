@@ -152,9 +152,17 @@ document.querySelectorAll('.pagination a').forEach(link => {
     });
 });
 
+
+
+
+
 // Search on Enter key
 document.querySelector('.search-input').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         document.querySelector('.search-btn').click();
     }
 });
+
+
+
+

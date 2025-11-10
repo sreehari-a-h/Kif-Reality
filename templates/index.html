@@ -1,3 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}KIF Realty – Property Expert in Dubai{% endblock %}
+
+<!-- home.html -->
+
+{% block canonical %}
+<link rel="canonical" href="https://kifrealty.com/">{% endblock %}
+
+{% load static %}
+
 <script>
     // Enhanced Real-time Calculator System with Editable Inputs
     document.addEventListener('DOMContentLoaded', function () {
@@ -261,16 +272,7 @@
         updateMortgageCalculations();
         updateROICalculations();
     });
-</script>{% extends 'base.html' %}
-
-{% block title %}Home - KIF Realty{% endblock %}
-
-<!-- home.html -->
-
-{% block canonical %}
-<link rel="canonical" href="https://kifrealty.com/">{% endblock %}
-
-{% load static %}
+</script>
 
 {% block extra_css %}
 

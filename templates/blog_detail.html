@@ -1,916 +1,942 @@
+
+
+
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}{{ post.title|truncatechars:59 }} | KIF Realty{% endblock %}
+{% block title %}{{ post.title|truncatechars:57 }}{% endblock %}
 
-
-
-{% block description %} {{ post.meta_description|default:post.excerpt }} {% endblock %}
+{% block description %}{{ post.meta_description|default:post.excerpt }}{% endblock %}
 
 {% block canonical %}
-<!-- <link rel="canonical" href="https://kifrealty.com/blogs/{{ post.slug }}/"> -->
-<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<link rel="canonical" href="https://kifrealty.com{{ post.get_absolute_url }}">
 {% endblock %}
 
 
 
-
-{% load static %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog-detail.css' %}">
 <style>
-/* OBSIDIAN Theme Blog Detail Styles */
-.blog-detail {
-    background: var(--obsidian-black);
-    min-height: 100vh;
-}
-
-/* Hero Section */
-.blog-hero {
-    height: 60vh;
-    min-height: 500px;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-top: 0;
-}
-
-.blog-hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(42, 42, 42, 0.8) 0%, rgba(28, 28, 28, 0.9) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.blog-hero-content {
-    text-align: center;
-    color: white;
-    max-width: 1200px;
-    padding: 0 3rem;
-    position: relative;
-    z-index: 2;
-}
-
-.breadcrumb {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-    font-weight: 300;
-}
-
-.breadcrumb a {
-    color: var(--rose-gold);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.breadcrumb a:hover {
-    color: var(--text-light);
-}
-
-.breadcrumb span:last-child {
-    color: var(--text-muted);
-}
-
-.breadcrumb i {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-
-.blog-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 400;
-    color: var(--text-light);
-    margin-bottom: 2.5rem;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    background: linear-gradient(135deg, var(--text-light), var(--rose-gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.blog-meta {
-    display: flex;
-    justify-content: center;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-}
-
-.meta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 300;
-    font-size: 1rem;
-}
-
-.meta-item i {
-    color: var(--rose-gold);
-    font-size: 1.1rem;
-}
-
-/* Content Section */
-.blog-content-section {
-    padding: 5rem 0;
-}
-
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 3rem;
-}
-
-.row {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 4rem;
-}
-
-.col-lg-8 {
-    position: relative;
-}
-
-.col-lg-4 {
-    position: relative;
-}
-
-/* Post Content */
-.post-content {
-    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-    border-radius: 25px;
-    padding: 3.5rem;
-    margin-bottom: 3rem;
-    border: 1px solid rgba(232, 180, 160, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.post-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--accent-gradient);
-    opacity: 0.02;
-}
-
-.post-content * {
-    position: relative;
-    z-index: 1;
-}
-
-.post-content h1,
-.post-content h2,
-.post-content h3,
-.post-content h4,
-.post-content h5,
-.post-content h6 {
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--rose-gold);
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    margin-top: 2.5rem;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-}
-
-.post-content h1 { font-size: 2.5rem; }
-.post-content h2 { font-size: 2.2rem; }
-.post-content h3 { font-size: 1.9rem; }
-.post-content h4 { font-size: 1.6rem; }
-.post-content h5 { font-size: 1.4rem; }
-.post-content h6 { font-size: 1.2rem; }
-
-.post-content p {
-    color: var(--text-light);
-    line-height: 1.8;
-    font-size: 1.1rem;
-    margin-bottom: 1.8rem;
-    font-weight: 300;
-}
-
-.post-content ul,
-.post-content ol {
-    color: var(--text-light);
-    margin-bottom: 2rem;
-    padding-left: 2rem;
-}
-
-.post-content li {
-    margin-bottom: 0.8rem;
-    line-height: 1.7;
-    font-weight: 300;
-    color: var(--text-light) !important;
-}
-
-.post-content blockquote {
-    background: rgba(232, 180, 160, 0.1);
-    border-left: 4px solid var(--rose-gold);
-    padding: 2rem;
-    margin: 2.5rem 0;
-    border-radius: 0 15px 15px 0;
-    font-style: italic;
-    color: var(--text-muted);
-    font-size: 1.2rem;
-}
-
-.post-content a {
-    color: var(--rose-gold);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(232, 180, 160, 0.3);
-    transition: all 0.3s ease;
-}
-
-.post-content a:hover {
-    color: var(--text-light);
-    border-bottom-color: var(--text-light);
-}
-
-.post-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 15px;
-    margin: 2rem 0;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Tags */
-.post-tags {
-    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-    border-radius: 20px;
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    border: 1px solid rgba(232, 180, 160, 0.1);
-}
-
-.post-tags h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin-bottom: 1.5rem;
-}
-
-.post-tags .tag {
-    display: inline-block;
-    background: rgba(232, 180, 160, 0.1);
-    color: var(--rose-gold);
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid rgba(232, 180, 160, 0.2);
-    transition: all 0.3s ease;
-}
-
-.post-tags .tag:hover {
-    background: var(--accent-gradient);
-    color: var(--obsidian-black);
-    transform: translateY(-2px);
-    border-color: var(--rose-gold);
-}
-
-/* Social Share */
-.social-share {
-    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-    border-radius: 20px;
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    border: 1px solid rgba(232, 180, 160, 0.1);
-    text-align: center;
-}
-
-.social-share h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin-bottom: 2rem;
-}
-
-.share-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.share-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: all 0.4s ease;
-    color: white;
-}
-
-.share-btn.facebook { background: #3b5998; }
-.share-btn.twitter { background: #1da1f2; }
-.share-btn.linkedin { background: #0077b5; }
-.share-btn.whatsapp { background: #25d366; }
-
-.share-btn:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    color: white;
-}
-
-/* Author Bio */
-.author-bio {
-    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-    border-radius: 20px;
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    border: 1px solid rgba(232, 180, 160, 0.1);
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
-
-.author-avatar {
-    flex-shrink: 0;
-}
-
-.author-avatar i {
-    font-size: 4rem;
-    color: var(--rose-gold);
-}
-
-.author-info h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin-bottom: 1rem;
-}
-
-.author-info p {
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin: 0;
-    font-weight: 300;
-}
-
-/* Comments Section */
-.comments-section {
-    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-    border-radius: 25px;
-    padding: 3rem;
-    border: 1px solid rgba(232, 180, 160, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.comments-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--accent-gradient);
-    opacity: 0.02;
-}
-
-.comments-section * {
-    position: relative;
-    z-index: 1;
-}
-
-.comments-section h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin-bottom: 3rem;
-    text-align: center;
-}
-
-/* Comment Form */
-.comment-form-section {
-    margin-bottom: 4rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(232, 180, 160, 0.1);
-}
-
-.comment-form-section h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin-bottom: 2rem;
-}
-
-.comment-form .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    color: var(--text-light);
-    font-weight: 500;
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    background: var(--obsidian-black);
-    border: 1px solid rgba(232, 180, 160, 0.2);
-    border-radius: 15px;
-    padding: 1rem 1.5rem;
-    color: var(--text-light);
-    font-size: 1rem;
-    font-weight: 300;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: var(--rose-gold);
-    box-shadow: 0 0 0 3px rgba(232, 180, 160, 0.1);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: var(--text-muted);
-}
-
-.form-group textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.form-errors {
-    margin-top: 0.5rem;
-}
-
-.form-errors .error {
-    color: #ff6b6b;
-    font-size: 0.9rem;
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.submit-btn {
-    background: var(--accent-gradient);
-    color: var(--obsidian-black);
-    border: none;
-    padding: 1.2rem 3rem;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.submit-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(232, 180, 160, 0.4);
-}
-
-.submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Comments List */
-.comments-list {
-    margin-top: 2rem;
-}
-
-.comment {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(232, 180, 160, 0.1);
-}
-
-.comment:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.comment-avatar i {
-    font-size: 3rem;
-    color: var(--rose-gold);
-}
-
-.comment-content {
-    flex: 1;
-}
-
-.comment-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.comment-header h5 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin: 0;
-}
-
-.comment-date {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    font-weight: 300;
-}
-
-.comment-content p {
-    color: var(--text-light);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-    font-weight: 300;
-}
-
-.comment-content a {
-    color: var(--rose-gold);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.comment-content a:hover {
-    color: var(--text-light);
-}
-
-.no-comments {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--text-muted);
-}
-
-.no-comments p {
-    font-size: 1.1rem;
-    font-weight: 300;
-    margin: 0;
-}
-
-/* Sidebar */
-.blog-sidebar {
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-}
-
-.sidebar-widget {
-    background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
-    border-radius: 20px;
-    padding: 2.5rem;
-    margin-bottom: 2.5rem;
-    border: 1px solid rgba(232, 180, 160, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.sidebar-widget::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--accent-gradient);
-    opacity: 0.02;
-}
-
-.widget-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--rose-gold);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-    letter-spacing: -0.01em;
-}
-
-/* Related Posts */
-.related-posts {
-    position: relative;
-    z-index: 1;
-}
-
-.related-post {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    cursor: pointer;
-    padding: 1rem;
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-}
-
-.related-post:hover {
-    background: rgba(232, 180, 160, 0.05);
-    border-color: rgba(232, 180, 160, 0.1);
-    transform: translateY(-2px);
-}
-
-.related-post-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 12px;
-    background-size: cover;
-    background-position: center;
-    flex-shrink: 0;
-}
-
-.related-post-content {
-    flex: 1;
-}
-
-.related-post-content h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-}
-
-.related-post-date {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    font-weight: 300;
-}
-
-/* Newsletter Widget */
-.newsletter-widget {
-    background: var(--rose-gold) !important;
-    color: var(--obsidian-black);
-}
-
-.newsletter-widget::before {
-    display: none;
-}
-
-.newsletter-widget .widget-title {
-    color: var(--obsidian-black);
-}
-
-.newsletter-widget p {
-    color: var(--obsidian-black);
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-    font-weight: 300;
-    position: relative;
-    z-index: 1;
-}
-
-.newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: relative;
-    z-index: 1;
-}
-
-.newsletter-input {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50px;
-    padding: 1rem 1.5rem;
-    color: var(--obsidian-black);
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.newsletter-input:focus {
-    background: white;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-}
-
-.newsletter-btn {
-    background: var(--obsidian-black);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 1rem 2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.newsletter-btn:hover {
-    background: var(--charcoal-gray);
-    transform: translateY(-2px);
-}
-
-#newsletter-message {
-    margin-top: 1rem;
-}
-
-.alert {
-    padding: 1rem;
-    border-radius: 15px;
-    font-weight: 500;
-    text-align: center;
-}
-
-.alert-success {
-    background: rgba(76, 175, 80, 0.2);
-    color: #4CAF50;
-    border: 1px solid rgba(76, 175, 80, 0.3);
-}
-
-.alert-error {
-    background: rgba(244, 67, 54, 0.2);
-    color: #F44336;
-    border: 1px solid rgba(244, 67, 54, 0.3);
-}
-
-/* Contact Widget */
-.contact-widget {
-    background: var(--accent-gradient) !important;
-    text-align: center;
-    border: none !important;
-}
-
-.contact-widget::before {
-    display: none;
-}
-
-.contact-widget h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--obsidian-black) !important;
-    margin-bottom: 1rem;
-}
-
-.contact-widget p {
-    color: var(--obsidian-black) !important;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-    font-weight: 300;
-}
-
-.contact-btn {
-    background: var(--obsidian-black);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    transition: all 0.4s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.contact-btn:hover {
-    background: var(--charcoal-gray);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    color: white;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 1024px) {
-    .row {
-        grid-template-columns: 1fr;
-        gap: 3rem;
+    /* OBSIDIAN Theme Blog Detail Styles */
+    .blog-detail {
+        background: var(--obsidian-black);
+        min-height: 100vh;
     }
-    
-    .blog-sidebar {
-        position: static;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-}
 
-@media (max-width: 768px) {
+    /* Hero Section */
     .blog-hero {
-        height: 50vh;
-        min-height: 400px;
-        background-attachment: scroll;
+        height: 60vh;
+        min-height: 500px;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-top: 0;
     }
-    
-    .blog-hero-content {
-        padding: 0 2rem;
-    }
-    
-    .blog-title {
-        font-size: 2.5rem;
-    }
-    
-    .blog-meta {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .container {
-        padding: 0 1.5rem;
-    }
-    
-    .post-content {
-        padding: 2.5rem 2rem;
-    }
-    
-    .author-bio {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .comment-form .form-row {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .comment-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    
-    .breadcrumb {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-    
-    .sidebar-widget {
-        padding: 2rem 1.5rem;
-    }
-}
 
-@media (max-width: 480px) {
-    .blog-title {
-        font-size: 2rem;
+    .blog-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(42, 42, 42, 0.8) 0%, rgba(28, 28, 28, 0.9) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    
+
     .blog-hero-content {
-        padding: 0 1rem;
+        text-align: center;
+        color: white;
+        max-width: 1200px;
+        padding: 0 3rem;
+        position: relative;
+        z-index: 2;
     }
-    
-    .post-content {
-        padding: 2rem 1.5rem;
-    }
-    
-    .comments-section {
-        padding: 2rem 1.5rem;
-    }
-    
-    .share-buttons {
+
+    .breadcrumb {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 1rem;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        font-weight: 300;
     }
-    
-    .share-btn {
-        width: 45px;
-        height: 45px;
+
+    .breadcrumb a {
+        color: var(--rose-gold);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--text-light);
+    }
+
+    .breadcrumb span:last-child {
+        color: var(--text-muted);
+    }
+
+    .breadcrumb i {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+    }
+
+    .blog-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 4rem;
+        font-weight: 400;
+        color: var(--text-light);
+        margin-bottom: 2.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        background: linear-gradient(135deg, var(--text-light), var(--rose-gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .blog-meta {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        color: var(--text-muted);
+        font-weight: 300;
         font-size: 1rem;
     }
-}
+
+    .meta-item i {
+        color: var(--rose-gold);
+        font-size: 1.1rem;
+    }
+
+    /* Content Section */
+    .blog-content-section {
+        padding: 5rem 0;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 3rem;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 4rem;
+    }
+
+    .col-lg-8 {
+        position: relative;
+    }
+
+    .col-lg-4 {
+        position: relative;
+    }
+
+    /* Post Content */
+    .post-content {
+        background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+        border-radius: 25px;
+        padding: 3.5rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(232, 180, 160, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .post-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--accent-gradient);
+        opacity: 0.02;
+    }
+
+    .post-content * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .post-content h1,
+    .post-content h2,
+    .post-content h3,
+    .post-content h4,
+    .post-content h5,
+    .post-content h6 {
+        font-family: 'Cormorant Garamond', serif;
+        color: var(--rose-gold);
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        margin-top: 2.5rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+    }
+
+    .post-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .post-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .post-content h3 {
+        font-size: 1.9rem;
+    }
+
+    .post-content h4 {
+        font-size: 1.6rem;
+    }
+
+    .post-content h5 {
+        font-size: 1.4rem;
+    }
+
+    .post-content h6 {
+        font-size: 1.2rem;
+    }
+
+    .post-content p {
+        color: var(--text-light);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        margin-bottom: 1.8rem;
+        font-weight: 300;
+    }
+
+    .post-content ul,
+    .post-content ol {
+        color: var(--text-light);
+        margin-bottom: 2rem;
+        padding-left: 2rem;
+    }
+
+    .post-content li {
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+        font-weight: 300;
+        color: var(--text-light) !important;
+    }
+
+    .post-content blockquote {
+        background: rgba(232, 180, 160, 0.1);
+        border-left: 4px solid var(--rose-gold);
+        padding: 2rem;
+        margin: 2.5rem 0;
+        border-radius: 0 15px 15px 0;
+        font-style: italic;
+        color: var(--text-muted);
+        font-size: 1.2rem;
+    }
+
+    .post-content a {
+        color: var(--rose-gold);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(232, 180, 160, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .post-content a:hover {
+        color: var(--text-light);
+        border-bottom-color: var(--text-light);
+    }
+
+    .post-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px;
+        margin: 2rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Tags */
+    .post-tags {
+        background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(232, 180, 160, 0.1);
+    }
+
+    .post-tags h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin-bottom: 1.5rem;
+    }
+
+    .post-tags .tag {
+        display: inline-block;
+        background: rgba(232, 180, 160, 0.1);
+        color: var(--rose-gold);
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(232, 180, 160, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .post-tags .tag:hover {
+        background: var(--accent-gradient);
+        color: var(--obsidian-black);
+        transform: translateY(-2px);
+        border-color: var(--rose-gold);
+    }
+
+    /* Social Share */
+    .social-share {
+        background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(232, 180, 160, 0.1);
+        text-align: center;
+    }
+
+    .social-share h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin-bottom: 2rem;
+    }
+
+    .share-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .share-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.4s ease;
+        color: white;
+    }
+
+    .share-btn.facebook {
+        background: #3b5998;
+    }
+
+    .share-btn.twitter {
+        background: #1da1f2;
+    }
+
+    .share-btn.linkedin {
+        background: #0077b5;
+    }
+
+    .share-btn.whatsapp {
+        background: #25d366;
+    }
+
+    .share-btn:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    /* Author Bio */
+    .author-bio {
+        background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(232, 180, 160, 0.1);
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .author-avatar {
+        flex-shrink: 0;
+    }
+
+    .author-avatar i {
+        font-size: 4rem;
+        color: var(--rose-gold);
+    }
+
+    .author-info h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin-bottom: 1rem;
+    }
+
+    .author-info p {
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    /* Comments Section */
+    .comments-section {
+        background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+        border-radius: 25px;
+        padding: 3rem;
+        border: 1px solid rgba(232, 180, 160, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .comments-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--accent-gradient);
+        opacity: 0.02;
+    }
+
+    .comments-section * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .comments-section h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+
+    /* Comment Form */
+    .comment-form-section {
+        margin-bottom: 4rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(232, 180, 160, 0.1);
+    }
+
+    .comment-form-section h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin-bottom: 2rem;
+    }
+
+    .comment-form .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        color: var(--text-light);
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        background: var(--obsidian-black);
+        border: 1px solid rgba(232, 180, 160, 0.2);
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        color: var(--text-light);
+        font-size: 1rem;
+        font-weight: 300;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: var(--rose-gold);
+        box-shadow: 0 0 0 3px rgba(232, 180, 160, 0.1);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: var(--text-muted);
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-errors {
+        margin-top: 0.5rem;
+    }
+
+    .form-errors .error {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    .submit-btn {
+        background: var(--accent-gradient);
+        color: var(--obsidian-black);
+        border: none;
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(232, 180, 160, 0.4);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Comments List */
+    .comments-list {
+        margin-top: 2rem;
+    }
+
+    .comment {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2.5rem;
+        border-bottom: 1px solid rgba(232, 180, 160, 0.1);
+    }
+
+    .comment:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .comment-avatar i {
+        font-size: 3rem;
+        color: var(--rose-gold);
+    }
+
+    .comment-content {
+        flex: 1;
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .comment-header h5 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin: 0;
+    }
+
+    .comment-date {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 300;
+    }
+
+    .comment-content p {
+        color: var(--text-light);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        font-weight: 300;
+    }
+
+    .comment-content a {
+        color: var(--rose-gold);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .comment-content a:hover {
+        color: var(--text-light);
+    }
+
+    .no-comments {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--text-muted);
+    }
+
+    .no-comments p {
+        font-size: 1.1rem;
+        font-weight: 300;
+        margin: 0;
+    }
+
+    /* Sidebar */
+    .blog-sidebar {
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+    }
+
+    .sidebar-widget {
+        background: linear-gradient(145deg, var(--charcoal-gray), var(--medium-gray));
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        border: 1px solid rgba(232, 180, 160, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sidebar-widget::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--accent-gradient);
+        opacity: 0.02;
+    }
+
+    .widget-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--rose-gold);
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -0.01em;
+    }
+
+    /* Related Posts */
+    .related-posts {
+        position: relative;
+        z-index: 1;
+    }
+
+    .related-post {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .related-post:hover {
+        background: rgba(232, 180, 160, 0.05);
+        border-color: rgba(232, 180, 160, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .related-post-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        background-size: cover;
+        background-position: center;
+        flex-shrink: 0;
+    }
+
+    .related-post-content {
+        flex: 1;
+    }
+
+    .related-post-content h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .related-post-date {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 300;
+    }
+
+    /* Newsletter Widget */
+    .newsletter-widget {
+        background: var(--rose-gold) !important;
+        color: var(--obsidian-black);
+    }
+
+    .newsletter-widget::before {
+        display: none;
+    }
+
+    .newsletter-widget .widget-title {
+        color: var(--obsidian-black);
+    }
+
+    .newsletter-widget p {
+        color: var(--obsidian-black);
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+        font-weight: 300;
+        position: relative;
+        z-index: 1;
+    }
+
+    .newsletter-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .newsletter-input {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50px;
+        padding: 1rem 1.5rem;
+        color: var(--obsidian-black);
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .newsletter-input:focus {
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .newsletter-btn {
+        background: var(--obsidian-black);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .newsletter-btn:hover {
+        background: var(--charcoal-gray);
+        transform: translateY(-2px);
+    }
+
+    #newsletter-message {
+        margin-top: 1rem;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 15px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .alert-success {
+        background: rgba(76, 175, 80, 0.2);
+        color: #4CAF50;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .alert-error {
+        background: rgba(244, 67, 54, 0.2);
+        color: #F44336;
+        border: 1px solid rgba(244, 67, 54, 0.3);
+    }
+
+    /* Contact Widget */
+    .contact-widget {
+        background: var(--accent-gradient) !important;
+        text-align: center;
+        border: none !important;
+    }
+
+    .contact-widget::before {
+        display: none;
+    }
+
+    .contact-widget h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--obsidian-black) !important;
+        margin-bottom: 1rem;
+    }
+
+    .contact-widget p {
+        color: var(--obsidian-black) !important;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    .contact-btn {
+        background: var(--obsidian-black);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .contact-btn:hover {
+        background: var(--charcoal-gray);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 1024px) {
+        .row {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .blog-sidebar {
+            position: static;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .blog-hero {
+            height: 50vh;
+            min-height: 400px;
+            background-attachment: scroll;
+        }
+
+        .blog-hero-content {
+            padding: 0 2rem;
+        }
+
+        .blog-title {
+            font-size: 2.5rem;
+        }
+
+        .blog-meta {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .container {
+            padding: 0 1.5rem;
+        }
+
+        .post-content {
+            padding: 2.5rem 2rem;
+        }
+
+        .author-bio {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .comment-form .form-row {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .comment-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sidebar-widget {
+            padding: 2rem 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .blog-title {
+            font-size: 2rem;
+        }
+
+        .blog-hero-content {
+            padding: 0 1rem;
+        }
+
+        .post-content {
+            padding: 2rem 1.5rem;
+        }
+
+        .comments-section {
+            padding: 2rem 1.5rem;
+        }
+
+        .share-buttons {
+            gap: 1rem;
+        }
+
+        .share-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 1rem;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -922,7 +948,7 @@
             <div class="blog-hero-content">
                 <div class="breadcrumb">
                     <a href="{% url 'blogs' %}">Blog</a>
-                    
+
                     <span><i class="fas fa-chevron-right"></i></span>
                     <span>{{ post.title }}</span>
                 </div>
@@ -973,7 +999,7 @@
                     <div class="social-share">
                         <h4>Share this post:</h4>
                         <div class="share-buttons">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                            <!-- <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
                                target="_blank" class="share-btn facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
@@ -987,6 +1013,22 @@
                             </a>
                             <a href="https://wa.me/?text={{ post.title }} {{ request.build_absolute_uri }}" 
                                target="_blank" class="share-btn whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a> -->
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://kifrealty.com{{ post.get_absolute_url }}"
+                                target="_blank" class="share-btn facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url=https://kifrealty.com{{ post.get_absolute_url }}&text={{ post.title }}"
+                                target="_blank" class="share-btn twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://kifrealty.com{{ post.get_absolute_url }}"
+                                target="_blank" class="share-btn linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://wa.me/?text={{ post.title }} https://kifrealty.com{{ post.get_absolute_url }}"
+                                target="_blank" class="share-btn whatsapp">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                         </div>
@@ -1006,43 +1048,43 @@
                     <!-- Comments Section -->
                     <div class="comments-section">
                         <h3>Comments ({{ comments.count }})</h3>
-                        
+
                         <!-- Comment Form -->
                         <div class="comment-form-section">
                             <h4>Leave a Comment</h4>
-                            
+
                             <!-- Display Messages -->
                             {% if messages %}
-                                {% for message in messages %}
-                                <!-- <div class="alert alert-{{ message.tags }}">{{ message }}</div> -->
-                                {% endfor %}
+                            {% for message in messages %}
+                            <!-- <div class="alert alert-{{ message.tags }}">{{ message }}</div> -->
+                            {% endfor %}
                             {% endif %}
-                            
+
                             <form method="POST" class="comment-form" id="comment-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="comment_submit" value="1">
-                                
+
                                 <div class="form-row">
                                     <div class="form-group">
                                         {{ comment_form.name.label_tag }}
                                         {{ comment_form.name }}
                                         {% if comment_form.name.errors %}
-                                            <div class="form-errors">
-                                                {% for error in comment_form.name.errors %}
-                                                    <span class="error">{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
+                                        <div class="form-errors">
+                                            {% for error in comment_form.name.errors %}
+                                            <span class="error">{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
                                         {% endif %}
                                     </div>
                                     <div class="form-group">
                                         {{ comment_form.email.label_tag }}
                                         {{ comment_form.email }}
                                         {% if comment_form.email.errors %}
-                                            <div class="form-errors">
-                                                {% for error in comment_form.email.errors %}
-                                                    <span class="error">{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
+                                        <div class="form-errors">
+                                            {% for error in comment_form.email.errors %}
+                                            <span class="error">{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -1051,26 +1093,26 @@
                                     {{ comment_form.website.label_tag }}
                                     {{ comment_form.website }}
                                     {% if comment_form.website.errors %}
-                                        <div class="form-errors">
-                                            {% for error in comment_form.website.errors %}
-                                                <span class="error">{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    <div class="form-errors">
+                                        {% for error in comment_form.website.errors %}
+                                        <span class="error">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% endif %}
                                 </div>
-                                
+
                                 <div class="form-group">
                                     {{ comment_form.content.label_tag }}
                                     {{ comment_form.content }}
                                     {% if comment_form.content.errors %}
-                                        <div class="form-errors">
-                                            {% for error in comment_form.content.errors %}
-                                                <span class="error">{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    <div class="form-errors">
+                                        {% for error in comment_form.content.errors %}
+                                        <span class="error">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% endif %}
                                 </div>
-                                
+
                                 <button type="submit" class="submit-btn" id="comment-submit-btn">
                                     Post Comment
                                 </button>
@@ -1087,11 +1129,13 @@
                                 <div class="comment-content">
                                     <div class="comment-header">
                                         <h5>{{ comment.name }}</h5>
-                                        <span class="comment-date">{{ comment.created_at|date:"F d, Y \a\t g:i A" }}</span>
+                                        <span class="comment-date">{{ comment.created_at|date:"F d, Y \a\t g:i A"
+                                            }}</span>
                                     </div>
                                     <p>{{ comment.content|linebreaks }}</p>
                                     {% if comment.website %}
-                                        <p><a href="{{ comment.website }}" target="_blank" rel="noopener noreferrer">{{ comment.website }}</a></p>
+                                    <p><a href="{{ comment.website }}" target="_blank" rel="noopener noreferrer">{{
+                                            comment.website }}</a></p>
                                     {% endif %}
                                 </div>
                             </div>
@@ -1113,11 +1157,13 @@
                             <h3 class="widget-title">Related Posts</h3>
                             <div class="related-posts">
                                 {% for related_post in related_posts %}
-                                <div class="related-post" onclick="window.location.href='{{ related_post.get_absolute_url }}'">
-                                    <div class="related-post-image" style="background-image: url('{{ related_post.featured_image.url }}');"></div>
+                                <div class="related-post"
+                                    onclick="window.location.href='{{ related_post.get_absolute_url }}'">
+                                    <div class="related-post-image"
+                                        style="background-image: url('{{ related_post.featured_image.url }}');"></div>
                                     <div class="related-post-content">
                                         <h4>{{ related_post.title }}</h4>
-                                        <span class="related-post-date">{{ related_post.published_at|date:"F d, Y" }}</span>
+                                        <span class="related-post-date">{{ related_post.published_at|date:"F d, Y"}}</span>
                                     </div>
                                 </div>
                                 {% endfor %}
@@ -1131,16 +1177,19 @@
                             <p>Get the latest Dubai real estate insights delivered to your inbox.</p>
                             <form class="newsletter-form" id="newsletter-form">
                                 {% csrf_token %}
-                                <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+                                <input type="email" name="email" class="newsletter-input"
+                                    placeholder="Your email address" required>
                                 <button type="submit" class="newsletter-btn">Subscribe Now</button>
                             </form>
                             <div id="newsletter-message"></div>
                         </div>
 
                         <!-- Contact Widget -->
-                        <div class="sidebar-widget contact-widget" style="background: var(--gradient-primary); color: white; text-align: center; padding: 1rem; margin:0% 1% 4% 1%;">
+                        <div class="sidebar-widget contact-widget"
+                            style="background: var(--gradient-primary); color: white; text-align: center; padding: 1rem; margin:0% 1% 4% 1%;">
                             <h3 style="margin-bottom: 1rem; color: white;">Need Expert Advice?</h3>
-                            <p style="margin-bottom: 2rem; opacity: 0.9;">Get personalized property investment guidance from our Dubai real estate experts.</p>
+                            <p style="margin-bottom: 2rem; opacity: 0.9;">Get personalized property investment guidance
+                                from our Dubai real estate experts.</p>
                             <a href="https://wa.me/971509647864" target="_blank" class="contact-btn">
                                 <i class="fab fa-whatsapp"></i> Chat with Expert
                             </a>
@@ -1153,47 +1202,47 @@
 </article>
 
 <script>
-// Newsletter subscription handling
-document.getElementById('newsletter-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const messageDiv = document.getElementById('newsletter-message');
-    
-    fetch('{% url "newsletter_subscribe" %}', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        messageDiv.innerHTML = `<div class="alert ${data.success ? 'alert-success' : 'alert-error'}">${data.message}</div>`;
-        if (data.success) {
-            this.reset();
-        }
-        setTimeout(() => {
-            messageDiv.innerHTML = '';
-        }, 5000);
-    })
-    .catch(error => {
-        messageDiv.innerHTML = '<div class="alert alert-error">Something went wrong. Please try again.</div>';
-    });
-});
+    // Newsletter subscription handling
+    document.getElementById('newsletter-form').addEventListener('submit', function (e) {
+        e.preventDefault();
 
-// Comment form enhancement (optional - for visual feedback)
-document.getElementById('comment-form').addEventListener('submit', function(e) {
-    const submitBtn = document.getElementById('comment-submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-    
-    // Re-enable after a delay (the page will redirect anyway)
-    setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Post Comment';
-    }, 5000);
-});
+        const formData = new FormData(this);
+        const messageDiv = document.getElementById('newsletter-message');
+
+        fetch('{% url "newsletter_subscribe" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.innerHTML = `<div class="alert ${data.success ? 'alert-success' : 'alert-error'}">${data.message}</div>`;
+                if (data.success) {
+                    this.reset();
+                }
+                setTimeout(() => {
+                    messageDiv.innerHTML = '';
+                }, 5000);
+            })
+            .catch(error => {
+                messageDiv.innerHTML = '<div class="alert alert-error">Something went wrong. Please try again.</div>';
+            });
+    });
+
+    // Comment form enhancement (optional - for visual feedback)
+    document.getElementById('comment-form').addEventListener('submit', function (e) {
+        const submitBtn = document.getElementById('comment-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        // Re-enable after a delay (the page will redirect anyway)
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Post Comment';
+        }, 5000);
+    });
 </script>
 
 {% endblock %}

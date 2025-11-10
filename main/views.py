@@ -4,6 +4,7 @@ from django.http import Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
+from django.http import HttpResponse
 from urllib.parse import urlparse, parse_qs
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
@@ -13,8 +14,8 @@ import requests
 
 from .services import PropertyService
 
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -28,7 +29,7 @@ def blog_list(request):
     """Display blog list page with pagination and filtering"""
     posts = BlogPost.objects.filter(status='published').select_related(
         'category', 'author'
-    ).prefetch_related('tags')
+    ).prefetch_related('tags').order_by('-published_at')
     
     # Get featured post
     featured_post = posts.filter(is_featured=True).first()
@@ -53,8 +54,12 @@ def blog_list(request):
             Q(tags__name__icontains=search_query)
         ).distinct()
     
+    # Exclude featured post from the paginated list
+    if featured_post:
+        posts = posts.exclude(id=featured_post.id)
+    
     # Pagination
-    paginator = Paginator(posts, 6)  # Show 6 posts per page
+    paginator = Paginator(posts, 6)  # 6 posts per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
@@ -75,6 +80,8 @@ def blog_list(request):
         'recent_posts': recent_posts,
         'popular_tags': popular_tags,
         'search_query': search_query,
+        'category_slug': category_slug,
+        'tag_slug': tag_slug,
         'newsletter_form': NewsletterForm(),
     }
     
@@ -178,7 +185,7 @@ def blog_category(request, slug):
         ).filter(posts_count__gt=0),
     }
     
-    return render(request, 'blog_category.html', context)
+    return render(request, 'blogs.html', context)
 
 
 def blog_tag(request, slug):
@@ -201,7 +208,7 @@ def blog_tag(request, slug):
         ).filter(posts_count__gt=0).order_by('-posts_count')[:10],
     }
     
-    return render(request, 'blog_tag.html', context)
+    return render(request, 'blogs.html', context)
 
 @require_POST
 def newsletter_subscribe(request):
@@ -279,6 +286,7 @@ def blog_search(request):
     return render(request, 'blog_search.html', context)
 
 API_BASE = "https://offplan.market/api/property"
+
 
 def index(request):
     """Homepage with featured properties"""
@@ -998,3 +1006,24 @@ def plots(request):
 
 def mansions(request):
     return render(request,'landingpages/mansions.html')
+
+
+def privacy(request):
+    return render(request,'privacy_policy.html')
+
+def terms(request):
+    return render(request,'terms.html')
+
+def rera(request):
+    return render(request,'rera.html')
+
+
+
+def robots_txt(request):
+    content = (
+        "User-agent: *\n"
+        "Disallow: /admin/\n"
+        "Allow: /\n"
+        "Sitemap: https://kifrealty.com/sitemap.xml\n"
+    )
+    return HttpResponse(content, content_type="text/plain")

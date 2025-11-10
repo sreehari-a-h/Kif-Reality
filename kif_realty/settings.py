@@ -3,6 +3,8 @@ from pathlib import Path
 from decouple import config
 from dotenv import load_dotenv
 
+
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +47,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',  # compress responses
+    'main.middleware.RemoveWWW',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

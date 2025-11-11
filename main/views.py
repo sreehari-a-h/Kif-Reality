@@ -888,9 +888,11 @@ def send_notification_email(contact):
     - Timeline: {contact.get_timeline_display() if contact.timeline else 'Not specified'}
     
     In the meantime, feel free to reach out directly:
-    📞 +971 50 964 7864
+    📞 +971 569599966
     📧 info@kifrealty.com
-    💬 WhatsApp: https://wa.me/971509647864
+    💬 WhatsApp: https://wa.me/971 569599966
+
+
     
     Best regards,
     KIF Realty Team

@@ -2808,7 +2808,7 @@ function loadFeaturedProperties() {
               <h4>${p.low_price} <span>${p.currency || "AED"}</span></h4>
               <p>${p.district?.name?.en || ""} / ${p.city?.name?.en || ""}  </p>
              
-              <a href="/property/${p.id}" class="learn-more">LEARN MORE</a>
+              <a href="/property/${p.id}" class="learn-more" aria-label="Learn more about ${p.title?.en || 'this property'} in ${p.district?.name?.en || ''} ${p.city?.name?.en || ''}">LEARN MORE</a>
             </div>
           </div>
         `;

@@ -129,6 +129,24 @@ DEFAULT_FROM_EMAIL = 'KIF Realty <noreply@kifrealty.com>'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'sitemap_cache_table',
+    }
+}
+
+# Or use Redis (recommended for production)
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/1',
+#     }
+# }
+
+
+
+
 
 DATABASES = {
     'default': {

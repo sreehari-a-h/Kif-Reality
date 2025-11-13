@@ -12,6 +12,7 @@
 <script>
     // Enhanced Real-time Calculator System with Editable Inputs
     document.addEventListener('DOMContentLoaded', function () {
+        
         // Mortgage Calculator Elements
         const mortgageElements = {
             // Sliders
@@ -3207,6 +3208,8 @@ function populateCitiesDropdown() {
     </div>
   </div>
 </section>
+
+
 <!-- Investment Calculator Section -->
 <section class="calculators-section">
     <div class="section-title-new">
@@ -3365,8 +3368,8 @@ function populateCitiesDropdown() {
                             <!-- <input type="range" id="interest-rate" min="2.5" max="8" value="3.75" class="slider"> -->
 
                             <div class="slider-values">
-                                <span class="min-value">2.5%</span>
-                                <span class="max-value">8%</span>
+                                <span class="min-value">1%</span>
+                                <span class="max-value">10%</span>
                             </div>
                         </div>
                     </div>
@@ -3390,6 +3393,8 @@ function populateCitiesDropdown() {
             </div>
             </div>
             </div>
+    </div>
+            
             <!-- ROI Calculator -->
             <div id="roi-calculator" class="calculator-container">
                 <div class="calculator-card">
@@ -3435,11 +3440,11 @@ function populateCitiesDropdown() {
                                 <div class="input-slider-group">
                                     <input type="text" id="current-value-input" value="3,000,000"
                                         class="editable-input">
-                                    <input type="range" id="current-value" min="500000" max="12000000" value="3000000"
+                                    <input type="range" id="current-value" min="500000" max="15000000" value="3000000"
                                         class="slider">
                                     <div class="slider-values">
                                         <span class="min-value">500,000 AED</span>
-                                        <span class="max-value">12,000,000 AED</span>
+                                        <span class="max-value">15,000,000 AED</span>
                                     </div>
                                 </div>
                             </div>
@@ -3505,7 +3510,7 @@ function populateCitiesDropdown() {
                     </div>
                 </div>
                 </div>
-            </div>
+            </div></div>
 </section>
 
 <!-- CTA Section -->
@@ -3660,18 +3665,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update min/max displays based on residency status
             const limits = getResidencyLimits();
-            const minDown = price * limits.minDownPercent;
-            const maxLoan = price * limits.maxLoanPercent;
+            const minDown = price * limits.minDownPercent; // minimum down payment
+            const maxLoan = price * limits.maxLoanPercent; // maximum loan
 
             const downMinDisplay = document.getElementById('down-min-display');
             const loanMinDisplay = document.getElementById('loan-min-display');
             
-            if (downMinDisplay) {
+             // Set the minimum loan value to be equal to the minimum down payment (240,000 AED)
+            // Set the minimum down payment value to be displayed in the down-min-display span
+             if (downMinDisplay) {
                 downMinDisplay.textContent = formatNumber(minDown) + ' AED (' + (limits.minDownPercent * 100).toFixed(0) + '%)';
             }
             if (loanMinDisplay) {
-                loanMinDisplay.textContent = formatNumber(maxLoan) + ' AED (' + (limits.maxLoanPercent * 100).toFixed(0) + '%)';
+                loanMinDisplay.textContent = formatNumber(minDown) + ' AED (' + (limits.minDownPercent * 100).toFixed(0) + '%)';
             }
+
+            
 
             // Calculate monthly payment using standard amortization formula
             const monthlyRate = rate / 100 / 12;
@@ -3851,111 +3860,166 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ROI CALCULATOR (unchanged)
-    function setupROICalculator() {
-        const elements = {
-            purchasePrice: document.getElementById('purchase-price'),
-            currentValue: document.getElementById('current-value'),
-            annualRent: document.getElementById('annual-rent'),
-            annualExpenses: document.getElementById('annual-expenses'),
-            holdingPeriod: document.getElementById('holding-period'),
+    // ROI CALCULATOR - EXACT FIX
+// Replace your entire setupROICalculator() function with this code
 
-            purchasePriceInput: document.getElementById('purchase-price-input'),
-            currentValueInput: document.getElementById('current-value-input'),
-            annualRentInput: document.getElementById('annual-rent-input'),
-            annualExpensesInput: document.getElementById('annual-expenses-input'),
-            holdingPeriodInput: document.getElementById('holding-period-input'),
+function setupROICalculator() {
+    const elements = {
+        purchasePrice: document.getElementById('purchase-price'),
+        currentValue: document.getElementById('current-value'),
+        annualRent: document.getElementById('annual-rent'),
+        annualExpenses: document.getElementById('annual-expenses'),
+        holdingPeriod: document.getElementById('holding-period'),
 
-            totalROIDisplay: document.getElementById('total-roi-display'),
-            annualROIDisplay: document.getElementById('annual-roi-display')
-        };
+        purchasePriceInput: document.getElementById('purchase-price-input'),
+        currentValueInput: document.getElementById('current-value-input'),
+        annualRentInput: document.getElementById('annual-rent-input'),
+        annualExpensesInput: document.getElementById('annual-expenses-input'),
+        holdingPeriodInput: document.getElementById('holding-period-input'),
 
-        let actualROIValues = {
-            purchasePrice: 2500000,
-            currentValue: 3000000,
-            annualRent: 180000,
-            annualExpenses: 25000,
-            holdingPeriod: 5
-        };
+        totalROIDisplay: document.getElementById('total-roi-display'),
+        annualROIDisplay: document.getElementById('annual-roi-display')
+    };
 
-        function calculateROI() {
-            const purchasePrice = actualROIValues.purchasePrice;
-            const currentValue = actualROIValues.currentValue;
-            const annualRent = actualROIValues.annualRent;
-            const annualExpenses = actualROIValues.annualExpenses;
-            const holdingPeriod = actualROIValues.holdingPeriod;
+    let actualROIValues = {
+        purchasePrice: 2500000,
+        currentValue: 3000000,
+        annualRent: 180000,
+        annualExpenses: 25000,
+        holdingPeriod: 5
+    };
 
-            // Update input displays
-            if (elements.purchasePriceInput) elements.purchasePriceInput.value = formatNumber(purchasePrice);
-            if (elements.currentValueInput) elements.currentValueInput.value = formatNumber(currentValue);
-            if (elements.annualRentInput) elements.annualRentInput.value = formatNumber(annualRent);
-            if (elements.annualExpensesInput) elements.annualExpensesInput.value = formatNumber(annualExpenses);
-            if (elements.holdingPeriodInput) elements.holdingPeriodInput.value = holdingPeriod;
-
-            // Update slider values
-            if (elements.purchasePrice) elements.purchasePrice.value = purchasePrice;
-            if (elements.currentValue) elements.currentValue.value = currentValue;
-            if (elements.annualRent) elements.annualRent.value = annualRent;
-            if (elements.annualExpenses) elements.annualExpenses.value = annualExpenses;
-            if (elements.holdingPeriod) elements.holdingPeriod.value = holdingPeriod;
-
-            // Calculate ROI
-            const capitalAppreciation = currentValue - purchasePrice;
-            const netAnnualRent = annualRent - annualExpenses;
-            const totalRentalIncome = netAnnualRent * holdingPeriod;
-            const totalReturn = capitalAppreciation + totalRentalIncome;
-            const totalROI = (totalReturn / purchasePrice) * 100;
-            const annualROI = holdingPeriod > 0 ? totalROI / holdingPeriod : 0;
-
-            // Update displays
-            if (elements.totalROIDisplay) elements.totalROIDisplay.textContent = totalROI.toFixed(2) + '%';
-            if (elements.annualROIDisplay) elements.annualROIDisplay.textContent = annualROI.toFixed(2) + '%';
-        }
-
-        // Add slider event listeners
-        if (elements.purchasePrice) {
-            elements.purchasePrice.addEventListener('input', function () {
-                actualROIValues.purchasePrice = parseFloat(this.value);
-                calculateROI();
-            });
-        }
-
-        if (elements.currentValue) {
-            elements.currentValue.addEventListener('input', function () {
-                actualROIValues.currentValue = parseFloat(this.value);
-                calculateROI();
-            });
-        }
-
-        if (elements.annualRent) {
-            elements.annualRent.addEventListener('input', function () {
-                actualROIValues.annualRent = parseFloat(this.value);
-                calculateROI();
-            });
-        }
-
-        if (elements.annualExpenses) {
-            elements.annualExpenses.addEventListener('input', function () {
-                actualROIValues.annualExpenses = parseFloat(this.value);
-                calculateROI();
-            });
-        }
-
-        if (elements.holdingPeriod) {
-            elements.holdingPeriod.addEventListener('input', function () {
-                actualROIValues.holdingPeriod = parseFloat(this.value);
-                calculateROI();
-            });
-        }
-
-        // Initialize
-        calculateROI();
+    function formatNumber(num) {
+        return new Intl.NumberFormat('en-AE').format(Math.round(num));
     }
+
+    function calculateROI() {
+        const purchasePrice = actualROIValues.purchasePrice;
+        const currentValue = actualROIValues.currentValue;
+        const annualRent = actualROIValues.annualRent;
+        const annualExpenses = actualROIValues.annualExpenses;
+        const holdingPeriod = actualROIValues.holdingPeriod;
+
+        // Update input displays
+        if (elements.purchasePriceInput) elements.purchasePriceInput.value = formatNumber(purchasePrice);
+        if (elements.currentValueInput) elements.currentValueInput.value = formatNumber(currentValue);
+        if (elements.annualRentInput) elements.annualRentInput.value = formatNumber(annualRent);
+        if (elements.annualExpensesInput) elements.annualExpensesInput.value = formatNumber(annualExpenses);
+        if (elements.holdingPeriodInput) elements.holdingPeriodInput.value = holdingPeriod;
+
+        // Update slider values
+        if (elements.purchasePrice) elements.purchasePrice.value = purchasePrice;
+        if (elements.currentValue) elements.currentValue.value = currentValue;
+        if (elements.annualRent) elements.annualRent.value = annualRent;
+        if (elements.annualExpenses) elements.annualExpenses.value = annualExpenses;
+        if (elements.holdingPeriod) elements.holdingPeriod.value = holdingPeriod;
+
+        // Calculate ROI
+        const capitalAppreciation = currentValue - purchasePrice;
+        const netAnnualRent = annualRent - annualExpenses;
+        const totalRentalIncome = netAnnualRent * holdingPeriod;
+        const totalReturn = capitalAppreciation + totalRentalIncome;
+        const totalROI = (totalReturn / purchasePrice) * 100;
+        const annualROI = holdingPeriod > 0 ? totalROI / holdingPeriod : 0;
+
+        // Update displays
+        if (elements.totalROIDisplay) elements.totalROIDisplay.textContent = totalROI.toFixed(2) + '%';
+        if (elements.annualROIDisplay) elements.annualROIDisplay.textContent = annualROI.toFixed(2) + '%';
+    }
+
+    // ========== THIS IS THE FIX - Input field synchronization ==========
+    function setupInputSync(inputElement, valueKey, isInteger = false, min = 0, max = Infinity) {
+        if (!inputElement) return;
+
+        inputElement.addEventListener('input', function () {
+            let value = this.value.replace(/,/g, '');
+            if (isInteger) {
+                value = value.replace(/[^0-9]/g, '');
+            } else {
+                value = value.replace(/[^0-9.]/g, '');
+            }
+
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && value !== '') {
+                if (numValue >= min && numValue <= max) {
+                    actualROIValues[valueKey] = numValue;
+                    calculateROI();
+                }
+            }
+        });
+
+        inputElement.addEventListener('blur', function () {
+            const value = this.value.replace(/,/g, '');
+            if (value === '' || isNaN(parseFloat(value))) {
+                this.value = isInteger ? actualROIValues[valueKey].toString() : formatNumber(actualROIValues[valueKey]);
+                return;
+            }
+
+            const numValue = parseFloat(value);
+            const clampedValue = Math.max(min, Math.min(max, numValue));
+
+            actualROIValues[valueKey] = clampedValue;
+            this.value = isInteger ? clampedValue.toString() : formatNumber(clampedValue);
+            calculateROI();
+        });
+    }
+    // ========== END OF FIX ==========
+
+    // Add slider event listeners
+    if (elements.purchasePrice) {
+        elements.purchasePrice.addEventListener('input', function () {
+            actualROIValues.purchasePrice = parseFloat(this.value);
+            calculateROI();
+        });
+    }
+
+    if (elements.currentValue) {
+        elements.currentValue.addEventListener('input', function () {
+            actualROIValues.currentValue = parseFloat(this.value);
+            calculateROI();
+        });
+    }
+
+    if (elements.annualRent) {
+        elements.annualRent.addEventListener('input', function () {
+            actualROIValues.annualRent = parseFloat(this.value);
+            calculateROI();
+        });
+    }
+
+    if (elements.annualExpenses) {
+        elements.annualExpenses.addEventListener('input', function () {
+            actualROIValues.annualExpenses = parseFloat(this.value);
+            calculateROI();
+        });
+    }
+
+    if (elements.holdingPeriod) {
+        elements.holdingPeriod.addEventListener('input', function () {
+            actualROIValues.holdingPeriod = parseFloat(this.value);
+            calculateROI();
+        });
+    }
+
+    // ========== CALL THE FIX - Setup input synchronization ==========
+    setupInputSync(elements.purchasePriceInput, 'purchasePrice', false, 500000, 10000000);
+    setupInputSync(elements.currentValueInput, 'currentValue', false, 500000, 15000000);
+    setupInputSync(elements.annualRentInput, 'annualRent', false, 30000, 800000);
+    setupInputSync(elements.annualExpensesInput, 'annualExpenses', false, 5000, 100000);
+    setupInputSync(elements.holdingPeriodInput, 'holdingPeriod', true, 1, 20);
+    // ========== END ==========
+
+    // Initialize
+    calculateROI();
+}
 
     // Initialize both calculators
     setupMortgageCalculator();
     setupROICalculator();
 });
 </script>
+
+
 <script>
   const carousel = document.getElementById("dubaiCarousel");
   const container = document.getElementById("carouselContainer");

@@ -32,7 +32,7 @@ urlpatterns = [
     path('cities/', views.cities_api, name='cities_api'),  # Cities API for React frontend
     path('developers/', views.developers_api, name='developers_api'),  # Developers API for React frontend
 
-    # Contact
+    
     path('contact/', views.contact_view, name='contact'),
     path('contact/submit/', views.contact_submit, name='contact_submit'),
     path('contact/ajax-submit/', views.contact_submit_ajax, name='contact_submit_ajax'),

@@ -3744,40 +3744,16 @@ document.addEventListener('DOMContentLoaded', function () {
             updateMortgageCalculations();
         });
 
-        
         // Interest rate slider
-      // --- FIXED INTEREST RATE INPUT HANDLING ---
-elements.interestRateInput.addEventListener('input', function () {
-    let value = this.value.replace(/,/g, '').replace(/[^0-9.]/g, '');
-
-    // Allow only one decimal point
-    const parts = value.split('.');
-    if (parts.length > 2) {
-        value = parts[0] + '.' + parts[1]; // drop extra dots
-    }
-
-    this.value = value; // let user type freely (like "3.", "3.7", etc.)
-});
-
-// On blur (finalize input)
-elements.interestRateInput.addEventListener('blur', function () {
-    let value = this.value.replace(/,/g, '').replace(/[^0-9.]/g, '');
-    const num = parseFloat(value);
-
-    if (isNaN(num)) {
-        // reset to last valid value
-        this.value = actualValues.interestRate.toFixed(2);
-        return;
-    }
-
-    // Clamp and update
-    const clamped = Math.min(Math.max(num, 1), 10); // between 1% and 10%
-    actualValues.interestRate = clamped;
-    this.value = clamped.toFixed(2);
-    manualRateChanged = true;
-    updateMortgageCalculations();
-});
-
+      elements.interestRateInput.addEventListener('input', function () {
+        let value = this.value.replace(/,/g, '').replace(/[^0-9.]/g, '');
+        const num = parseFloat(value);
+        if (!isNaN(num)) {
+            actualValues.interestRate = num;
+            manualRateChanged = true; // user manually changed rate
+            updateMortgageCalculations();
+        }
+    });
 
     elements.interestRateInput.addEventListener('blur', function () {
         const value = this.value.replace(/,/g, '');

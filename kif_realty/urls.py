@@ -3,17 +3,19 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap, index as sitemap_index
-from .sitemaps import BlogSitemap, StaticViewSitemap, PropertySitemap
-from .sitemaps import (
-    BlogSitemap, 
-    StaticViewSitemap, 
-    PropertySitemap,
-)
+
+from .sitemaps import StaticViewSitemap, BlogPostSitemap,  PropertySitemap
+# from .sitemaps import BlogSitemap, StaticViewSitemap, PropertySitemap
+# from .sitemaps import (
+#     BlogSitemap, 
+#     StaticViewSitemap, 
+#     PropertySitemap,
+# )
 from main import views as main_views  # import your app's views
 
 
 sitemaps_dict = {
-    'blogs': BlogSitemap,
+    'blogs': BlogPostSitemap,
     'static': StaticViewSitemap,
     'properties': PropertySitemap,   
 }
@@ -22,12 +24,12 @@ sitemaps_dict = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-    path('tinymce/', include('tinymce.urls')),
-    # path('exclusive-properties/', include('exclusive_properties.urls')),
+    path('tinymce/', include('tinymce.urls')),    
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    # path('exclusive-properties/', include('exclusive_properties.urls')),
     
     # Sitemap index (main sitemap file)
-    path('sitemap.xml', sitemap_index, {'sitemaps': sitemaps_dict}, name='django.contrib.sitemaps.views.index'),
+    path('sitemap.xml', sitemap_index, {'sitemaps': sitemaps_dict}, name='django.contrib.sitemaps.views.sitemap_index'),
     
     # Individual sitemap sections
     path('sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps_dict}, name='django.contrib.sitemaps.views.sitemap'),

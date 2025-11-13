@@ -11,33 +11,47 @@ PROPERTIES_API_URL = 'http://54.197.194.173/api/properties/large/'
 
 
 class StaticViewSitemap(Sitemap):
+    """Sitemap for all static pages."""
+    priority = 0.8
     changefreq = "monthly"
-    priority = 0.6
 
     def items(self):
+        # Include only static named routes from urls.py
         return [
-            'index', 'about', 'properties', 'contact', 'blogs',
-            'retail', 'second', 'commercial', 'luxury', 'beach',
-            'offplan', 'labour', 'warehouse', 'plots', 'mansions',
-            'privacy-policy', 'terms-conditions', 'rera-compliance'
+            'index',
+            'about',
+            'blogs',
+            'contact',
+            'privacy-policy',
+            'terms-and-conditions',
+            'rera-compliance',
+            # Landing pages
+            'retail',
+            'second',
+            'commercial',
+            'luxury',
+            'beach',
+            'offplan',
+            'labour',
+            'warehouse',
+            'plots',
+            'mansions',
         ]
 
     def location(self, item):
         return reverse(item)
 
 
-class BlogSitemap(Sitemap):
+class BlogPostSitemap(Sitemap):
+    """Sitemap for all published blog posts."""
     changefreq = "weekly"
-    priority = 0.8
+    priority = 0.9
 
     def items(self):
-        return BlogPost.objects.filter(status="published")
+        return BlogPost.objects.filter(status='published')
 
     def lastmod(self, obj):
         return obj.updated_at
-
-    def location(self, obj):
-        return reverse('blog_detail', kwargs={'slug': obj.slug})
 
 
 class PropertySitemap(Sitemap):

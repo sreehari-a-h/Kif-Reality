@@ -26,10 +26,13 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}KIF Realty - Premium Dubai Real Estate | Buy Property in Dubai 2025{% endblock %}</title>
+
+    <title>{% block title %}KIF Realty - Premium Dubai Real Estate{% endblock %}</title>
+    
     <meta name="description"
         content="{% block description %}KIF Realty - Top Dubai real estate company since 2011. Buy apartments, luxury villas, off-plan properties in Dubai. Expert investment guidance for Dubai property ROI.{% endblock %}">
-    <meta name="keywords"
+    
+        <meta name="keywords"
         content="Dubai real estate, buy property Dubai, luxury villas Dubai, off-plan properties Dubai, Dubai investment properties, real estate Dubai 2025">
 
     <!-- home.html -->
@@ -1510,21 +1513,21 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul class="dropdown-menu-grid">
-                        <li class="" style="font-size:0.85rem;"><a href="{% url 'retail' %}"><i
+                        <li class="" style="font-size:0.85rem;"><a href="{% url 'retail-spaces' %}"><i
                                     class="fas fa-store"></i> Retail Spaces</a></li>
-                        <li><a href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
-                        <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial Properties</a>
+                        <li><a href="{% url 'secondary-residential-properties' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
+                        <li><a href="{% url 'commercial-properties' %}"><i class="fas fa-building"></i> Commercial Properties</a>
                         </li>
-                        <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a>
+                        <li><a href="{% url 'beachfront-Properties' %}"><i class="fas fa-umbrella-beach"></i> Beachfront Properties</a>
                         </li>
-                        <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a>
+                        <li><a href="{% url 'luxury-villas-townhouses' %}"><i class="fas fa-vihara"></i> Luxury Villas & Townhouses</a>
                         </li>
-                        <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
-                        <li><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
-                        <li><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a>
+                        <li><a href="{% url 'mansions-for-sale' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
+                        <li><a href="{% url 'plots-for-sale' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a></li>
+                        <li><a href="{% url 'off-plan-residential-properties' %}"><i class="fas fa-project-diagram"></i> Off-Plan Properties</a>
                         </li>
-                        <li><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
-                        <li><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a>
+                        <li><a href="{% url 'labour-camps' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
+                        <li><a href="{% url 'warehouses-for-sale' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a>
                         </li>
                     </ul>
                 </div>
@@ -1609,21 +1612,21 @@
                     </a>
                     <div class="dropdown-menu">
                         <ul class="dropdown-menu-grid">
-                            <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
-                            <li><a href="{% url 'second' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
-                            <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i> Commercial
+                            <li><a href="{% url 'retail-spaces' %}"><i class="fas fa-store"></i> Retail Spaces</a></li>
+                            <li><a href="{% url 'secondary-residential-properties' %}"><i class="fas fa-home"></i> Secondary Residential</a></li>
+                            <li><a href="{% url 'commercial-properties' %}"><i class="fas fa-building"></i> Commercial
                                     Properties</a></li>
-                            <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i> Beachfront
+                            <li><a href="{% url 'beachfront-Properties' %}"><i class="fas fa-umbrella-beach"></i> Beachfront
                                     Properties</a></li>
-                            <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i> Luxury Villas &
+                            <li><a href="{% url 'luxury-villas-townhouses' %}"><i class="fas fa-vihara"></i> Luxury Villas &
                                     Townhouses</a></li>
-                            <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
-                            <li><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a>
+                            <li><a href="{% url 'mansions-for-sale' %}"><i class="fas fa-gem"></i> Mansions for Sale</a></li>
+                            <li><a href="{% url 'plots-for-sale' %}"><i class="fas fa-map-marked-alt"></i> Plots for Sale</a>
                             </li>
-                            <li><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i> Off-Plan
+                            <li><a href="{% url 'off-plan-residential-properties' %}"><i class="fas fa-project-diagram"></i> Off-Plan
                                     Properties</a></li>
-                            <li><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
-                            <li><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a>
+                            <li><a href="{% url 'labour-camps' %}"><i class="fas fa-hard-hat"></i> Labour Camps</a></li>
+                            <li><a href="{% url 'warehouses-for-sale' %}"><i class="fas fa-warehouse"></i> Warehouses for Sale</a>
                             </li>
                         </ul>
                     </div>
@@ -1702,32 +1705,32 @@
                 <div class="footer-links-section">
                     <h5>Our Expertise</h5>
                     <ul class="footer-list">
-                        <li><a href="{% url 'retail' %}"><i class="fas fa-store"></i>Retail Spaces</a></li>
+                        <li><a href="{% url 'retail-spaces' %}"><i class="fas fa-store"></i>Retail Spaces</a></li>
                         <!-- storefront / shop -->
-                        <li><a href="{% url 'second' %}"><i class="fas fa-home"></i>Secondary Residential Properties</a>
+                        <li><a href="{% url 'secondary-residential-properties' %}"><i class="fas fa-home"></i>Secondary Residential Properties</a>
                         </li>
                         <!-- home / house -->
-                        <li><a href="{% url 'commercial' %}"><i class="fas fa-building"></i>Commercial Properties</a>
+                        <li><a href="{% url 'commercial-properties' %}"><i class="fas fa-building"></i>Commercial Properties</a>
                         </li>
                         <!-- office building -->
-                        <li><a href="{% url 'beach' %}"><i class="fas fa-umbrella-beach"></i>Beachfront Properties</a>
+                        <li><a href="{% url 'beachfront-Properties' %}"><i class="fas fa-umbrella-beach"></i>Beachfront Properties</a>
                         </li>
                         <!-- beach / coastal -->
-                        <li><a href="{% url 'luxury' %}"><i class="fas fa-vihara"></i>Luxury Villas & Townhouses</a>
+                        <li><a href="{% url 'luxury-villas-townhouses' %}"><i class="fas fa-vihara"></i>Luxury Villas & Townhouses</a>
                         </li>
                         <!-- villa / high-end home -->
-                        <li><a href="{% url 'mansions' %}"><i class="fas fa-gem"></i>Mansions for Sale</a></li>
+                        <li><a href="{% url 'mansions-for-sale' %}"><i class="fas fa-gem"></i>Mansions for Sale</a></li>
                         <!-- luxury / premium -->
-                        <li class="extra"><a href="{% url 'plots' %}"><i class="fas fa-map-marked-alt"></i>Plots for
+                        <li class="extra"><a href="{% url 'plots-for-sale' %}"><i class="fas fa-map-marked-alt"></i>Plots for
                                 Sale</a></li>
                         <!-- land / plot -->
-                        <li class="extra"><a href="{% url 'offplan' %}"><i class="fas fa-project-diagram"></i>Off-Plan
+                        <li class="extra"><a href="{% url 'off-plan-residential-properties' %}"><i class="fas fa-project-diagram"></i>Off-Plan
                                 Properties</a></li>
                         <!-- construction / plan -->
-                        <li class="extra"><a href="{% url 'labour' %}"><i class="fas fa-hard-hat"></i>Labour Camps</a>
+                        <li class="extra"><a href="{% url 'labour-camps' %}"><i class="fas fa-hard-hat"></i>Labour Camps</a>
                         </li>
                         <!-- construction / workers -->
-                        <li class="extra"><a href="{% url 'warehouse' %}"><i class="fas fa-warehouse"></i>Warehouses for
+                        <li class="extra"><a href="{% url 'warehouses-for-sale' %}"><i class="fas fa-warehouse"></i>Warehouses for
                                 Sale</a></li>
                         <!-- warehouse / storage -->
 

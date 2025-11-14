@@ -26,16 +26,16 @@ class StaticViewSitemap(Sitemap):
             'terms-and-conditions',
             'rera-compliance',
             # Landing pages
-            'retail',
-            'second',
-            'commercial',
-            'luxury',
-            'beach',
-            'offplan',
-            'labour',
-            'warehouse',
-            'plots',
-            'mansions',
+            'retail-spaces',
+            'secondary-residential-properties',
+            'commercial-properties',
+            'luxury-villas-townhouses',
+            'beachfront-Properties',
+            'off-plan-residential-properties',
+            'labour-camps',
+            'warehouses-for-sale',
+            'plots-for-sale',
+            'mansions-for-sale',
         ]
 
     def location(self, item):

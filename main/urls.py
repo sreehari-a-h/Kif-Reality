@@ -43,19 +43,20 @@ urlpatterns = [
     path('privacy-policy/',views.privacy, name='privacy-policy'),
     path('terms-and-conditions/',views.terms, name='terms-and-conditions'),
     path('rera-compliance/',views.rera, name='rera-compliance'),
+    
 
     # landingpages
     # ---------------KIF REALTY-------------
        
-    path('retail',views.retail, name='retail'),
-    path('second',views.second, name='second'),
-    path('commercial',views.commercial, name='commercial'),
-    path('luxury',views.luxury, name='luxury'),
-    path('beach',views.beach, name='beach'),
-    path('offplan',views.offplan, name='offplan'),
-    path('labour',views.labour, name='labour'),
-    path('warehouse',views.warehouse, name='warehouse'),
-    path('plots',views.plots, name='plots'),
-    path('mansions',views.mansions, name='mansions'),
+    path('retail-spaces',views.retail, name='retail-spaces'),
+    path('secondary-residential-properties',views.second, name='secondary-residential-properties'),
+    path('commercial-properties',views.commercial, name='commercial-properties'),
+    path('luxury-villas-townhouses',views.luxury, name='luxury-villas-townhouses'),
+    path('beachfront-Properties',views.beach, name='beachfront-Properties'),
+    path('off-plan-residential-properties',views.offplan, name='off-plan-residential-properties'),
+    path('labour-camps',views.labour, name='labour-camps'),
+    path('warehouses-for-sale',views.warehouse, name='warehouses-for-sale'),
+    path('plots-for-sale',views.plots, name='plots-for-sale'),
+    path('mansions-for-sale',views.mansions, name='mansions-for-sale'),
 ]
 

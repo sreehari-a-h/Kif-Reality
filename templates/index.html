@@ -2789,6 +2789,7 @@
 function loadFeaturedProperties() {
   const grid = document.querySelector('.properties-grid');
   grid.innerHTML = `<p>Loading Featured Properties...</p>`;
+  
 
   fetch('https://offplan.market/api/properties/filter/', {
     method: 'POST',
@@ -2801,6 +2802,11 @@ function loadFeaturedProperties() {
 
     if (data?.data?.results?.length) {
       data.data.results.slice(0, 8 ).forEach(p => {
+
+        // ✅ Create slug from API slug or title
+        const slug = p.slug || createSlug(p.title?.en || 'property');
+        const propertyUrl = `/property/${slug}-${p.id}/`;
+
         grid.innerHTML += `
           <div class="property-card">
             <img src="${p.cover || '/static/img/no-image.jpg'}" alt="${p.title}" loading="lazy">
@@ -2809,7 +2815,7 @@ function loadFeaturedProperties() {
               <h4>${p.low_price} <span>${p.currency || "AED"}</span></h4>
               <p>${p.district?.name?.en || ""} / ${p.city?.name?.en || ""}  </p>
              
-              <a href="/property/${p.id}" class="learn-more" aria-label="Learn more about ${p.title?.en || 'this property'} in ${p.district?.name?.en || ''} ${p.city?.name?.en || ''}">LEARN MORE</a>
+              <a href="${propertyUrl}" class="learn-more" aria-label="Learn more about ${p.title?.en || 'this property'} in ${p.district?.name?.en || ''} ${p.city?.name?.en || ''}">LEARN MORE</a>
             </div>
           </div>
         `;
@@ -2822,6 +2828,16 @@ function loadFeaturedProperties() {
     console.error(err);
     grid.innerHTML = `<p>Error loading properties</p>`;
   });
+}
+
+// ✅ Helper function to create slug from title (if API doesn't provide slug)
+function createSlug(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-')      // Replace spaces with hyphens
+    .replace(/--+/g, '-')      // Replace multiple hyphens with single hyphen
+    .trim();
 }
 
 // Run on page load

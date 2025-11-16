@@ -2,9 +2,12 @@
 
 {% block title %}{{ property.title.en }} - KIF Realty{% endblock %}
 
+{% block description %}{{ property.description.en|truncatechars:150 }}{% endblock %}
+
+
 
 {% block canonical %}
-<link rel="canonical" href="https://kifrealty.com/property/{{ property.id }}/">{% endblock %}
+<link rel="canonical" href="https://kifrealty.com{{ request.path }}">{% endblock %}
 
 {% load static %}
 {% load custom_filters %}
@@ -1255,7 +1258,7 @@
                 </h2>
                 <div class="units-grid">
                     {% for unit in property.grouped_apartments %}
-                        <div class="unit-card" onclick="navigateToUnit('{{ property.id }}', '{{ unit.id }}')">
+                        <div class="unit-card" onclick="navigateToUnit('{{ property.slug }}','{{ property.id }}', '{{ unit.id }}')">
                             <div class="unit-header">
                                 <div class="unit-type">
                                     {{ unit.unit_type.en }} - {{ unit.rooms.en }}{% if unit.rooms.en != "Studio" %}BR{% endif %}
@@ -1542,8 +1545,8 @@
     }
 
     // Navigate to unit page
-    function navigateToUnit(propertyId, unitId) {
-        window.location.href = `/property/${propertyId}/unit/${unitId}/`;
+    function navigateToUnit(propertySlug,propertyId, unitId) {
+        window.location.href = `/property/${propertySlug}-${propertyId}/unit/${unitId}/`;
     }
 
     // Event Handlers

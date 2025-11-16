@@ -2137,10 +2137,6 @@
                 // Get image - check both 'cover' and 'image' fields
                 const image = property.cover || property.image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
-                // ✅ Create URL with slug-id format
-                const slug = property.slug || 'property';
-                const propertyUrl = `/property/${slug}-${property.id}/`;
-
                 return `
             <div class="property-card">
                 <div class="property-image" style="background-image: url('${image}');">
@@ -2176,7 +2172,7 @@
                     </div>
 
                     <div class="property-actions">
-                        <a href="${propertyUrl}" class="btn-primary-custom">
+                        <a href="/property/${property.id}/" class="btn-primary-custom">
                             <i class="fas fa-eye" aria-hidden="true"></i>
                             View Details
                         </a>
@@ -2192,7 +2188,6 @@
 
             propertiesGrid.innerHTML = propertiesHTML;
         }
-        
 
         // Global function to update total count
         window.updateTotalCount = function (count) {

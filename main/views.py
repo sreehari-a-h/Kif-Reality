@@ -11,9 +11,8 @@ from django.core.mail import send_mail
 from .models import Contact
 import json
 import requests
-
+from django.utils.text import slugify
 from .services import PropertyService
-
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Count
@@ -352,7 +351,9 @@ def properties(request):
     
     if properties_result['success'] and properties_result['data'].get('status') is True:
         data_block = properties_result['data']['data']  # ✅ THIS is where the real results are
+        
         for prop in data_block.get('results', []):
+            # Extract property data
             title_data = prop.get('title', {})
             title = title_data.get('en', 'Untitled') if isinstance(title_data, dict) else (title_data or 'Untitled')
 
@@ -380,8 +381,15 @@ def properties(request):
             else:
                 property_type_counts['residential'] += 1
 
+
+            # Get ID and create slug from title or use API slug
+            prop_id = prop.get('id')
+            # Use API slug if available, otherwise create from title
+            prop_slug = prop.get('slug') or slugify(title)
+
             mapped_properties.append({
                 'id': prop.get('id'),
+                'slug': prop_slug,
                 'title': title,
                 'image': prop.get('cover'),
                 'location': f"{city_name}, {district_name}",
@@ -394,11 +402,13 @@ def properties(request):
             })
 
             
-        
+         # Pagination logic
         next_page_num = extract_page_number(data_block.get('next_page_url'))
         prev_page_num = extract_page_number(data_block.get('previous_page_url'))
         current_page = data_block.get('current_page')
         last_page = data_block.get('last_page', (data_block.get('count', 0) // 12) + 1)
+        
+        
         def get_page_range(current_page, last_page, max_display=5):
             page_range = []
 
@@ -453,11 +463,20 @@ def properties(request):
 
 
 
-def property_detail(request, pk):
+def property_detail(request, slug, pk):
     """
     Fetch property data from the API and render property_detail.html
     """
+    """
+    Display property details using slug in URL but pk (ID) for API call
+    URL format: /property/luxury-villa-palm-jumeirah-2376/
+    API call: https://offplan.market/api/properties/2376
+    """
+    
     url = f"{API_BASE}/{pk}"
+    # Use the pk (ID) to fetch from API
+    # url = f"https://offplan.market/api/properties/{pk}"
+    
     try:
         resp = requests.get(url, timeout=8)
     except requests.RequestException as e:
@@ -471,6 +490,16 @@ def property_detail(request, pk):
 
     prop = data.get("data") or {}
     # normalize a few fields for template convenience
+    
+     # Optional: Verify slug matches and redirect if wrong
+    title_data = prop.get('title', {})
+    title = title_data.get('en', 'property') if isinstance(title_data, dict) else (title_data or 'property')
+    correct_slug = prop.get('slug') or slugify(title)
+    
+    if correct_slug != slug:
+        # Redirect to correct URL with proper slug
+        return redirect('property_detail', slug=correct_slug, pk=pk)
+    
     # ensure lists exist
     prop.setdefault("property_images", [])
     prop.setdefault("facilities", [])
@@ -481,45 +510,88 @@ def property_detail(request, pk):
     return render(request, "property_detail.html", {"property": prop})
 
 
-def unit_detail(request, property_id, unit_id):
+def unit_detail(request, property_slug, property_id, unit_id):
+    """
+    Display unit details using slug in URL but property_id for API call
+    URL format: /property/luxury-villa-2376/unit/123/
+    """
     """
     Show unit details. We fetch the property and locate the unit by id in either grouped_apartments or property_units.
     """
-    url = f"{API_BASE}/{property_id}"
+    # url = f"{API_BASE}/{property_id}"
+    url = f"{API_BASE}/{property_id}/units/{unit_id}"
+    # try:
+    #     resp = requests.get(url, timeout=8)
+    # except requests.RequestException:
+    #     raise Http404("Property data could not be retrieved.")
+    # if resp.status_code != 200:
+    #     raise Http404("Property not found.")
     try:
         resp = requests.get(url, timeout=8)
-    except requests.RequestException:
-        raise Http404("Property data could not be retrieved.")
+    except requests.RequestException as e:
+        return render(request, "unit_detail.html", {
+            "unit_error": "Failed to retrieve unit data."
+        })
+
     if resp.status_code != 200:
-        raise Http404("Property not found.")
+        return render(request, "unit_detail.html", {
+            "unit_error": "Unit not found or API error."
+        })
 
+    # data = resp.json()
+    # prop = data.get("data") or {}
+    # units = prop.get("property_units", []) or []
+    # grouped = prop.get("grouped_apartments", []) or []
+
+    # # Try to find unit in grouped_apartments by id
+    # unit = None
+    # for u in grouped + units:
+    #     # some ids might be strings or ints; normalize
+    #     try:
+    #         if int(u.get("id")) == int(unit_id):
+    #             unit = u
+    #             break
+    #     except Exception:
+    #         if str(u.get("id")) == str(unit_id):
+    #             unit = u
+    #             break
+
+    # if not unit:
+    #     raise Http404("Unit not found.")
+
+    # # supply property + unit to template
+    # context = {
+    #     "property": prop,
+    #     "unit": unit,
+    # }
+    # return render(request, "unit_detail.html", context)
     data = resp.json()
-    prop = data.get("data") or {}
-    units = prop.get("property_units", []) or []
-    grouped = prop.get("grouped_apartments", []) or []
+    if not data.get("status"):
+        return render(request, "unit_detail.html", {
+            "unit_error": data.get("message") or "API returned error."
+        })
 
-    # Try to find unit in grouped_apartments by id
-    unit = None
-    for u in grouped + units:
-        # some ids might be strings or ints; normalize
-        try:
-            if int(u.get("id")) == int(unit_id):
-                unit = u
-                break
-        except Exception:
-            if str(u.get("id")) == str(unit_id):
-                unit = u
-                break
+    unit = data.get("data") or {}
+    
+    return render(request, "unit_detail.html", {
+        "unit": unit, 
+        "property_slug": property_slug,
+        "property_id": property_id
+    })
 
-    if not unit:
-        raise Http404("Unit not found.")
 
-    # supply property + unit to template
-    context = {
-        "property": prop,
-        "unit": unit,
-    }
-    return render(request, "unit_detail.html", context)
+def extract_page_number(url):
+    """Helper to extract page number from URL"""
+    if not url:
+        return None
+    try:
+        from urllib.parse import urlparse, parse_qs
+        parsed = urlparse(url)
+        page = parse_qs(parsed.query).get('page', [None])[0]
+        return page
+    except:
+        return None
+
 
 def model1(request):
     """Model 1 page"""

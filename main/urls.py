@@ -12,8 +12,11 @@ urlpatterns = [
 
     # Properties
     path('properties/', views.properties, name='properties'),
-    path('property/<int:pk>/', views.property_detail, name='property_detail'),
-    path('property/<int:property_id>/unit/<int:unit_id>/', views.unit_detail, name='unit_detail'),
+    # path('property/<int:pk>/', views.property_detail, name='property_detail'),
+    path('property/<slug:slug>-<int:pk>/', views.property_detail, name='property_detail'),  # ✅ slug-id format
+    # path('property/<int:property_id>/unit/<int:unit_id>/', views.unit_detail, name='unit_detail'),
+    path('property/<slug:property_slug>-<int:property_id>/unit/<int:unit_id>/', views.unit_detail, name='unit_detail'),
+
 
     # Static pages
     path('about/', views.about, name='about'),

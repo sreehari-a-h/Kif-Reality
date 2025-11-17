@@ -1,5 +1,16 @@
 from django.urls import path, include
+
 from . import views
+
+
+
+
+
+
+
+
+
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,9 +23,14 @@ urlpatterns = [
 
     # Properties
     path('properties/', views.properties, name='properties'),
+    
+    # ✅ ADD THIS - Old property URL redirect (MUST come BEFORE the new format)
+    path('property/<int:property_id>/', views.property_redirect, name='property_old'),
+
     # path('property/<int:pk>/', views.property_detail, name='property_detail'),
     path('property/<slug:slug>-<int:pk>/', views.property_detail, name='property_detail'),  # ✅ slug-id format
     # path('property/<int:property_id>/unit/<int:unit_id>/', views.unit_detail, name='unit_detail'),
+     # Unit detail
     path('property/<slug:property_slug>-<int:property_id>/unit/<int:unit_id>/', views.unit_detail, name='unit_detail'),
 
 

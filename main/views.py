@@ -462,6 +462,38 @@ def properties(request):
     return render(request, 'properties.html', context)
 
 
+# Add this new function to handle old property URLs
+def property_redirect(request, property_id):
+    """
+    Redirect old /property/ID/ URLs to new /property/slug-ID/ format
+    Fetches property from API to get proper slug
+    """
+    url = f"{API_BASE}/{property_id}"
+    
+    try:
+        resp = requests.get(url, timeout=8)
+        
+        if resp.status_code == 200:
+            data = resp.json()
+            
+            if data.get("status"):
+                prop = data.get("data") or {}
+                
+                # Get title and generate slug
+                title_data = prop.get('title', {})
+                title = title_data.get('en', 'property') if isinstance(title_data, dict) else (title_data or 'property')
+                
+                # Use API slug if available, otherwise create from title
+                slug = prop.get('slug') or slugify(title)
+                
+                # Redirect to new URL format with 301 (permanent)
+                return redirect('property_detail', slug=slug, pk=property_id, permanent=True)
+    
+    except requests.RequestException:
+        pass
+    
+    # If API call fails, create generic slug and redirect
+    return redirect('property_detail', slug='property', pk=property_id, permanent=True)
 
 def property_detail(request, slug, pk):
     """

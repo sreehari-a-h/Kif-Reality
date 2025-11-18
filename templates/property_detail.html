@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ property.title.en|truncatechars:33}} |Dubai Real Estate | KIF Realty{% endblock %}
+{% block title %} {{ property.id }}-{{ property.title.en|truncatechars:33}}-dubai-real-estate-kif-realty{% endblock %}
 
-{% block description %}{{ property.description.en|striptags|truncatechars:130 }}{% endblock %}
+{% block description %}{{ property.id }}-{{ property.description.en|striptags|truncatechars:130 }}{% endblock %}
 
 
 
@@ -1081,7 +1081,7 @@
         <!-- Hero Section -->
         <section class="property-hero">
             <div class="hero-gallery">
-                <img id="heroImage" src="{{ property.cover }}" alt="{{ property.title.en }}" class="hero-image">
+                <img id="heroImage" src="{{ property.cover }}" alt="{{ property.title.en }}" class="hero-image" loading="lazy">
 
                 {% if property.property_images|length > 0 %}
                 <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">
@@ -1297,7 +1297,7 @@
                 <i class="fas fa-phone"></i>
                 Call Now
             </a>
-            <a href="https://wa.me/971569599966" class="contact-btn outline" target="_blank">
+            <a href="https://wa.me/971569599966" class="contact-btn outline" target="_blank" rel="noopener">
                 <i class="fab fa-whatsapp"></i>
                 WhatsApp
             </a>

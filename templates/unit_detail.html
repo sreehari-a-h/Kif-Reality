@@ -1133,7 +1133,7 @@
     <div class="sidebar">
         <!-- Property Info -->
         <div class="sidebar-card property-info fade-in">
-            <img src="{{ property.cover }}" alt="{{ property.title.en }}" class="property-thumbnail">
+            <img src="{{ property.cover }}" alt="{{ property.title.en }}" class="property-thumbnail" loading="lazy">
             <h3 class="property-name">{{ property.title.en }}</h3>
             <p class="property-location">{{ property.district.name.en }}, {{ property.city.name.en }}</p>
             <a href="{% url 'property_detail' property.id %}" class="view-property-btn">

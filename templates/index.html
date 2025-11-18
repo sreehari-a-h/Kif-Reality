@@ -2706,10 +2706,15 @@
 <!-- Hero Section -->
 <section id="home" class="hero">
     <!-- Background Video -->
-    <video autoplay muted loop playsinline class="hero-video" loading="lazy" preload="none">
+    <!-- <video autoplay muted loop playsinline class="hero-video" loading="lazy" preload="none">
         <source src="static/videos/kif_web.mp4" type="video/mp4">
         Your browser does not support the video tag.
-    </video>
+    </video> -->
+    <!-- Replace your video tag -->
+<video autoplay muted loop playsinline class="hero-video" 
+       poster="{% static 'images/video-poster.jpg' %}">
+    <source data-src="{% static 'videos/kif_web.mp4' %}" type="video/mp4">
+</video>
 
     <!-- Optional particle overlay -->
     <div class="hero-particles"></div>
@@ -3302,6 +3307,17 @@ function populateCitiesDropdown() {
 {% endblock %}
 
 {% block extra_js %}
+
+
+
+<script>
+// Load video after page loads
+window.addEventListener('load', function() {
+    const video = document.querySelector('.hero-video source');
+    video.src = video.dataset.src;
+    video.parentElement.load();
+});
+</script>
 
 <script>
     // UAE Property Investment Calculators - Fixed Implementation with Precise Input Handling

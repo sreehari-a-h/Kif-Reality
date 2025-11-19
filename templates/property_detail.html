@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ property.id }}-{{ property.title.en|truncatechars:33}}-dubai-real-estate-kif-realty{% endblock %}
+{% block title %} {{ property.id }}-{{ property.title.en|truncatechars:28}}-dubai-real-estate-kif-realty{% endblock %}
 
 {% block description %}{{ property.id }}-{{ property.description.en|striptags|truncatechars:130 }}{% endblock %}
 

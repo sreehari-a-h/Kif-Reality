@@ -306,15 +306,36 @@
         opacity: 0.05;
     } */
 
-    .hero-video {
+    /*.hero-video {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;   /* ensures full coverage */
-        z-index: -2;         /* behind everything */
-    }
+        object-fit: cover;   
+        z-index: -2;        
+    }*/
+    .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    background: linear-gradient(
+        rgba(10, 10, 10, 0.9), 
+        rgba(26, 26, 26, 0.95)
+    ),
+    radial-gradient(
+        circle at 30% 50%, 
+        rgba(232, 180, 160, 0.1) 0%, 
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
 
     .hero-badge {
         display: inline-block;
@@ -2705,15 +2726,10 @@
 
 <!-- Hero Section -->
 <section id="home" class="hero">
-    <!-- Background Video -->
-    <!-- <video autoplay muted loop playsinline class="hero-video" loading="lazy" preload="none">
-        <source src="static/videos/kif_web.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video> -->
+   
     <!-- Replace your video tag -->
-<video autoplay muted loop playsinline class="hero-video" 
-       poster="{% static 'images/video-poster.jpg' %}">
-    <source data-src="{% static 'videos/kif_web.mp4' %}" type="video/mp4">
+<video autoplay muted loop playsinline class="hero-video" preload="none">
+    <source src="/static/videos/kif_web.mp4" type="video/mp4">
 </video>
 
     <!-- Optional particle overlay -->
@@ -2743,7 +2759,7 @@
 <section class="featured-properties">
   <div class="heading">
     <div class="heading-left">
-      <img src="static/images/logo-kif.png" alt="Logo" class="logo" loading="lazy">
+      <img src="static/images/logo-kif.png" alt="KIF Realty - Dubai Real Estate Logo" class="logo" loading="lazy">
       <h2>Latest  Properties</h2>
     </div>
     <div class="heading-right">
@@ -3311,11 +3327,9 @@ function populateCitiesDropdown() {
 
 
 <script>
-// Load video after page loads
-window.addEventListener('load', function() {
-    const video = document.querySelector('.hero-video source');
-    video.src = video.dataset.src;
-    video.parentElement.load();
+const video = document.querySelector('.hero-video');
+video.addEventListener('canplay', () => {
+    video.style.opacity = 1;
 });
 </script>
 

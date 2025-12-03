@@ -23,6 +23,9 @@ from django.utils import timezone
 from .models import BlogPost, Category, Tag, Newsletter, Comment
 from .forms import NewsletterForm, CommentForm
 
+from django.utils.html import strip_tags
+import re
+
 
 def blog_list(request):
     """Display blog list page with pagination and filtering"""
@@ -522,6 +525,47 @@ def property_detail(request, slug, pk):
 
     prop = data.get("data") or {}
     # normalize a few fields for template convenience
+    
+    # Clean the description
+    # ========== UPDATED SECTION - CLEAN THE DESCRIPTION ==========
+    if prop.get('description'):
+        desc = prop['description']
+        if isinstance(desc, dict) and 'en' in desc:
+            raw_html = desc['en']
+            
+            # Remove all style attributes (including incomplete ones)
+            raw_html = re.sub(r'style\s*=\s*["\'][^"\']*["\']?', '', raw_html, flags=re.IGNORECASE | re.DOTALL)
+            
+            # Remove other problematic attributes
+            raw_html = re.sub(r'(color-scheme|forced-color-adjust|font-family|position-anchor)[^>]*', '', raw_html, flags=re.IGNORECASE)
+            
+            # Strip all remaining HTML tags
+            clean_text = strip_tags(raw_html)
+            
+            # Remove broken <p or <p, tags
+            clean_text = re.sub(r'<\s*p[^a-zA-Z0-9>]*', '', clean_text)
+
+            
+            # Clean up whitespace
+            clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+            
+            # Remove any remaining CSS-like text (the leaked style content)
+            clean_text = re.sub(r'unset[;:\s]+', '', clean_text)
+            clean_text = re.sub(r'(color-scheme|forced-color-adjust|mask|math-depth|position|appearance)[:\s]+[^;]*;?', '', clean_text)
+            
+            # Split into sentences
+            sentences = re.split(r'(?<=[.!?])\s+', clean_text)
+            
+            # Group into paragraphs (every 3 sentences)
+            paragraphs = []
+            for i in range(0, len(sentences), 3):
+                para_sentences = sentences[i:i+3]
+                para_text = ' '.join(para_sentences).strip()
+                if para_text:
+                    paragraphs.append(f'<p>{para_text}</p>')
+            
+            prop['description']['en'] = '\n'.join(paragraphs) if paragraphs else '<p>No description available.</p>'
+    # ========== END OF UPDATED SECTION ==========
     
      # Optional: Verify slug matches and redirect if wrong
     title_data = prop.get('title', {})

@@ -253,7 +253,7 @@
         color: var(--rose-gold);
         font-size: 1.5rem;
     }
-
+    
     .property-description {
         font-size: 1.1rem;
         line-height: 1.8;
@@ -1440,14 +1440,11 @@
             btn.innerHTML = '<i class="fas fa-map"></i> View on Map';
         }
     }
-
     // Image gallery functionality
     let currentImageIndex = 0;
     const images = [
-        "{{ property.cover }}"{% for image in property.property_images %},
-    "{{ image.image }}"
-    {% endfor %}
-];
+        "{{ property.cover }}"{% for image in property.property_images %},"{{ image.image }}"{% endfor %}
+    ];
 
     function changeImage(direction) {
         if (images.length <= 1) return;

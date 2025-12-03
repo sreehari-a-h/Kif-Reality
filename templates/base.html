@@ -1,14 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head> 
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>{% block title %}KIF Realty - Premium Dubai Real Estate{% endblock %}</title>
-    
+    <title>{% block title %}KIF Realty - Premium Dubai Real Estate{% endblock %}</title>    
     <meta name="description"
         content="{% block description %}KIF Realty - Top Dubai real estate company since 2011. Buy apartments, luxury villas, off-plan properties in Dubai. Expert investment guidance for Dubai property ROI.{% endblock %}">
     
@@ -20,7 +16,6 @@
     <!-- <link rel="canonical" href="https://kifrealty.com/"> -->
     <link rel="canonical" href="https://kifrealty.com{{ request.path }}">
     {% endblock %}
-
 
     <<!-- ✅ ADD these optimized font links: -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,17 +36,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </noscript>
 
- 
-
-    <!-- Google Fonts - OBSIDIAN Theme -->
-    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-
     <!-- Optimized Google Fonts with font-display: swap -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
-
-        <style>
-
+<style>
      :root {
             --obsidian-black: #0a0a0a;
             --charcoal-gray: #1a1a1a;
@@ -163,16 +151,7 @@
             margin-left: -15%;
             filter: brightness(1.2);
         }
-
-
-
         /* Enhanced Navbar - OBSIDIAN Style */
-
-        /* ============================================
-   REPLACE YOUR EXISTING DROPDOWN CSS WITH THIS
-   (Replace the entire section you showed me)
-   ============================================ */
-
         /* Dropdown container */
         .nav-item.dropdown {
             position: relative;
@@ -323,7 +302,6 @@
                 display: block;
             }
         }
-
         .navbar {
             position: fixed;
             top: 0;
@@ -378,14 +356,12 @@
             opacity: 1 !important;
             visibility: visible !important;
         }
-
         .nav-links {
             display: flex;
             gap: 1rem;
             list-style: none;
             align-items: center;
         }
-
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
@@ -405,7 +381,6 @@
             background: rgba(232, 180, 160, 0.1);
             text-decoration: none;
         }
-
         /* Mobile Menu Toggle */
         .mobile-toggle {
             display: none;
@@ -836,7 +811,6 @@
             display: none;
             /* hide additional items initially */
         }
-
         .show-more-btn {
             background: none;
             border: none;
@@ -848,7 +822,6 @@
             transition: all 0.3s ease;
             display: inline-block;
         }
-
         .show-more-btn:hover {
             color: var(--rose-gold);
             text-decoration: underline;
@@ -1442,15 +1415,11 @@
         .mobile-icon {
             display: none;
         }
-
-        </style>
-    
-
+    </style>   
     {% block extra_css %}{% endblock %}
 </head>
 
-<body>
-    
+<body>    
     <!-- Animated Background -->
     <div class="bg-animation">
         <div class="floating-orb orb-1"></div>
@@ -1499,8 +1468,7 @@
                 </a>
             </li> -->
 
-            <!-- EXPLORE DROPDOWN -->
-            <!-- DESKTOP VERSION - Replace your existing Explore dropdown: -->
+            <!-- DESKTOP VERSION - Explore dropdown: -->
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle">
@@ -1527,7 +1495,6 @@
                     </ul>
                 </div>
             </li>
-
             <li>
                 <a href="{% url 'about' %}"
                     class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
@@ -1546,8 +1513,6 @@
                     Contact
                 </a>
             </li>
-
-
             <li class="nav-item dropdown" style="width: 145px;white-space: nowrap;overflow: visible;">
                 <a role="button" class="nav-link dropdown-toggle" id="calculatorDropdown">
                     <i class="bi bi-calculator" id="calculatorIcon"></i>
@@ -1557,7 +1522,6 @@
                             href="{% url 'index' %}?scroll=mortgage-calculator">Mortgage Calculator</a></li>
                     <li><a class="dropdown-item scroll-link" href="{% url 'index' %}?scroll=roi-calculator">ROI
                             Calculator</a></li>
-
                 </ul>
             </li>
 
@@ -1655,7 +1619,6 @@
                     </a>
                 </li>
             </div>
-
             <!-- Mobile Footer (hidden on desktop) -->
             <li class="mobile-footer">
                 <div class="mobile-contact">
@@ -1694,48 +1657,32 @@
                         <a href="https://wa.me/+971569599966" target="_blank" rel="noopener noreferrer"
                             aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
-
                 </div>
 
                 <div class="footer-links-section">
                     <h5>Our Expertise</h5>
                     <ul class="footer-list">
                         <li><a href="{% url 'retail-spaces' %}"><i class="fas fa-store"></i>Retail Spaces</a></li>
-                        <!-- storefront / shop -->
                         <li><a href="{% url 'secondary-residential-properties' %}"><i class="fas fa-home"></i>Secondary Residential Properties</a>
                         </li>
-                        <!-- home / house -->
                         <li><a href="{% url 'commercial-properties' %}"><i class="fas fa-building"></i>Commercial Properties</a>
                         </li>
-                        <!-- office building -->
                         <li><a href="{% url 'beachfront-Properties' %}"><i class="fas fa-umbrella-beach"></i>Beachfront Properties</a>
                         </li>
-                        <!-- beach / coastal -->
                         <li><a href="{% url 'luxury-villas-townhouses' %}"><i class="fas fa-vihara"></i>Luxury Villas & Townhouses</a>
                         </li>
-                        <!-- villa / high-end home -->
                         <li><a href="{% url 'mansions-for-sale' %}"><i class="fas fa-gem"></i>Mansions for Sale</a></li>
-                        <!-- luxury / premium -->
                         <li class="extra"><a href="{% url 'plots-for-sale' %}"><i class="fas fa-map-marked-alt"></i>Plots for
                                 Sale</a></li>
-                        <!-- land / plot -->
                         <li class="extra"><a href="{% url 'off-plan-residential-properties' %}"><i class="fas fa-project-diagram"></i>Off-Plan
                                 Properties</a></li>
-                        <!-- construction / plan -->
                         <li class="extra"><a href="{% url 'labour-camps' %}"><i class="fas fa-hard-hat"></i>Labour Camps</a>
                         </li>
-                        <!-- construction / workers -->
                         <li class="extra"><a href="{% url 'warehouses-for-sale' %}"><i class="fas fa-warehouse"></i>Warehouses for
                                 Sale</a></li>
-                        <!-- warehouse / storage -->
-
                     </ul>
-
                     <button class="show-more-btn">More...</button>
                 </div>
-
-
-
                 <div class="footer-locations">
                     <h5>Dubai Locations</h5>
                     <ul>
@@ -1762,7 +1709,6 @@
                     <p><a href="mailto:info@kifrealty.com"><i class="fas fa-envelope"></i>info@kifrealty.com</a></p>
                     <!-- <p><i class="fas fa-clock"></i>Sun-Thu: 9AM-7PM, Sat: 10AM-4PM</p> -->
                     <p><i class="fas fa-clock"></i> Sun–Thu 9AM–7PM | Sat 10AM–4PM</p>
-
                     <p><i class="fas fa-certificate"></i>RERA Certified Broker</p>
                 </div>
             </div>
@@ -1785,10 +1731,6 @@
         </a>
     </div>
 
-
-
-
-
     <!-- more ...link -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -1806,7 +1748,6 @@
             }
         });
     </script>
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

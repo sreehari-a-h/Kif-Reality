@@ -1979,7 +1979,8 @@
     <p>Fill in your details and we’ll contact you shortly.</p>
     <form id="web3Form" method="POST" action="https://api.web3forms.com/submit">
       <input type="hidden" name="access_key" value="e6d0d24d-c0a0-466b-8df6-250fefd4205e">
-      
+      <input type="hidden" name="page_url" id="page_url">
+
       <div class="form-group">
         <input type="text" name="name" placeholder="Name" required>
       </div>
@@ -2134,18 +2135,31 @@ document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('web3Form');
     const formMessage = document.getElementById('formMessage');
 
-    function showPopup() { popup.style.display = 'flex'; }
-    function hidePopup() { 
-        popup.style.display = 'none'; 
-        setTimeout(showPopup, 30000); // optional reappear
+    document.getElementById('page_url').value = window.location.href;
+
+    function showPopup() { 
+        // Reset form fields
+        form.reset();
+        // Clear previous messages
+        formMessage.innerHTML = '';
+        // Show popup
+        popup.style.display = 'flex'; 
     }
 
-    setTimeout(showPopup, 12000);
+    function hidePopup() { 
+        popup.style.display = 'none'; 
+        setTimeout(showPopup, 40000); // optional reappear after 40 sec
+    }
 
+    // First popup after 15 seconds
+    setTimeout(showPopup, 15000);
+
+    // Close events
     closeBtn.addEventListener('click', hidePopup);
     popup.addEventListener('click', e => { if(e.target === popup) hidePopup(); });
     document.addEventListener('keydown', e => { if(e.key === "Escape") hidePopup(); });
 
+    // Form submission
     form.addEventListener('submit', async function(e){
         e.preventDefault();
         formMessage.innerHTML = '<span style="color:orange">Sending...</span>';
@@ -2171,5 +2185,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
 
 {% endblock %}

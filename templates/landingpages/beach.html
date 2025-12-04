@@ -1969,14 +1969,14 @@ document.addEventListener("DOMContentLoaded", function() {
     function showPopup() { popup.style.display = 'flex'; }
     function hidePopup() { 
         popup.style.display = 'none';
-        setTimeout(showPopup, 30000); // reappear after 30s
+        //setTimeout(showPopup, 30000); // reappear after 30s
     }
 
     document.getElementById('page_url').value = window.location.href;
 
 
     // Auto show popup after 12s
-    setTimeout(showPopup, 12000);
+    setTimeout(showPopup, 20000);
 
     closeBtn.addEventListener('click', hidePopup);
     popup.addEventListener('click', e => { if(e.target === popup) hidePopup(); });

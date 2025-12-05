@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ post.title|truncatechars:57 }}|KIF Realty{% endblock %}
+{% block title %}{{ post.title|truncatechars:52 }}|KIF Realty{% endblock %}
 
 {% block description %}{{ post.meta_description|default:post.excerpt }}{% endblock %}
 

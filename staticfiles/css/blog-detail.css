@@ -1,8 +1,4 @@
-body{
-    font-family: 'Cinzel', serif;
-}
 
-/* Blog Detail Specific Styles */
 .blog-detail {
     margin-top: 80px; /* Account for fixed navbar */
 }
@@ -652,6 +648,10 @@ body{
     .blog-hero {
         height: 60vh;
     }
+
+    /* .nav-links{
+        background-color: #4c4c4c;
+    } */
 
     .blog-title {
         font-size: 2rem;

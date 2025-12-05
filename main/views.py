@@ -676,6 +676,7 @@ def model1(request):
 def about(request):
     """About us page"""
     return render(request, 'about.html')
+
 def basenw(request):
        return render(request, 'basenew.html')
 

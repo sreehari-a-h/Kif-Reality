@@ -317,8 +317,13 @@
 <section id="home" class="hero">
    
     <!-- Replace your video tag -->
-<video autoplay muted loop playsinline class="hero-video" preload="none">
+<!-- <video autoplay muted loop playsinline class="hero-video" preload="none">
     <source src="/static/videos/kif_web.mp4" type="video/mp4">
+</video> -->
+
+<video id="hero-video" autoplay muted loop playsinline preload="none" class="hero-video" width="100%" height="auto">
+  <source data-src="/static/videos/kif_web.mp4" type="video/mp4">
+  Your browser does not support the video tag.
 </video>
 
     <!-- Optional particle overlay -->
@@ -905,12 +910,40 @@ function populateCitiesDropdown() {
 
 
 
+<video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="none" style="opacity: 0; transition: opacity 1s;">
+  <source data-src="/static/videos/kif_web.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 <script>
-const video = document.querySelector('.hero-video');
-video.addEventListener('canplay', () => {
-    video.style.opacity = 1;
-});
+  const video = document.querySelector('.hero-video');
+  const source = video.querySelector('source');
+  
+  // Create an IntersectionObserver to lazy load the video when it is in the viewport
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Load the video by setting the source attribute
+        source.src = source.dataset.src;
+        video.load(); // Start loading the video
+        
+        // Once the video is loaded, start playing it and fade in
+        video.addEventListener('canplay', () => {
+          video.style.opacity = 1; // Fade in the video
+        });
+        
+        // Stop observing once the video has started loading
+        observer.disconnect();
+      }
+    });
+  }, {
+    rootMargin: '100px', // Trigger when the video is 100px from the viewport
+  });
+
+  // Observe the video element
+  observer.observe(video);
 </script>
+
 
 <script>
     // UAE Property Investment Calculators - Fixed Implementation with Precise Input Handling

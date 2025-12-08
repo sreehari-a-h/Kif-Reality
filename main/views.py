@@ -290,19 +290,23 @@ def blog_search(request):
 API_BASE = "https://offplan.market/api/property"
 
 
+# def index(request):
+#     """Homepage with featured properties"""
+#     properties_result = PropertyService.get_featured_properties()
+    
+#     featured = []
+#     if properties_result['success']:
+#         featured = properties_result.get('data', {}).get('results', [])[:4]  # limit to 4
+    
+#     context = {
+#         'featured_properties': featured,
+#         'properties_error': properties_result.get('error'),
+#     }
+#     return render(request, 'index.html', context)
+
 def index(request):
-    """Homepage with featured properties"""
-    properties_result = PropertyService.get_featured_properties()
-    
-    featured = []
-    if properties_result['success']:
-        featured = properties_result.get('data', {}).get('results', [])[:4]  # limit to 4
-    
-    context = {
-        'featured_properties': featured,
-        'properties_error': properties_result.get('error'),
-    }
-    return render(request, 'index.html', context)
+    """Homepage - properties loaded dynamically via JavaScript"""
+    return render(request, 'index.html')
 
 def exclusive(request):
     """Homepage with featured properties"""

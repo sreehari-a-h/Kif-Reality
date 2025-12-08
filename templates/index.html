@@ -382,32 +382,36 @@ function loadFeaturedProperties() {
   const grid = document.querySelector('.properties-grid');
   grid.innerHTML = `<p>Loading Featured Properties...</p>`;
   
-
   fetch('https://offplan.market/api/properties/filter/', {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ property_type: "Residential" })
+    body: JSON.stringify({ 
+      property_type: "Residential",
+      limit: 8,        // Try to limit results
+      page_size: 8     // Alternative parameter
+    })
   })
   .then(res => res.json())
   .then(data => {
-    grid.innerHTML = ""; // clear
+    grid.innerHTML = ""; // clear loading message
 
     if (data?.data?.results?.length) {
-      data.data.results.slice(0, 8 ).forEach(p => {
-
-        // ✅ Create slug from API slug or title
+      // ✅ Show only first 8 properties
+      data.data.results.slice(0, 8).forEach(p => {
+        
+        // Create slug from API slug or title
         const slug = p.slug || createSlug(p.title?.en || 'property');
         const propertyUrl = `/property/${slug}-${p.id}/`;
 
         grid.innerHTML += `
           <div class="property-card">
-            <img src="${p.cover || '/static/img/no-image.jpg'}" alt="${p.title}" loading="lazy">
+            <img src="${p.cover || '/static/img/no-image.jpg'}" alt="${p.title?.en || 'Property'}" loading="lazy">
             <div class="property-info">
-              <h3>${p.title.en}</h3>
-              <h4>${p.low_price} <span>${p.currency || "AED"}</span></h4>
-              <p>${p.district?.name?.en || ""} / ${p.city?.name?.en || ""}  </p>
+              <h3>${p.title?.en || 'Untitled Property'}</h3>
+              <h4>${p.low_price || 'Price on request'} <span>${p.currency || "AED"}</span></h4>
+              <p>${p.district?.name?.en || ""} / ${p.city?.name?.en || ""}</p>
              
-              <a href="${propertyUrl}" class="learn-more" aria-label="Learn more about ${p.title?.en || 'this property'} in ${p.district?.name?.en || ''} ${p.city?.name?.en || ''}">LEARN MORE</a>
+              <a href="${propertyUrl}" class="learn-more" aria-label="Learn more about ${p.title?.en || 'this property'}">LEARN MORE</a>
             </div>
           </div>
         `;
@@ -417,12 +421,12 @@ function loadFeaturedProperties() {
     }
   })
   .catch(err => {
-    console.error(err);
-    grid.innerHTML = `<p>Error loading properties</p>`;
+    console.error('Error loading properties:', err);
+    grid.innerHTML = `<p>Error loading properties. Please try again later.</p>`;
   });
-}
+} // ✅ Function properly closed here
 
-// ✅ Helper function to create slug from title (if API doesn't provide slug)
+// ✅ Helper function defined OUTSIDE loadFeaturedProperties
 function createSlug(text) {
   return text
     .toLowerCase()
@@ -432,61 +436,68 @@ function createSlug(text) {
     .trim();
 }
 
-// Run on page load
-document.addEventListener("DOMContentLoaded", loadFeaturedProperties);
+// ✅ Run on page load
+document.addEventListener("DOMContentLoaded", function() {
+  loadFeaturedProperties();
+  loadCitiesFromAPI(); // ✅ Also load cities
+});
+
+// ✅ Load cities function
 function loadCitiesFromAPI() {
-    fetch('https://offplan.market/api/cities/')
-        .then(response => response.json())
-        .then(result => {
-            // Handle the nested structure: result.data.data
-            if (result && result.data && result.data.status && result.data.data) {
-                citiesData = result.data.data;
-                populateCitiesDropdown();
-            } else {
-                console.error('Failed to load cities:', result.error || 'Invalid response structure');
-                // Fallback to no cities if API fails
-                citiesData = [];
-            }
-        })
-        .catch(error => {
-            console.error('Error loading cities:', error);
-            // Fallback to no cities if API fails
-            citiesData = [];
-        });
+  fetch('https://offplan.market/api/cities/')
+    .then(response => response.json())
+    .then(result => {
+      // Handle the nested structure: result.data.data
+      if (result && result.data && result.data.status && result.data.data) {
+        citiesData = result.data.data;
+        populateCitiesDropdown();
+      } else {
+        console.error('Failed to load cities:', result.error || 'Invalid response structure');
+        citiesData = [];
+      }
+    })
+    .catch(error => {
+      console.error('Error loading cities:', error);
+      citiesData = [];
+    });
 }
 
+// ✅ Populate cities dropdown
 function populateCitiesDropdown() {
-    const citySelect = document.getElementById('citySelect');
-    
-    if (!citySelect) {
-        console.error('❌ City select element not found');
-        return;
+  const citySelect = document.getElementById('citySelect');
+  
+  if (!citySelect) {
+    console.error('❌ City select element not found');
+    return;
+  }
+  
+  if (!citiesData.length) {
+    console.error('❌ No cities data available');
+    return;
+  }
+  
+  // Clear existing options except the first one
+  citySelect.innerHTML = '<option value="">All Cities</option>';
+  
+  // Add cities from API - Use a Set to avoid duplicates
+  const uniqueCities = new Map();
+  citiesData.forEach(city => {
+    if (city.name && city.name.en) {
+      uniqueCities.set(city.name.en, city);
     }
-    
-    if (!citiesData.length) {
-        console.error('❌ No cities data available');
-        return;
-    }
-    
-    // Clear existing options except the first one
-    citySelect.innerHTML = '<option value="">All Cities</option>';
-    
-    // Add cities from API - Use a Set to avoid duplicates
-    const uniqueCities = new Map();
-    citiesData.forEach(city => {
-        if (city.name && city.name.en) {
-            uniqueCities.set(city.name.en, city);
-        }
-    });
-    
-    // Add unique cities to dropdown
-    uniqueCities.forEach((city, cityName) => {
-        const option = document.createElement('option');
-        option.value = cityName; // Use English name as value
-        option.textContent = cityName; // Display English name
-        citySelect.appendChild(option);
-    });
+  });
+  
+  // Add unique cities to dropdown
+  uniqueCities.forEach((city, cityName) => {
+    const option = document.createElement('option');
+    option.value = cityName;
+    option.textContent = cityName;
+    citySelect.appendChild(option);
+  });
 }
+
+// ✅ Initialize citiesData variable
+let citiesData = [];
 </script>
 
   <section class="services-1 fade-up">

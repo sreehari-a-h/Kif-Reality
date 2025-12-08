@@ -19,7 +19,9 @@ ALLOWED_FILTER_KEYS = {
     'property_status',
     'sales_status',
     'title',
-    'developer'
+    'developer',
+    'limit',      # ← Add this
+    'page_size'   # ← Add this
 }
 
 class PropertyService:

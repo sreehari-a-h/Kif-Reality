@@ -299,15 +299,32 @@
         window.filterSystemInitialized = true;
         console.log('✅ Initializing filter system...');
 
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            console.log('📋 DOMContentLoaded fired');
-            initializeFilters();
-            setupEventListeners();
-
+        
+        //document.addEventListener('DOMContentLoaded', function () {            
+            //console.log('📋 DOMContentLoaded fired');
+            //initializeFilters();
+           // setupEventListeners();
             // Load initial properties from API on page load
-            loadInitialProperties();
-        });
+           // loadInitialProperties();
+        //});
+        // NEW - Load properties first, then cities/developers:
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('📋 DOMContentLoaded fired');
+    
+    // ✅ Initialize filters WITHOUT loading cities/developers yet
+    initializeFiltersQuick();
+    setupEventListeners();
+    
+    // ✅ Load properties immediately (most important)
+    loadInitialProperties();
+    
+    // ✅ Load cities and developers AFTER properties (less important)
+    setTimeout(() => {
+        loadCitiesFromAPI();
+        loadDevelopersFromAPI();
+    }, 500); // Delay by 500ms
+});
+
 
        function initializeFilters() {
     console.log('🔧 Initializing filters...');
@@ -375,6 +392,39 @@
     loadDevelopersFromAPI();
 }
 
+// Add this NEW function after initializeFilters():
+function initializeFiltersQuick() {
+    console.log('🔧 Quick initializing filters...');
+
+    // Check for city and district in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityParam = urlParams.get('city');
+    const districtParam = urlParams.get('district');
+    
+    // Set default property type to residential
+    const propertyTypeInput = document.getElementById('propertyTypeInput');
+    if (propertyTypeInput) {
+        propertyTypeInput.value = 'residential';
+    }
+
+    // Update visual state
+    updatePropertyType('residential');
+
+    const residentialBtn = document.getElementById('residentialBtn');
+    const commercialBtn = document.getElementById('commercialBtn');
+
+    if (residentialBtn && commercialBtn) {
+        residentialBtn.classList.add('active');
+        commercialBtn.classList.remove('active');
+    }
+
+    // Initialize ranges
+    updatePriceRange();
+    updateAreaRange();
+    
+    // ✅ Cities and developers will load after properties
+}
+
        function loadInitialProperties() {
     console.log('🏠 Loading initial properties from API...');
 
@@ -401,6 +451,10 @@
     
     // Always include property_type
     filters.property_type = 'Residential';
+
+    // ✅ ADD THESE TWO LINES:
+    filters.limit = 12;    // Only fetch 12 properties per page
+    filters.page = 1;      // Start with first page
 
     // ✅ If city is in URL, add it to filters
     if (cityParam) {
@@ -1132,6 +1186,10 @@
             // Always include property_type (Required: Residential or Commercial)
             filters.property_type = propertyTypeText;
 
+            // ✅ ADD THESE TWO LINES:
+            filters.limit = 12;    // Only fetch 12 properties per page
+            filters.page = 1;      // Reset to first page on new search
+
             // Only add non-empty string values
             const city = formData.get('city');
             if (city && city.trim()) {
@@ -1293,16 +1351,20 @@
                 // Get area
                 const area = property.min_area ? `${property.min_area.toLocaleString()} sq ft` : 'N/A';
 
-                // Get image - check both 'cover' and 'image' fields
+                // Get image - check both 'cover' and 'image' fields, Add image optimization parameters:
                 const image = property.cover || property.image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-
+                // ✅ Add width/height parameters to optimize image loading
+                const optimizedImage = image.includes('?') 
+                ? `${image}&w=400&h=300&q=80` 
+                : `${image}?w=400&h=300&q=80`;
+                
                 // ✅ Create URL with slug-id format
                 const slug = property.slug || 'property';
                 const propertyUrl = `/property/${slug}-${property.id}/`;
 
                 return `
             <div class="property-card">
-                <div class="property-image" style="background-image: url('${image}');">
+                <div class="property-image" style="background-image: url('${optimizedImage}'); background-size: cover; ">
                     <div class="price-tag">
                         Available
                     </div>
@@ -1526,6 +1588,9 @@
 
         const filters = {};
         filters.property_type = propertyTypeText;
+
+        // ✅ ADD THIS LINE:
+        filters.limit = 12;    // Always limit to 12 properties per page
 
         // Add other filters only if they have values
         const city = formData.get('city');

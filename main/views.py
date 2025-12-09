@@ -334,6 +334,10 @@ def extract_page_number(url):
 
 @csrf_exempt
 def properties(request):
+    
+    """
+    Optimized properties view with pagination - loads only 12 properties per page    """
+    # Build filters
     filters = {}
 
     if request.method == 'POST':
@@ -349,8 +353,16 @@ def properties(request):
         filters['city'] = request.GET.get('city')
         filters['district'] = request.GET.get('district')  # Add this line
 
+     # Remove empty filters
     filters = {k: v for k, v in filters.items() if v}
+    
+    # ✅ CRITICAL: Always set limit to 12 and ensure page is set
+    filters['limit'] = 12
+    if 'page' not in filters:
+        filters['page'] = '1'
 
+    print(f"🔍 Fetching properties with filters: {filters}")
+    
     properties_result = PropertyService.get_properties(filters)
     
     mapped_properties = []
@@ -433,8 +445,8 @@ def properties(request):
 
             return page_range
 
-        if next_page_num == '3':
-            prev_page_num = '1'
+        # if next_page_num == '3':
+            # prev_page_num = '1'
 
         # print("➡️ NEXT PAGE:", next_page_num)
         # print("➡️ PREV PAGE:", prev_page_num)
@@ -449,8 +461,8 @@ def properties(request):
             'total_count': data_block.get('count', 0),
             'next_page': next_page_num,
             'prev_page': prev_page_num,
-            'current_page': data_block.get('current_page'),
-            'last_page': data_block.get('last_page', (data_block.get('count', 0) // 12) + 1),  # assuming 12 per page
+            'current_page': current_page,
+            'last_page': last_page,
             'page_range': get_page_range(current_page, last_page), 
             'properties_error': None,
             'predominant_property_type': predominant_type,
@@ -462,6 +474,9 @@ def properties(request):
             'total_count': 0,
             'next_page': None,
             'prev_page': None,
+            'current_page': 1,
+            'last_page': 1,
+            'page_range': [1],
             'properties_error': properties_result.get('error', 'Unable to load properties.'),
             'predominant_property_type': 'residential',  # Default to residential if no properties
         }

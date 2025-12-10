@@ -2,6 +2,7 @@ import requests
 import logging
 from django.conf import settings
 from typing import Dict, Optional
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 

@@ -136,17 +136,6 @@ CACHES = {
     }
 }
 
-# Or use Redis (recommended for production)
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-#         'LOCATION': 'redis://127.0.0.1:6379/1',
-#     }
-# }
-
-
-
-
 
 DATABASES = {
     'default': {
@@ -159,6 +148,8 @@ DATABASES = {
     }
      
 }
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -194,3 +185,4 @@ PROPERTIES_API_URL = 'https://offplan.market/api/properties/filter/'
 CITIES_API_URL = 'https://offplan.market/api/cities/'
 DEVELOPERS_API_URL = 'https://offplan.market/api/developers/'
 API_TIMEOUT = 30
+

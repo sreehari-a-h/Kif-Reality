@@ -332,156 +332,356 @@ def extract_page_number(url):
         return None
 
 
-@csrf_exempt
+
 def properties(request):
-    
-    """
-    Optimized properties view with pagination - loads only 12 properties per page    """
-    # Build filters
-    filters = {}
+    """Ultra-fast properties page – all data loaded by JavaScript"""
+    return render(request, 'properties.html', {
+        'properties': [],
+        'total_count': 0,
+        'properties_error': None,
+    })
 
-    if request.method == 'POST':
-        # Pass exact frontend property type values as they are
-        filters['property_type'] = request.POST.get('property_type', '')
-        filters['city'] = request.POST.get('city')
-        filters['min_price'] = request.POST.get('min_price')
-        filters['max_price'] = request.POST.get('max_price')
-        filters['page'] = request.POST.get('page')
+# @csrf_exempt
+# def properties(request):
+#     """
+#     Optimized properties view with caching and pagination
+#     """
+#     # Build filters with EXPLICIT defaults
+#     filters = {
+#         'limit': '12',      # ✅ ALWAYS set limit to 12
+#         'page_size': '12',  # ✅ ALWAYS set page_size to 12
+#     }
 
-    else:
-        filters['page'] = request.GET.get('page')
-        filters['city'] = request.GET.get('city')
-        filters['district'] = request.GET.get('district')  # Add this line
-
-     # Remove empty filters
-    filters = {k: v for k, v in filters.items() if v}
-    
-    # ✅ CRITICAL: Always set limit to 12 and ensure page is set
-    filters['limit'] = 12
-    if 'page' not in filters:
-        filters['page'] = '1'
-
-    print(f"🔍 Fetching properties with filters: {filters}")
-    
-    properties_result = PropertyService.get_properties(filters)
-    
-    mapped_properties = []
-    property_type_counts = {'residential': 0, 'commercial': 0}
-    
-    if properties_result['success'] and properties_result['data'].get('status') is True:
-        data_block = properties_result['data']['data']  # ✅ THIS is where the real results are
+#     if request.method == 'POST':
+#         # Get property type
+#         property_type = request.POST.get('property_type', 'residential')
+#         filters['property_type'] = property_type
         
-        for prop in data_block.get('results', []):
-            # Extract property data
-            title_data = prop.get('title', {})
-            title = title_data.get('en', 'Untitled') if isinstance(title_data, dict) else (title_data or 'Untitled')
+#         # Get other filters
+#         city = request.POST.get('city')
+#         if city:
+#             filters['city'] = city
+            
+#         min_price = request.POST.get('min_price')
+#         if min_price:
+#             filters['min_price'] = min_price
+            
+#         max_price = request.POST.get('max_price')
+#         if max_price:
+#             filters['max_price'] = max_price
+            
+#         page = request.POST.get('page')
+#         if page:
+#             filters['page'] = page
+        
+#         # Override limit if provided (but default is already 12)
+#         limit = request.POST.get('limit')
+#         if limit:
+#             filters['limit'] = limit
+            
+#         page_size = request.POST.get('page_size')
+#         if page_size:
+#             filters['page_size'] = page_size
 
-            city_data = prop.get('city', {})
-            city_name = ''
-            if isinstance(city_data, dict):
-                name_data = city_data.get('name', {})
-                city_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+#     else:
+#         # GET request - set defaults and get URL params
+#         page = request.GET.get('page', '1')
+#         filters['page'] = page
+        
+#         city = request.GET.get('city')
+#         if city:
+#             filters['city'] = city
+            
+#         district = request.GET.get('district')
+#         if district:
+#             filters['district'] = district
+        
+#         # Override limit if provided in GET
+#         limit = request.GET.get('limit')
+#         if limit:
+#             filters['limit'] = limit
+            
+#         page_size = request.GET.get('page_size')
+#         if page_size:
+#             filters['page_size'] = page_size
 
-            district_data = prop.get('district', {})
-            district_name = ''
-            if isinstance(district_data, dict):
-                name_data = district_data.get('name', {})
-                district_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+#     # 🐛 DEBUG: Print filters being sent
+#     print("=" * 80)
+#     print("📤 FILTERS BEING SENT TO PropertyService:")
+#     print(filters)
+#     print(f"✅ limit = {filters.get('limit')}")
+#     print(f"✅ page_size = {filters.get('page_size')}")
+#     print("=" * 80)
 
-            # Map property type ID to readable text
-            property_type_id = prop.get('property_type')
-            property_type_text = 'Residential'  # Default
-            if property_type_id == '3' or property_type_id == 3:
-                property_type_text = 'Commercial'
-                property_type_counts['commercial'] += 1
-            elif property_type_id == '20' or property_type_id == 20:
-                property_type_text = 'Residential'
-                property_type_counts['residential'] += 1
-            else:
-                property_type_counts['residential'] += 1
+#     properties_result = PropertyService.get_properties(filters)
+    
+#     # 🐛 DEBUG: Print API response
+#     if properties_result['success'] and properties_result['data'].get('status') is True:
+#         data_block = properties_result['data']['data']
+#         results_count = len(data_block.get('results', []))
+#         print("=" * 80)
+#         print("📥 API RESPONSE:")
+#         print(f"✅ Properties returned: {results_count}")
+#         print(f"✅ Total count: {data_block.get('count', 0)}")
+#         print("=" * 80)
+    
+#     mapped_properties = []
+#     property_type_counts = {'residential': 0, 'commercial': 0}
+    
+#     if properties_result['success'] and properties_result['data'].get('status') is True:
+#         data_block = properties_result['data']['data']
+        
+#         for prop in data_block.get('results', []):
+#             # Extract property data
+#             title_data = prop.get('title', {})
+#             title = title_data.get('en', 'Untitled') if isinstance(title_data, dict) else (title_data or 'Untitled')
+
+#             city_data = prop.get('city', {})
+#             city_name = ''
+#             if isinstance(city_data, dict):
+#                 name_data = city_data.get('name', {})
+#                 city_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+
+#             district_data = prop.get('district', {})
+#             district_name = ''
+#             if isinstance(district_data, dict):
+#                 name_data = district_data.get('name', {})
+#                 district_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+
+#             # Map property type ID to readable text
+#             property_type_id = prop.get('property_type')
+#             property_type_text = 'Residential'  # Default
+#             if property_type_id == '3' or property_type_id == 3:
+#                 property_type_text = 'Commercial'
+#                 property_type_counts['commercial'] += 1
+#             elif property_type_id == '20' or property_type_id == 20:
+#                 property_type_text = 'Residential'
+#                 property_type_counts['residential'] += 1
+#             else:
+#                 property_type_counts['residential'] += 1
+
+#             # Get ID and create slug from title or use API slug
+#             prop_id = prop.get('id')
+#             prop_slug = prop.get('slug') or slugify(title)
+
+#             mapped_properties.append({
+#                 'id': prop.get('id'),
+#                 'slug': prop_slug,
+#                 'title': title,
+#                 'image': prop.get('cover'),
+#                 'location': f"{city_name}, {district_name}",
+#                 'price': prop.get('low_price'),
+#                 'area': prop.get('min_area'),
+#                 'bedrooms': prop.get('bedrooms'),
+#                 'bathrooms': prop.get('bathrooms'),
+#                 'property_type': property_type_text,
+#                 'description': 'Explore more about this project at the detail page.',
+#             })
+
+#         # Pagination logic
+#         next_page_num = extract_page_number(data_block.get('next_page_url'))
+#         prev_page_num = extract_page_number(data_block.get('previous_page_url'))
+#         current_page = data_block.get('current_page')
+#         last_page = data_block.get('last_page', (data_block.get('count', 0) // 12) + 1)
+        
+#         def get_page_range(current_page, last_page, max_display=5):
+#             page_range = []
+
+#             if last_page <= max_display + 1:
+#                 return list(range(1, last_page + 1))
+
+#             start = max(1, current_page - 2)
+#             end = min(start + max_display - 1, last_page - 1)
+
+#             page_range = list(range(start, end + 1))
+
+#             if last_page not in page_range:
+#                 page_range.append('...')
+#                 page_range.append(last_page)
+
+#             return page_range
+
+#         if next_page_num == '3':
+#             prev_page_num = '1'
+
+#         # Determine predominant property type
+#         predominant_type = 'commercial' if property_type_counts['commercial'] > property_type_counts['residential'] else 'residential'
+
+#         context = {
+#             'properties': mapped_properties,
+#             'filters': filters,
+#             'total_count': data_block.get('count', 0),
+#             'next_page': next_page_num,
+#             'prev_page': prev_page_num,
+#             'current_page': data_block.get('current_page'),
+#             'last_page': data_block.get('last_page', (data_block.get('count', 0) // 12) + 1),
+#             'page_range': get_page_range(current_page, last_page), 
+#             'properties_error': None,
+#             'predominant_property_type': predominant_type,
+#         }
+#     else:
+#         context = {
+#             'properties': [],
+#             'filters': filters,
+#             'total_count': 0,
+#             'next_page': None,
+#             'prev_page': None,
+#             'properties_error': properties_result.get('error', 'Unable to load properties.'),
+#             'predominant_property_type': 'residential',
+#         }
+
+#     return render(request, 'properties.html', context)
+
+# @csrf_exempt
+# def properties(request):
+    
+#     """
+#     Optimized properties view with caching and pagination
+#     """
+#     # Build filters
+#     filters = {
+#          'limit': '12',      # ✅ ALWAYS set limit to 12
+#         'page_size': '12',  # ✅ ALWAYS set page_size to 12
+#     }
+
+#     if request.method == 'POST':
+#         # Pass exact frontend property type values as they are
+#         filters['property_type'] = request.POST.get('property_type', '')
+#         filters['city'] = request.POST.get('city')
+#         filters['min_price'] = request.POST.get('min_price')
+#         filters['max_price'] = request.POST.get('max_price')
+#         filters['page'] = request.POST.get('page')
+#         # ✅ ADD THESE CRITICAL LINES to limit results per page
+#         filters['limit'] = request.POST.get('limit', '12')  # Default to 12 if not provided
+#         filters['page_size'] = request.POST.get('page_size', '12')  # Fallback parameter
 
 
-            # Get ID and create slug from title or use API slug
-            prop_id = prop.get('id')
-            # Use API slug if available, otherwise create from title
-            prop_slug = prop.get('slug') or slugify(title)
+#     else:
+#         filters['page'] = request.GET.get('page')
+#         filters['city'] = request.GET.get('city')
+#         filters['district'] = request.GET.get('district')  # Add this line
+#         # ✅ ADD THESE for GET requests too
+#         filters['limit'] = request.GET.get('limit', '12')
+#         filters['page_size'] = request.GET.get('page_size', '12')
 
-            mapped_properties.append({
-                'id': prop.get('id'),
-                'slug': prop_slug,
-                'title': title,
-                'image': prop.get('cover'),
-                'location': f"{city_name}, {district_name}",
-                'price': prop.get('low_price'),
-                'area': prop.get('min_area'),
-                'bedrooms': prop.get('bedrooms'),
-                'bathrooms': prop.get('bathrooms'),
-                'property_type': property_type_text,
-                'description': 'Explore more about this project at the detail page.',
-            })
+#     filters = {k: v for k, v in filters.items() if v}    
+
+#     properties_result = PropertyService.get_properties(filters)
+    
+#     mapped_properties = []
+#     property_type_counts = {'residential': 0, 'commercial': 0}
+    
+#     if properties_result['success'] and properties_result['data'].get('status') is True:
+#         data_block = properties_result['data']['data']  # ✅ THIS is where the real results are
+        
+#         for prop in data_block.get('results', []):
+#             # Extract property data
+#             title_data = prop.get('title', {})
+#             title = title_data.get('en', 'Untitled') if isinstance(title_data, dict) else (title_data or 'Untitled')
+
+#             city_data = prop.get('city', {})
+#             city_name = ''
+#             if isinstance(city_data, dict):
+#                 name_data = city_data.get('name', {})
+#                 city_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+
+#             district_data = prop.get('district', {})
+#             district_name = ''
+#             if isinstance(district_data, dict):
+#                 name_data = district_data.get('name', {})
+#                 district_name = name_data.get('en', '') if isinstance(name_data, dict) else name_data
+
+#             # Map property type ID to readable text
+#             property_type_id = prop.get('property_type')
+#             property_type_text = 'Residential'  # Default
+#             if property_type_id == '3' or property_type_id == 3:
+#                 property_type_text = 'Commercial'
+#                 property_type_counts['commercial'] += 1
+#             elif property_type_id == '20' or property_type_id == 20:
+#                 property_type_text = 'Residential'
+#                 property_type_counts['residential'] += 1
+#             else:
+#                 property_type_counts['residential'] += 1
+
+
+#             # Get ID and create slug from title or use API slug
+#             prop_id = prop.get('id')
+#             # Use API slug if available, otherwise create from title
+#             prop_slug = prop.get('slug') or slugify(title)
+
+#             mapped_properties.append({
+#                 'id': prop.get('id'),
+#                 'slug': prop_slug,
+#                 'title': title,
+#                 'image': prop.get('cover'),
+#                 'location': f"{city_name}, {district_name}",
+#                 'price': prop.get('low_price'),
+#                 'area': prop.get('min_area'),
+#                 'bedrooms': prop.get('bedrooms'),
+#                 'bathrooms': prop.get('bathrooms'),
+#                 'property_type': property_type_text,
+#                 'description': 'Explore more about this project at the detail page.',
+#             })
 
             
-         # Pagination logic
-        next_page_num = extract_page_number(data_block.get('next_page_url'))
-        prev_page_num = extract_page_number(data_block.get('previous_page_url'))
-        current_page = data_block.get('current_page')
-        last_page = data_block.get('last_page', (data_block.get('count', 0) // 12) + 1)
+#          # Pagination logic
+#         next_page_num = extract_page_number(data_block.get('next_page_url'))
+#         prev_page_num = extract_page_number(data_block.get('previous_page_url'))
+#         current_page = data_block.get('current_page')
+#         last_page = data_block.get('last_page', (data_block.get('count', 0) // 12) + 1)
         
         
-        def get_page_range(current_page, last_page, max_display=5):
-            page_range = []
+#         def get_page_range(current_page, last_page, max_display=5):
+#             page_range = []
 
-            if last_page <= max_display + 1:
-                return list(range(1, last_page + 1))
+#             if last_page <= max_display + 1:
+#                 return list(range(1, last_page + 1))
 
-            start = max(1, current_page - 2)
-            end = min(start + max_display - 1, last_page - 1)
+#             start = max(1, current_page - 2)
+#             end = min(start + max_display - 1, last_page - 1)
 
-            page_range = list(range(start, end + 1))
+#             page_range = list(range(start, end + 1))
 
-            if last_page not in page_range:
-                page_range.append('...')  # Add ellipsis
-                page_range.append(last_page)
+#             if last_page not in page_range:
+#                 page_range.append('...')  # Add ellipsis
+#                 page_range.append(last_page)
 
-            return page_range
+#             return page_range
 
-        # if next_page_num == '3':
-            # prev_page_num = '1'
+#         if next_page_num == '3':
+#             prev_page_num = '1'
 
-        # print("➡️ NEXT PAGE:", next_page_num)
-        # print("➡️ PREV PAGE:", prev_page_num)
+#         # print("➡️ NEXT PAGE:", next_page_num)
+#         # print("➡️ PREV PAGE:", prev_page_num)
 
-        # Determine predominant property type
-        predominant_type = 'commercial' if property_type_counts['commercial'] > property_type_counts['residential'] else 'residential'
+#         # Determine predominant property type
+#         predominant_type = 'commercial' if property_type_counts['commercial'] > property_type_counts['residential'] else 'residential'
 
 
-        context = {
-            'properties': mapped_properties,
-            'filters': filters,
-            'total_count': data_block.get('count', 0),
-            'next_page': next_page_num,
-            'prev_page': prev_page_num,
-            'current_page': current_page,
-            'last_page': last_page,
-            'page_range': get_page_range(current_page, last_page), 
-            'properties_error': None,
-            'predominant_property_type': predominant_type,
-        }
-    else:
-        context = {
-            'properties': [],
-            'filters': filters,
-            'total_count': 0,
-            'next_page': None,
-            'prev_page': None,
-            'current_page': 1,
-            'last_page': 1,
-            'page_range': [1],
-            'properties_error': properties_result.get('error', 'Unable to load properties.'),
-            'predominant_property_type': 'residential',  # Default to residential if no properties
-        }
+#         context = {
+#             'properties': mapped_properties,
+#             'filters': filters,
+#             'total_count': data_block.get('count', 0),
+#             'next_page': next_page_num,
+#             'prev_page': prev_page_num,
+#             'current_page': data_block.get('current_page'),
+#             'last_page': data_block.get('last_page', (data_block.get('count', 0) // 12) + 1),  # assuming 12 per page
+#             'page_range': get_page_range(current_page, last_page), 
+#             'properties_error': None,
+#             'predominant_property_type': predominant_type,
+#         }
+#     else:
+#         context = {
+#             'properties': [],
+#             'filters': filters,
+#             'total_count': 0,
+#             'next_page': None,
+#             'prev_page': None,
+#             'properties_error': properties_result.get('error', 'Unable to load properties.'),
+#             'predominant_property_type': 'residential',  # Default to residential if no properties
+#         }
 
-    return render(request, 'properties.html', context)
+#     return render(request, 'properties.html', context)
 
 
 # Add this new function to handle old property URLs

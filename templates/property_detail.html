@@ -373,6 +373,16 @@
 </div>
 
 <script>
+
+   // let mapLoaded = false;
+//function toggleMap() {
+//  if (!mapLoaded) {
+ //   const container = document.getElementById('mapContainer');
+ //   container.innerHTML = `<iframe src="https://maps.google.com/maps?q=..." ...></iframe>`;
+ //   mapLoaded = true;
+//  }
+  // rest of toggle logic
+//}
     function toggleMap() {
         const mapContainer = document.getElementById("mapContainer");
         const btn = event.target;
@@ -387,9 +397,22 @@
     }
     // Image gallery functionality
     let currentImageIndex = 0;
+    //const images = [
+       // "{{ property.cover }}"{% for image in property.property_images %},"{{ image.image }}"{% endfor %}
+    //];
     const images = [
-        "{{ property.cover }}"{% for image in property.property_images %},"{{ image.image }}"{% endfor %}
-    ];
+    "{{ property.cover|escapejs }}"{% for image in property.property_images %},"{{ image.image|default:''|escapejs }}"{% endfor %}
+].filter(src => src && src.trim() !== '');
+
+    // Preload with native lazy loading support
+images.forEach(src => {
+    if (src && src.trim() !== '') {
+        const img = new Image();
+        img.loading = "lazy";        // This helps browsers that support it
+        img.src = src;
+    }
+});
+
 
     function changeImage(direction) {
         if (images.length <= 1) return;
@@ -534,12 +557,12 @@
         });
 
         // Preload images for smooth gallery transitions
-        if (images.length > 1) {
-            images.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        }
+        //if (images.length > 1) {
+        //    images.forEach(src => {
+          //      const img = new Image();
+            //    img.src = src;
+            //});
+        //}
 
         console.log('Property page initialization complete');
     });
@@ -574,5 +597,6 @@
         e.preventDefault();
     });
 </script>
+
 
 {% endblock %}

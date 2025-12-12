@@ -26,6 +26,20 @@
 {% block canonical %}
 <link rel="canonical" href="https://kifrealty.com{{ request.path }}">{% endblock %}
 
+
+{% block extra_head %}
+<!-- Async font loading -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" 
+      as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+      as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</noscript>
+{% endblock %}
+
 {% block content %}
 <!-- <style> -->
    
@@ -39,8 +53,15 @@
         <!-- Hero Section -->
         <section class="property-hero">
             <div class="hero-gallery">
-                <img id="heroImage" src="{{ property.cover }}" alt="{{ property.title.en }}" class="hero-image" loading="lazy">
-
+                <!-- <img id="heroImage" src="{{ property.cover }}" alt="{{ property.title.en }}" class="hero-image" loading="lazy"> -->
+                <!-- Use native lazy loading for hero image -->
+<img id="heroImage" 
+     src="{{ property.cover }}" 
+     alt="{{ property.title.en }}" 
+     class="hero-image" 
+     loading="eager"
+     decoding="async"
+     fetchpriority="high">
                 {% if property.property_images|length > 0 %}
                 <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">
                     <i class="fas fa-chevron-left"></i>
@@ -227,7 +248,7 @@
                     </button>
 
                     <!-- Hidden Map Container -->
-                    <div id="mapContainer" style="display:none; height:400px; width:100%; margin-top:20px; border-radius:15px; overflow:hidden; border: 1px solid rgba(232, 180, 160, 0.2);">
+                    <!-- <div id="mapContainer" style="display:none; height:400px; width:100%; margin-top:20px; border-radius:15px; overflow:hidden; border: 1px solid rgba(232, 180, 160, 0.2);">
                         {% if property.latitude and property.longitude %}
                         <iframe
                             src="https://maps.google.com/maps?q={{ property.latitude }},{{ property.longitude }}&z=15&output=embed"
@@ -241,7 +262,17 @@
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                         {% endif %}
-                    </div>
+                    </div> -->
+
+                            <!-- OPTIMIZED: Map container with data attributes (NO iframe initially) -->
+<div id="mapContainer" 
+     style="display:none; height:400px; width:100%; margin-top:20px; border-radius:15px; overflow:hidden; border: 1px solid rgba(232, 180, 160, 0.2);"
+     data-lat="{{ property.latitude }}"
+     data-lng="{{ property.longitude }}"
+     data-location="{{ property.district.name.en }}">
+    <!-- Iframe loads here on click -->
+</div>
+
                 </div>
             </div>
         </div>
@@ -393,27 +424,61 @@
 
 <script>
 
-   // let mapLoaded = false;
-//function toggleMap() {
-//  if (!mapLoaded) {
- //   const container = document.getElementById('mapContainer');
- //   container.innerHTML = `<iframe src="https://maps.google.com/maps?q=..." ...></iframe>`;
- //   mapLoaded = true;
-//  }
-  // rest of toggle logic
-//}
-    function toggleMap() {
-        const mapContainer = document.getElementById("mapContainer");
-        const btn = event.target;
+    //function toggleMap() {
+   //     const mapContainer = document.getElementById("mapContainer");
+     //   const btn = event.target;
         
-        if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
-            mapContainer.style.display = "block";
-            btn.innerHTML = '<i class="fas fa-times"></i> Hide Map';
-        } else {
-            mapContainer.style.display = "none";
-            btn.innerHTML = '<i class="fas fa-map"></i> View on Map';
-        }
+    //    if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
+      //      mapContainer.style.display = "block";
+        //    btn.innerHTML = '<i class="fas fa-times"></i> Hide Map';
+      //  } else {
+       //     mapContainer.style.display = "none";
+      //     btn.innerHTML = '<i class="fas fa-map"></i> View on Map';
+       // }
+   // }
+
+
+    // REPLACE the old toggleMap() with this:
+let mapLoaded = false;
+function toggleMap() {
+    const mapContainer = document.getElementById("mapContainer");
+    const btn = event.target;
+    
+    // Load map iframe on first click
+    if (!mapLoaded) {
+        const lat = mapContainer.dataset.lat;
+        const lng = mapContainer.dataset.lng;
+        const location = mapContainer.dataset.location;
+        
+        const mapSrc = (lat && lng) 
+            ? `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`
+            : `https://maps.google.com/maps?q=${encodeURIComponent(location)}&z=15&output=embed`;
+        
+        mapContainer.innerHTML = `
+            <iframe 
+                src="${mapSrc}"
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen 
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        `;
+        mapLoaded = true;
     }
+    
+    // Toggle visibility
+    if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
+        mapContainer.style.display = "block";
+        btn.innerHTML = '<i class="fas fa-times"></i> Hide Map';
+    } else {
+        mapContainer.style.display = "none";
+        btn.innerHTML = '<i class="fas fa-map"></i> View on Map';
+    }
+}
+
+
     // Image gallery functionality
     let currentImageIndex = 0;
     //const images = [
@@ -424,13 +489,45 @@
 ].filter(src => src && src.trim() !== '');
 
     // Preload with native lazy loading support
-images.forEach(src => {
+//images.forEach(src => {
+  //  if (src && src.trim() !== '') {
+    //    const img = new Image();
+      //  img.loading = "lazy";        // This helps browsers that support it
+        //img.src = src;
+    //}
+//});
+
+
+// Only preload first 2-3 images
+const PRELOAD_COUNT = 3;
+const preloadImages = images.slice(0, PRELOAD_COUNT);
+const lazyImages = images.slice(PRELOAD_COUNT);
+
+// Immediate preload
+preloadImages.forEach(src => {
     if (src && src.trim() !== '') {
         const img = new Image();
-        img.loading = "lazy";        // This helps browsers that support it
         img.src = src;
     }
 });
+
+// Lazy load rest on interaction or after delay
+let lazyLoaded = false;
+function loadRemainingImages() {
+    if (lazyLoaded) return;
+    lazyLoaded = true;
+    
+    lazyImages.forEach(src => {
+        if (src && src.trim() !== '') {
+            const img = new Image();
+            img.src = src;
+        }
+    });
+}
+
+// Trigger on first interaction or after 2 seconds
+document.querySelector('.gallery-nav')?.addEventListener('click', loadRemainingImages, { once: true });
+setTimeout(loadRemainingImages, 2000);
 
 
     function changeImage(direction) {
@@ -555,36 +652,30 @@ images.forEach(src => {
     }
 
     // Initialize everything when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function () {
-        console.log('Initializing property page with obsidian theme...');
-
-        // Initialize all components
-        initializeAnimations();
-        initializeTouchGestures();
-
-        // Start gallery autoplay if there are multiple images
-        if (images.length > 1) {
-            startGalleryAutoplay();
-        }
-
-        // Stagger loading animations for sections
-        const sections = document.querySelectorAll('.section');
-        sections.forEach((section, index) => {
-            setTimeout(() => {
-                section.classList.add('animate-in');
-            }, index * 300);
+    // REPLACE WITH:
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('Initializing property page...');
+    
+    // Priority 1: Gallery (critical)
+    if (images.length > 1) {
+        startGalleryAutoplay();
+    }
+    
+    // Priority 2: Defer animations (non-critical)
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            initializeAnimations();
+            initializeTouchGestures();
         });
-
-        // Preload images for smooth gallery transitions
-        //if (images.length > 1) {
-        //    images.forEach(src => {
-          //      const img = new Image();
-            //    img.src = src;
-            //});
-        //}
-
-        console.log('Property page initialization complete');
-    });
+    } else {
+        setTimeout(() => {
+            initializeAnimations();
+            initializeTouchGestures();
+        }, 100);
+    }
+    
+    // No need to manually animate sections - IntersectionObserver handles it
+});
 
     // Handle page visibility for performance
     document.addEventListener('visibilitychange', function () {

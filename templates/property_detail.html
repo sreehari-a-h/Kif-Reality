@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% load date_extras %}
 
-{% block title %} {{ property.id }}-{{ property.title.en|truncatechars:28}}-dubai-real-estate-kif-realty{% endblock %}
+{% block title %}
+    {% if property.title.en %}
+        {{ property.title.en }} - | {{ property.district.name.en }} - | KIF Realty
+    {% else %}
+        {{ property.developer.name }} {{ property.property_type.name.en|default:"Luxury Residences" }} in {{ property.district.name.en }} | KIF Realty
+    {% endif %}
+{% endblock %}
 
-{% block description %}{{ property.id }}-{{ property.description.en|striptags|truncatechars:130 }}{% endblock %}
 
+{% block description %}
+    {% if property.description.en|striptags|length > 30 %}
+        {{ property.description.en|striptags|truncatechars:150 }} (Ref: {{ property.id }})
+    {% elif property.title.en %}
+        {{ property.title.en }} - Luxury {{ property.property_type.name.en|default:"off-plan property" }} in {{ property.district.name.en }}, Dubai starting from {{ property.low_price|add_commas }} AED. (Ref: {{ property.id }})
+    {% else %}
+        Exclusive {{ property.property_type.name.en|default:"off-plan" }} project by {{ property.developer.name }} in {{ property.district.name.en }}, Dubai. Prices from {{ property.low_price|add_commas }} AED. (Ref: {{ property.id }})
+    {% endif %}
+{% endblock %} 
 
 
 {% block canonical %}
 <link rel="canonical" href="https://kifrealty.com{{ request.path }}">{% endblock %}
-
-{% load static %}
-{% load custom_filters %}
-{% load date_extras %}
 
 {% block content %}
 <!-- <style> -->
@@ -46,7 +59,13 @@
             </div>
 
             <div class="hero-overlay">
-                <h1 class="property-title">{{ property.title.en }}</h1>
+                <h1 class="property-title">
+                    {% if property.title.en %}
+                        {{ property.title.en }}
+                    {% else %}
+                        {{ property.developer.name }} {{ property.property_type.name.en|default:"Residences" }} at {{ property.district.name.en }}
+                    {% endif %}
+                </h1>
                 <div class="property-location">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>{{ property.district.name.en }}, {{ property.city.name.en }}</span>

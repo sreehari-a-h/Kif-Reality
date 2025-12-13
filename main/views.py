@@ -799,20 +799,27 @@ def property_detail(request, slug, pk):
     # Calculate the meta title length
     combined_title_length = len(title) + len(district_name) + 13  # 13 is for " - | KIF Realty"
 
+    # Generate the meta title with property ID to avoid duplicates
+    id_suffix = f" #{pk}"
+
     # Generate the meta title based on the combined length
-    if combined_title_length >= 63:
+    if combined_title_length >= 55:
         # If the title and district name length is greater than or equal to 63, don't add "KIF Realty"
-        meta_title = f"{title} - | {district_name}"
+        meta_title = f"{title} - | {district_name}{id_suffix}"
     elif combined_title_length >= 30:
         # If the title and district name length is between 30 and 64, add "KIF Realty"
-        meta_title = f"{title} - | {district_name} - | KIF Realty"
+        meta_title = f"{title} - | {district_name} - KIF Realty{id_suffix}"
     else:
         # If the title and district name length is less than 30, add "KIF Realty - Dubai"
-        meta_title = f"{title} - | {district_name} - | KIF Realty - Dubai"
+        meta_title = f"{title} - | {district_name} - KIF Realty - Dubai{id_suffix}"
 
     # Ensure the final length does not exceed 64 characters
     if len(meta_title) > 64:
-        meta_title = meta_title[:64]
+        available_length = 64 - len(id_suffix)
+        meta_title = meta_title[:available_length].rsplit(' ', 1)[0] + id_suffix
+
+        # Trim content but keep the ID
+        # meta_title = meta_title[:64]
     
     if correct_slug != slug:
         # Redirect to correct URL with proper slug

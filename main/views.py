@@ -22,7 +22,7 @@ from django.contrib import messages
 from django.utils import timezone
 from .models import BlogPost, Category, Tag, Newsletter, Comment
 from .forms import NewsletterForm, CommentForm
-
+from django.views.decorators.cache import cache_page
 from django.utils.html import strip_tags
 import re
 
@@ -717,6 +717,9 @@ def property_redirect(request, property_id):
     # If API call fails, create generic slug and redirect
     return redirect('property_detail', slug='property', pk=property_id, permanent=True)
 
+
+# Cache the view for 15 minutes to reduce API calls
+@cache_page(60 * 15)
 def property_detail(request, slug, pk):
     """
     Fetch property data from the API and render property_detail.html
@@ -738,6 +741,7 @@ def property_detail(request, slug, pk):
 
     if resp.status_code != 200:
         return render(request, "property_detail.html", {"property_error": "Property not found or API error."})
+    
     data = resp.json()
     if not data.get("status"):
         return render(request, "property_detail.html", {"property_error": data.get("message") or "API returned error."})
@@ -752,7 +756,7 @@ def property_detail(request, slug, pk):
         if isinstance(desc, dict) and 'en' in desc:
             raw_html = desc['en']
             
-            # Remove all style attributes (including incomplete ones)
+            # Remove all style attributes (including incomplete ones) and clean HTML
             raw_html = re.sub(r'style\s*=\s*["\'][^"\']*["\']?', '', raw_html, flags=re.IGNORECASE | re.DOTALL)
             
             # Remove other problematic attributes
@@ -790,6 +794,25 @@ def property_detail(request, slug, pk):
     title_data = prop.get('title', {})
     title = title_data.get('en', 'property') if isinstance(title_data, dict) else (title_data or 'property')
     correct_slug = prop.get('slug') or slugify(title)
+    district_name = prop.get('district', {}).get('name', {}).get('en', '')
+
+    # Calculate the meta title length
+    combined_title_length = len(title) + len(district_name) + 13  # 13 is for " - | KIF Realty"
+
+    # Generate the meta title based on the combined length
+    if combined_title_length >= 63:
+        # If the title and district name length is greater than or equal to 63, don't add "KIF Realty"
+        meta_title = f"{title} - | {district_name}"
+    elif combined_title_length >= 30:
+        # If the title and district name length is between 30 and 64, add "KIF Realty"
+        meta_title = f"{title} - | {district_name} - | KIF Realty"
+    else:
+        # If the title and district name length is less than 30, add "KIF Realty - Dubai"
+        meta_title = f"{title} - | {district_name} - | KIF Realty - Dubai"
+
+    # Ensure the final length does not exceed 64 characters
+    if len(meta_title) > 64:
+        meta_title = meta_title[:64]
     
     if correct_slug != slug:
         # Redirect to correct URL with proper slug
@@ -801,8 +824,18 @@ def property_detail(request, slug, pk):
     prop.setdefault("grouped_apartments", [])
     prop.setdefault("payment_plans", [])
     prop.setdefault("property_units", [])
+    
+    
+        # ========== OPTIONAL: LIMIT IMAGES FOR FASTER LOAD ==========
+    # Only send first 20 images to template (rest loaded via lazy loading)
+    if len(prop["property_images"]) > 20:
+        prop["property_images"] = prop["property_images"][:20]
 
-    return render(request, "property_detail.html", {"property": prop})
+     # Pass the calculated meta_title to the template
+    return render(request, "property_detail.html", 
+                  {"property": prop, 
+                   "meta_title": meta_title  # Pass the meta title to the template 
+                   })
 
 
 def unit_detail(request, property_slug, property_id, unit_id):

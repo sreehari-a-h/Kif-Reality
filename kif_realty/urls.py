@@ -36,8 +36,16 @@ urlpatterns = [
     
     # Robots.txt
     path('robots.txt', main_views.robots_txt, name='robots_txt'),
+    
+    # ✅ Preview 404 page
+    path('preview-404/', main_views.preview_404, name='preview_404'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+    
+# ✅ ADD THIS LINE - Custom 404 handler
+handler404 = 'main.views.custom_404'    

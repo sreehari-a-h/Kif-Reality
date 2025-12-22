@@ -288,6 +288,7 @@ def blog_search(request):
     return render(request, 'blog_search.html', context)
 
 API_BASE = "https://offplan.market/api/property"
+# API_BASE = "http://54.197.194.173/api/properties/large/"
 
 
 # def index(request):
@@ -1437,3 +1438,15 @@ def robots_txt(request):
         "Sitemap: https://kifrealty.com/sitemap.xml\n"
     )
     return HttpResponse(content, content_type="text/plain")
+
+
+# main/views.py
+
+
+def custom_404(request, exception):
+    """Custom 404 error handler"""
+    return render(request, '404.html', status=404)
+
+def preview_404(request):
+    """Preview the 404 page during development"""
+    return render(request, '404.html', status=404)

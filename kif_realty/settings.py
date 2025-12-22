@@ -13,6 +13,7 @@ SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', '192.168.x.x', '54.237.196.120', 'kifrealty.com', 'www.kifrealty.com']
 
 INSTALLED_APPS = [

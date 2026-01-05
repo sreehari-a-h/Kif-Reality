@@ -16,8 +16,8 @@
 <link rel="canonical" href="https://kifrealty.com/properties/">{% endblock %}
 
 <!-- Add in <head> section: -->
-<link rel="preconnect" href="https://offplan.market">
-<link rel="dns-prefetch" href="https://offplan.market">
+<link rel="preconnect" href="https://microservice.x-opp.com">
+<link rel="dns-prefetch" href="https://microservice.x-opp.com">
 
 
 {% block extra_css %}
@@ -277,6 +277,7 @@
 {% block extra_js %}
 <script>
 
+const MICROSERVICE_API = "{{ MICROSERVICE_API }}";
     // Add this at the top of your script, before the IIFE:
 const CACHE_KEY = 'properties_cache';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -516,8 +517,13 @@ function initializeFiltersQuick() {
 
     console.log('🏠 Initial filters being sent:', filters);
 
+    const MICROSERVICE_API = "{{ MICROSERVICE_API }}";
+
+    const API_URL = `${MICROSERVICE_API}/properties/filter/`;
+    console.log("filter:",API_URL);
+
     // Make API call to get initial properties
-    fetch('https://offplan.market/api/properties/filter/', {
+    fetch(API_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -966,7 +972,12 @@ function initializeFiltersQuick() {
 
         function loadDevelopersFromAPI() {
             console.log('🏗️ Loading developers from API...');
-            fetch('https://offplan.market/api/developers/')
+            const MICROSERVICE_API = "{{ MICROSERVICE_API }}";
+
+            const API_URL = `${MICROSERVICE_API}/developers/`;
+ 
+
+            fetch(API_URL)
                 .then(response => {
                     console.log('🏗️ Developers API response status:', response.status);
                     return response.json();
@@ -1315,9 +1326,14 @@ function initializeFiltersQuick() {
             }
 
             console.log('🔍 Sending filters:', filters);
+            
+            const MICROSERVICE_API = "{{ MICROSERVICE_API }}";
+
+            const API_URL = `${MICROSERVICE_API}/properties/filter/`;
+
 
             // Make API call and return Promise to external API
-            return fetch('https://offplan.market/api/properties/filter/', {
+            return fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1583,7 +1599,11 @@ function initializeFiltersQuick() {
 
         // Call external API with page as query parameter and current filters in body
         const currentFilters = getCurrentFilters();
-        fetch(`https://offplan.market/api/properties/filter/?page=${page}`, {
+        const MICROSERVICE_API = "{{ MICROSERVICE_API }}";
+
+        const API_URL = `${MICROSERVICE_API}/properties/filter/?page=${page}`;
+
+        fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

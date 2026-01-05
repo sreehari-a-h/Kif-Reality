@@ -312,11 +312,7 @@ API_BASE = os.getenv("MICROSERVICE_API")
 
 def index(request):
     """Homepage - properties loaded dynamically via JavaScript"""
-    context = {
-        'MICROSERVICE_API': settings.MICROSERVICE_API,
-    }
-    return render(request, 'index.html', context)
-
+    return render(request, 'index.html')
 
 def exclusive(request):
     """Homepage with featured properties"""
@@ -844,14 +840,6 @@ def property_detail(request, slug, pk):
 
     print(f"   ✅ Rendering template with property data")
     
-    # In property_detail view, add this after getting prop:
-    print(f"   Property data keys: {prop.keys()}")
-    print(f"   Property slug from API: {prop.get('slug')}")
-    
-    # ✅ CRITICAL: Ensure slug is in the property object for the template
-    prop['slug'] = correct_slug  # This ensures grouped_apartments have access to property slug
-
-    
     return render(request, "property_detail.html", {
         "property": prop,
         "meta_title": meta_title
@@ -860,162 +848,71 @@ def property_detail(request, slug, pk):
 
 def unit_detail(request, property_slug, property_id, unit_id):
     """
-    Display unit details
+    Display unit details using slug in URL but property_id for API call
     URL format: /property/luxury-villa-2376/unit/123/
     """
-    
-    print(f"🔍 Unit Detail View:")
-    print(f"   Property Slug: {property_slug}")
-    print(f"   Property ID: {property_id}")
-    print(f"   Unit ID: {unit_id}")
-    
-    # TRY MULTIPLE API ENDPOINT PATTERNS
-    api_patterns = [
-        f"{API_BASE}/units/{unit_id}",                              # Pattern 1: Direct unit access
-        f"{API_BASE}/apartment/{unit_id}",                          # Pattern 2: Apartment endpoint
-        f"{API_BASE}/property/{property_id}/unit/{unit_id}",        # Pattern 3: Nested (singular)
-        f"{API_BASE}/grouped-apartments/{unit_id}",                 # Pattern 4: Grouped apartments
-        f"{API_BASE}/property-units/{unit_id}",                     # Pattern 5: Property units
-    ]
-    
-    unit = None
-    unit_data = None
-    
-    # Try each API pattern until one works
-    for pattern_index, unit_url in enumerate(api_patterns, 1):
-        print(f"   🔄 Trying API Pattern #{pattern_index}: {unit_url}")
-        
-        try:
-            unit_resp = requests.get(unit_url, timeout=8)
-            print(f"      Response Status: {unit_resp.status_code}")
-            
-            if unit_resp.status_code == 200:
-                unit_data = unit_resp.json()
-                
-                if unit_data.get("status"):
-                    unit = unit_data.get("data", {})
-                    print(f"   ✅ SUCCESS with Pattern #{pattern_index}!")
-                    print(f"   Unit Type: {unit.get('unit_type', 'Unknown')}")
-                    break
-                else:
-                    print(f"      ⚠️ Status is False: {unit_data.get('message', 'No message')}")
-            else:
-                print(f"      ❌ Failed with status {unit_resp.status_code}")
-                
-        except requests.RequestException as e:
-            print(f"      ❌ Request error: {e}")
-            continue
-    
-    # If no API pattern worked, try fetching from property data
-    if not unit:
-        print(f"   ⚠️ All API patterns failed. Trying to find unit in property data...")
-        
-        # Fetch property data to get units
-        property_url = f"{API_BASE}/property/{property_id}"
-        print(f"   Fetching property: {property_url}")
-        
-        try:
-            property_resp = requests.get(property_url, timeout=8)
-            if property_resp.status_code == 200:
-                property_data = property_resp.json()
-                if property_data.get("status"):
-                    property = property_data.get("data", {})
-                    
-                    # Search in grouped_apartments
-                    for apt in property.get("grouped_apartments", []):
-                        if str(apt.get("id")) == str(unit_id):
-                            unit = apt
-                            print(f"   ✅ Found unit in grouped_apartments!")
-                            break
-                    
-                    # If not found, search in property_units
-                    if not unit:
-                        for apt in property.get("property_units", []):
-                            if str(apt.get("id")) == str(unit_id):
-                                unit = apt
-                                print(f"   ✅ Found unit in property_units!")
-                                break
-        except requests.RequestException as e:
-            print(f"   ❌ Error fetching property: {e}")
-    
-    # If still no unit found, show error
-    if not unit:
-        print(f"   ❌ Unit not found in any source")
-        return render(request, "unit_detail.html", {
-            "unit_error": f"Unit #{unit_id} not found. Please contact us for availability."
-        })
-    
-    print(f"   📦 Unit data keys: {unit.keys() if unit else 'None'}")
-    
-    # FETCH PROPERTY DATA for template
-    property_url = f"{API_BASE}/property/{property_id}"
-    print(f"   Fetching property details: {property_url}")
-    
-    property = None
+    """
+    Show unit details. We fetch the property and locate the unit by id in either grouped_apartments or property_units.
+    """
+    # url = f"{API_BASE}/{property_id}"
+    url = f"{API_BASE}/{property_id}/units/{unit_id}"
+    # try:
+    #     resp = requests.get(url, timeout=8)
+    # except requests.RequestException:
+    #     raise Http404("Property data could not be retrieved.")
+    # if resp.status_code != 200:
+    #     raise Http404("Property not found.")
     try:
-        property_resp = requests.get(property_url, timeout=8)
-        if property_resp.status_code == 200:
-            property_data = property_resp.json()
-            if property_data.get("status"):
-                property = property_data.get("data", {})
-                
-                # Get slug from property or generate it
-                if not property.get('slug'):
-                    title = property.get('title', {})
-                    title_en = title.get('en', 'property') if isinstance(title, dict) else str(title)
-                    property['slug'] = slugify(title_en)
-                
-                print(f"   ✅ Property retrieved: {property.get('title', {}).get('en', 'Unknown')}")
-                print(f"   📌 Property ID: {property.get('id')}")
-                print(f"   📌 Property Slug: {property.get('slug')}")
-                
-                # Ensure required fields exist
-                property.setdefault("facilities", [])
-                property.setdefault("payment_plans", [])
-                property.setdefault("title", {"en": "Property Details"})
-                property.setdefault("district", {"name": {"en": "Dubai"}})
-                property.setdefault("city", {"name": {"en": "Dubai"}})
-                property.setdefault("developer", {"name": "Developer"})
-                property.setdefault("delivery_date", None)
-                property.setdefault("sales_status", {"name": {"en": "Available"}})
-                property.setdefault("residential_units", 0)
-                property.setdefault("completion_rate", 0)
-                property.setdefault("cover", "")
-                
+        resp = requests.get(url, timeout=8)
     except requests.RequestException as e:
-        print(f"   ⚠️ Error fetching property: {e}")
-    
-    # Create fallback property if fetch failed
-    if not property:
-        print(f"   ⚠️ Using fallback property data")
-        
-        # Use property_slug from URL or generate one
-        fallback_slug = property_slug if (property_slug and property_slug != 'property') else slugify(f"property-{property_id}")
+        return render(request, "unit_detail.html", {
+            "unit_error": "Failed to retrieve unit data."
+        })
 
-        
-        property = {
-            "id": property_id,
-            "slug": fallback_slug,  # ✅ ALWAYS valid slug
-            "title": {"en": "Property Details"},
-            "district": {"name": {"en": "Dubai"}},
-            "city": {"name": {"en": "Dubai"}},
-            "developer": {"name": "Developer"},
-            "facilities": [],
-            "payment_plans": [],
-            "delivery_date": None,
-            "sales_status": {"name": {"en": "Available"}},
-            "residential_units": 0,
-            "completion_rate": 0,
-            "cover": ""
-        }
-    
-    print(f"   ✅ Rendering template with unit and property data")
-    print(f"   🔗 Final Property Slug: {property.get('slug')}")
-    print(f"   🔗 Final Property ID: {property.get('id')}")
+    if resp.status_code != 200:
+        return render(request, "unit_detail.html", {
+            "unit_error": "Unit not found or API error."
+        })
+
+    # data = resp.json()
+    # prop = data.get("data") or {}
+    # units = prop.get("property_units", []) or []
+    # grouped = prop.get("grouped_apartments", []) or []
+
+    # # Try to find unit in grouped_apartments by id
+    # unit = None
+    # for u in grouped + units:
+    #     # some ids might be strings or ints; normalize
+    #     try:
+    #         if int(u.get("id")) == int(unit_id):
+    #             unit = u
+    #             break
+    #     except Exception:
+    #         if str(u.get("id")) == str(unit_id):
+    #             unit = u
+    #             break
+
+    # if not unit:
+    #     raise Http404("Unit not found.")
+
+    # # supply property + unit to template
+    # context = {
+    #     "property": prop,
+    #     "unit": unit,
+    # }
+    # return render(request, "unit_detail.html", context)
+    data = resp.json()
+    if not data.get("status"):
+        return render(request, "unit_detail.html", {
+            "unit_error": data.get("message") or "API returned error."
+        })
+
+    unit = data.get("data") or {}
     
     return render(request, "unit_detail.html", {
-        "unit": unit,
-        "property": property
+        "unit": unit, 
+        "property_slug": property_slug,
+        "property_id": property_id
     })
 
 

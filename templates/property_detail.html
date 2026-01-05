@@ -606,9 +606,25 @@ function resetGalleryAutoplay() {
 
 // NAVIGATION & INTERACTIONS
 // ==========================================
-    function navigateToUnit(propertySlug, propertyId, unitId) {
-        window.location.href = `/property/${propertySlug}-${propertyId}/unit/${unitId}/`;
+   function navigateToUnit(propertySlug, propertyId, unitId) {
+    console.log('🔍 Navigation clicked!');
+    console.log('   Property Slug:', propertySlug);
+    console.log('   Property ID:', propertyId);
+    console.log('   Unit ID:', unitId);
+    
+    // Check if slug exists
+    if (!propertySlug || propertySlug === 'None' || propertySlug.trim() === '') {
+        console.warn('⚠️ Slug is empty, using "property" as fallback');
+        propertySlug = 'property';
     }
+    
+    // Build the URL
+    const url = `/property/${propertySlug}-${propertyId}/unit/${unitId}/`;
+    console.log('   🔗 Navigating to:', url);
+    
+    // Navigate
+    window.location.href = url;
+}
 
     // Event Handlers
     function requestBrochure() {

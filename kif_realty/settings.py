@@ -7,12 +7,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+MICROSERVICE_API=os.getenv('MICROSERVICE_API')
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 
+
+# settings.py
+DEFAULT_CHARSET = 'utf-8'
+FILE_CHARSET = 'utf-8'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', '192.168.x.x', '54.237.196.120', 'kifrealty.com', 'www.kifrealty.com']
 
@@ -47,11 +53,12 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.gzip.GZipMiddleware',  # compress responses
     'main.middleware.RemoveWWW',
+    'main.middleware.UTF8EnforcementMiddleware',  # New UTF-8 middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -182,8 +189,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # External API Configuration
-PROPERTIES_API_URL = 'https://offplan.market/api/properties/filter/'
-CITIES_API_URL = 'https://offplan.market/api/cities/'
-DEVELOPERS_API_URL = 'https://offplan.market/api/developers/'
+PROPERTIES_API_URL = f"{MICROSERVICE_API}/properties/filter/"
+CITIES_API_URL = f"{MICROSERVICE_API}/cities/"
+DEVELOPERS_API_URL = f"{MICROSERVICE_API}/developers/"
 API_TIMEOUT = 30
-

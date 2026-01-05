@@ -5,10 +5,16 @@ from django.core.cache import cache
 from main.models import BlogPost
 import requests
 import logging
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-PROPERTIES_API_URL = 'http://54.197.194.173/api/properties/large/'
+MICROSERVICE_API =  os.getenv("MICROSERVICE_API")
+
+PROPERTIES_API_URL = f'{MICROSERVICE_API}/properties/large/'
 
 
 class StaticViewSitemap(Sitemap):

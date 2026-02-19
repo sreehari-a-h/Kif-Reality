@@ -20,7 +20,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', '192.168.x.x', '54.237.196.120', 'kifrealty.com', 'www.kifrealty.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', '192.168.x.x', '54.237.196.120','3.91.248.7', 'kifrealty.com', 'www.kifrealty.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

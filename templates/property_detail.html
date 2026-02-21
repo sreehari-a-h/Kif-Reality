@@ -436,22 +436,6 @@ property.district.name.en }}, Dubai. Prices from {{ property.low_price|add_comma
 
 <script>
 
-    //function toggleMap() {
-    //     const mapContainer = document.getElementById("mapContainer");
-    //   const btn = event.target;
-
-    //    if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
-    //      mapContainer.style.display = "block";
-    //    btn.innerHTML = '<i class="fas fa-times"></i> Hide Map';
-    //  } else {
-    //     mapContainer.style.display = "none";
-    //     btn.innerHTML = '<i class="fas fa-map"></i> View on Map';
-    // }
-    // }
-
-
-    // REPLACE the old toggleMap() with this:
-   
     let mapLoaded = false;
     function toggleMap() {
         const mapContainer = document.getElementById("mapContainer");
@@ -746,5 +730,4 @@ property.district.name.en }}, Dubai. Prices from {{ property.low_price|add_comma
         galleryNav.addEventListener('click', preloadRemainingImages, { once: true });
     }
 </script>
-
 {% endblock %}
